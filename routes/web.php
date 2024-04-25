@@ -44,10 +44,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('profile/update/{id}',[UserController::class,'update_profile'])->name('profile.update');
     //Catelogs
     Route::resource('catelog',CatelogController::class);
+    Route::post('/update-status-catelog', [CatelogController::class, 'updateStatus'])->name('catelog.status-update');
     //Books
     Route::resource('book',BookController::class);
+    Route::post('/update-status', [BookController::class, 'updateStatus'])->name('book.update_status');
     //Customer Type
     Route::resource('customer_type',CustomerTypeController::class);
     //Customer
     Route::resource('customer',CustomerController::class);
+    Route::post('/update-status-customer', [CustomerController::class, 'updateStatus'])->name('customer.status_update');
 });

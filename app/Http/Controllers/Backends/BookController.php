@@ -2,14 +2,34 @@
 
 namespace App\Http\Controllers\Backends;
 
-use App\Http\Controllers\Controller;
+use Exception;
 use App\Models\Book;
 use App\Models\Catelog;
 use Illuminate\Http\Request;
 use Laravel\Ui\Presets\React;
+use App\Http\Controllers\Controller;
 
 class BookController extends Controller
 {
+    public function updateStatus(Request $request)
+    {
+        try {
+            $status = $request->input('status') === 'true' ? '1' : '0';
+            $book = Book::findOrFail($request->input('id'));
+            $book->update(['status' => $status]);
+            $output = [
+                'success' => 1,
+                'msg' => _('Status update successfully')
+            ];
+        } catch (Exception $e) {
+            dd($e);
+            $output = [
+                'error' => 0,
+                'msg' => _('Something went wrong')
+            ];
+        }
+        return response()->json($output);
+    }
     /**
      * Display a listing of the resource.
      */

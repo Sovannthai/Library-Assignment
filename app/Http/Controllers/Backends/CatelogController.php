@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backends;
 
+use Exception;
 use Carbon\Carbon;
 use App\Models\Catelog;
 use Illuminate\Http\Request;
@@ -11,6 +12,25 @@ use Illuminate\Support\Facades\Lang;
 
 class CatelogController extends Controller
 {
+    public function updateStatus(Request $request)
+    {
+        try {
+            $status = $request->input('status') === 'true' ? '1' : '0';
+            $catelog = Catelog::findOrFail($request->input('id'));
+            $catelog->update(['status' => $status]);
+            $output = [
+                'success' => 1,
+                'msg' => _('Status update successfully')
+            ];
+        } catch (Exception $e) {
+            dd($e);
+            $output = [
+                'error' => 0,
+                'msg' => _('Something went wrong')
+            ];
+        }
+        return response()->json($output);
+    }
     /**
      * Display a listing of the resource.
      */

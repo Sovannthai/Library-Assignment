@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="customer_type_id">Type</label>
-                    <select id="customer_type-filter" clas  s="form-control">
+                    <select id="customer_type-filter" class="form-control">
                         <option value="">Select type</option>
                         <option value="" {{ !request()->filled('customer_type_id') ? 'selected' : '' }}>All Type
                         </option>
@@ -46,6 +46,7 @@
                     <th>Type</th>
                     <th>phone</th>
                     <th>Date of Birth</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -58,6 +59,12 @@
                     <td>{{ $customer->customer_type->name }}</td>
                     <td>{{ $customer->phone }}</td>
                     <td>{{ $customer->dob }}</td>
+                    <td>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $customer->id }}" data-id="{{ $customer->id }}" {{ $customer->status =='1' ? 'checked' : '' }}>
+                            <label class="custom-control-label" for="customSwitches{{ $customer->id }}"></label>
+                        </div>
+                    </td>
                     <td>
                         @if (auth()->user()->can('edit.customer'))
                         <a href="{{ route('customer.edit',['customer'=>$customer->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
@@ -89,6 +96,27 @@
         window.location.href = url;
     }
     document.getElementById('customer_type-filter').addEventListener('change', applyFilters);
+</script>
+<script>
+    $('.toggle-status').on('change', function() {
+    var status = $(this).prop('checked') ? 'true' : 'false';
+    $.ajax({
+        type: "POST",
+        url: "{{ route('customer.status_update') }}",
+        data: {
+            "id": $(this).data('id'),
+            "status": status
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.success == 1) {
+                toastr.success(response.msg);
+            } else {
+                toastr.error(response.msg);
+            }
+        }
+    });
+});
 </script>
 @endpush
 @endsection

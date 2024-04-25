@@ -20,6 +20,7 @@
                         <th>Publisher</th>
                         <th>Publish Year</th>
                         <th>Pubish Edition</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -40,6 +41,12 @@
                         <td>{{ $catelog->publisher }}</td>
                         <td>{{ $catelog->publishyear }}</td>
                         <td>{{ $catelog->publish_edition }}</td>
+                        <td>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $catelog->id }}" data-id="{{ $catelog->id }}" {{ $catelog->status =='1' ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customSwitches{{ $catelog->id }}"></label>
+                            </div>
+                        </td>
                         <td>
                             @if (auth()->user()->can('edit.catelog'))
                             <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
@@ -62,6 +69,26 @@
         </div>
     </div>
 @push('js')
-
+<script>
+    $('.toggle-status').on('change', function() {
+    var status = $(this).prop('checked') ? 'true' : 'false';
+    $.ajax({
+        type: "POST",
+        url: "{{ route('catelog.status-update') }}",
+        data: {
+            "id": $(this).data('id'),
+            "status": status
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response.success == 1) {
+                toastr.success(response.msg);
+            } else {
+                toastr.error(response.msg);
+            }
+        }
+    });
+});
+</script>
 @endpush
 @endsection
