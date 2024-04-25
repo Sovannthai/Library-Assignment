@@ -28,6 +28,7 @@ Admin Dashboard
         <h3>Welcome, {{ auth()->user()->name }}</h3>
     </div>
     <!-- Content Row -->
+    @if (auth()->user()->can('view.dash'))
     <div class="row">
         <!-- Income -->
         <div class="col-xl-3 col-md-6 mb-4">
@@ -36,11 +37,11 @@ Admin Dashboard
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Patain</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">500</div>
+                                Total Librarian</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fa-solid fa-user-injured fa-2x text-gray-300"></i>
+                            <i class="fa-solid fa-user-group fa-2x text-gray-300"></i>
                             {{-- <i class="fas fa-database fa-2x text-gray-300"></i> --}}
                         </div>
                     </div>
@@ -55,11 +56,11 @@ Admin Dashboard
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Expenses</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$ 500</div>
+                                Book</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $books }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="fas fa-book fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -72,11 +73,11 @@ Admin Dashboard
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Pending Expense Requests</div>
+                                Borrow</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fa fas fa-exchange-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -90,7 +91,7 @@ Admin Dashboard
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                 Customers</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $customer }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -100,6 +101,7 @@ Admin Dashboard
             </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection
 @push('js')

@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title','Admin Dashboard')</title>
-    <link rel="icon" href="{{ asset('uploads/all_photo/title.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('uploads/all_photo/library-title.png') }}" type="image/png">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- Google Font: Source Sans Pro -->
@@ -37,6 +37,13 @@
 </head>
 
 <style type="text/css">
+thead{
+    background-color: #66B132;
+    color: white;
+}
+.btn-success{
+    background-color: #66B132;
+}
 .btn-style{
     border-radius: 100%;
 }

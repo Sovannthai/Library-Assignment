@@ -164,7 +164,6 @@
         @endif
 
     });
-
 </script>
 <script>
     $(document).on('click', '.delete-btn', function(e) {

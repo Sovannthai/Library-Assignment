@@ -4,11 +4,11 @@
 <div class="card">
     <div class="card-header text-uppercase">
         List Role
-        <a href="{{ route('add_role') }}" class="btn btn-primary btn-sm float-lg-right"><i class="fa-solid fa-plus"> Add New</i></a>
+        <a href="{{ route('add_role') }}" class="btn btn-success btn-sm float-lg-right"><i class="fa-solid fa-plus"> Add New</i></a>
     </div>
     <div class="card-body">
-        <table class="table table-striped datatable nowrap table-bordered">
-            <thead class="table-dark">
+        <table class="table table-striped datatable nowrap table-bordered table-hover">
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Action</th>
@@ -19,7 +19,7 @@
                 <tr>
                     <td class="table-plus">{{ $role->name }}</td>
                     <td>
-                        <a href="{{ route('edit_role', ['id' => $role->id]) }}" class="btn btn-primary btn-sm btn-style"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href="{{ route('edit_role', ['id' => $role->id]) }}" class="btn btn-success btn-sm btn-style"><i class="fa-regular fa-pen-to-square"></i></a>
                         <form id="deleteForm" action="{{ route('destroy_role',['id'=>$role->id]) }}" method="POST" class="d-inline-block">
                             @csrf
                             @method('DELETE')

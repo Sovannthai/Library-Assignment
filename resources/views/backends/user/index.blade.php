@@ -4,11 +4,13 @@
 <div class="card">
     <div class="card-header text-uppercase">
         User List
-        <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm float-lg-right"><i class="fa-solid fa-plus"> Add New</i></a>
+        @if (auth()->user()->can('create.user'))
+        <a href="{{ route('user.create') }}" class="btn btn-success btn-sm float-lg-right"><i class="fa-solid fa-plus"> Add New</i></a>
+        @endif
     </div>
     <div class="card-body">
-        <table class="table datatable table-bordered table-striped">
-            <thead class="table-dark">
+        <table class="table datatable table-bordered table-striped table-hover">
+            <thead class="">
                 <tr>
                     <th>Profile</th>
                     <th>Full Name</th>
@@ -31,7 +33,10 @@
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-primary btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                        @if (auth()->user()->can('edit.user'))
+                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                        @endif
+                        @if(auth()->user()->can('delete.user'))
                         <form id="deleteForm" action="{{ route('user.destroy',['user'=>$user->id]) }}" method="POST" class="d-inline-block">
                             @csrf
                             @method('DELETE')
@@ -39,6 +44,7 @@
                                 <i class="fa fa-trash ambitious-padding-btn"></i>
                             </button>
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

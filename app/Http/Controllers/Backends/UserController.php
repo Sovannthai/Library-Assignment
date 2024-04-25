@@ -54,6 +54,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view.user')) {
+            abort(403, 'Unauthorized action.');
+        }
         $users = User::all();
         return view('backends.user.index', compact('users'));
     }

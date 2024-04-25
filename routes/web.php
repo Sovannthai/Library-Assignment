@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\Backends\BookController;
+use App\Http\Controllers\Backends\CatelogController;
+use App\Http\Controllers\Backends\CustomerController;
+use App\Http\Controllers\Backends\CustomerTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Backends\PermissionController;
 use App\Http\Controllers\Backends\UserController;
+use App\Models\Customer;
 use Illuminate\Routing\RouteRegistrar;
 
 /*
@@ -37,4 +42,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('user',UserController::class);
     Route::get('profile/edit/{id}',[UserController::class,'edit_profile'])->name('profile.edit');
     Route::put('profile/update/{id}',[UserController::class,'update_profile'])->name('profile.update');
+    //Catelogs
+    Route::resource('catelog',CatelogController::class);
+    //Books
+    Route::resource('book',BookController::class);
+    //Customer Type
+    Route::resource('customer_type',CustomerTypeController::class);
+    //Customer
+    Route::resource('customer',CustomerController::class);
 });

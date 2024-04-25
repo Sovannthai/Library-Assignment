@@ -1,4 +1,5 @@
 @extends('backends.master')
+@section('title','Create Role')
 @section('contents')
 <style>
     .row {
@@ -86,185 +87,84 @@
                 </div>
             </div>
             <hr>
-            <div class="product">Employee</div>
+            <div class="user">Customer</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.emp" class="custom-control-input toggle-status" id="emp" data-id="">
-                    <label class="custom-control-label" for="emp"></label>
+                    <label style="position: absolute">View</label>
+                    <input type="checkbox" name="permissions[]" value="view.customer" class="custom-control-input toggle-status" id="customer" data-id="">
+                    <label class="custom-control-label" for="customer"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.emp" class="custom-control-input toggle-status" id="emp1" data-id="">
-                    <label class="custom-control-label" for="emp1"></label>
+                    <input type="checkbox" name="permissions[]" value="create.customer" class="custom-control-input toggle-status" id="customer1" data-id="">
+                    <label class="custom-control-label" for="customer1"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.emp" class="custom-control-input toggle-status" id="emp2" data-id="">
-                    <label class="custom-control-label" for="emp3"></label>
+                    <input type="checkbox" name="permissions[]" value="edit.customer" class="custom-control-input toggle-status" id="customer2" data-id="">
+                    <label class="custom-control-label" for="customer2"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.emp" class="custom-control-input toggle-status" id="emp3" data-id="">
-                    <label class="custom-control-label" for="emp3"></label>
+                    <input type="checkbox" name="permissions[]" value="delete.customer" class="custom-control-input toggle-status" id="customer3" data-id="">
+                    <label class="custom-control-label" for="customer3"></label>
                 </div>
             </div>
             <hr>
-            <div class="product">Disease</div>
+            <div class="user">Catelog</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.disease" class="custom-control-input toggle-status" id="disease" data-id="">
-                    <label class="custom-control-label" for="disease"></label>
+                    <label style="position: absolute">View</label>
+                    <input type="checkbox" name="permissions[]" value="view.catelog" class="custom-control-input toggle-status" id="catelog" data-id="">
+                    <label class="custom-control-label" for="catelog"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.disease" class="custom-control-input toggle-status" id="disease1" data-id="">
-                    <label class="custom-control-label" for="disease1"></label>
+                    <input type="checkbox" name="permissions[]" value="create.catelog" class="custom-control-input toggle-status" id="catelog1" data-id="">
+                    <label class="custom-control-label" for="catelog1"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.disease" class="custom-control-input toggle-status" id="disease2" data-id="">
-                    <label class="custom-control-label" for="disease2"></label>
+                    <input type="checkbox" name="permissions[]" value="edit.catelog" class="custom-control-input toggle-status" id="catelog2" data-id="">
+                    <label class="custom-control-label" for="catelog2"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.disease" class="custom-control-input toggle-status" id="disease3" data-id="">
-                    <label class="custom-control-label" for="disease3"></label>
+                    <input type="checkbox" name="permissions[]" value="delete.catelog" class="custom-control-input toggle-status" id="catelog3" data-id="">
+                    <label class="custom-control-label" for="catelog3"></label>
                 </div>
             </div>
             <hr>
-            <div class="product">Pataint</div>
+            <div class="user">Book</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.pataint" class="custom-control-input toggle-status" id="pataint" data-id="">
-                    <label class="custom-control-label" for="pataint"></label>
+                    <label style="position: absolute">View</label>
+                    <input type="checkbox" name="permissions[]" value="view.book" class="custom-control-input toggle-status" id="book" data-id="">
+                    <label class="custom-control-label" for="book"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.pataint" class="custom-control-input toggle-status" id="pataint1" data-id="">
-                    <label class="custom-control-label" for="pataint1"></label>
+                    <input type="checkbox" name="permissions[]" value="create.book" class="custom-control-input toggle-status" id="book1" data-id="">
+                    <label class="custom-control-label" for="book1"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.pataint" class="custom-control-input toggle-status" id="pataint2" data-id="">
-                    <label class="custom-control-label" for="pataint2"></label>
+                    <input type="checkbox" name="permissions[]" value="edit.book" class="custom-control-input toggle-status" id="book2" data-id="">
+                    <label class="custom-control-label" for="book2"></label>
                 </div>
                 <div class="custom-control col-3 custom-switch">
                     <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.pataint" class="custom-control-input toggle-status" id="pataint3" data-id="">
-                    <label class="custom-control-label" for="pataint3"></label>
+                    <input type="checkbox" name="permissions[]" value="delete.book" class="custom-control-input toggle-status" id="book3" data-id="">
+                    <label class="custom-control-label" for="book3"></label>
                 </div>
             </div>
             <hr>
-            <div class="product">Appointment</div>
+            <div class="user mt-4">Setting</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.appointment" class="custom-control-input toggle-status" id="app" data-id="">
-                    <label class="custom-control-label" for="app"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.appointment" class="custom-control-input toggle-status" id="app1" data-id="">
-                    <label class="custom-control-label" for="app1"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.appointment" class="custom-control-input toggle-status" id="app2" data-id="">
-                    <label class="custom-control-label" for="app2"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.appointment" class="custom-control-input toggle-status" id="app3" data-id="">
-                    <label class="custom-control-label" for="app3"></label>
-                </div>
-            </div>
-            <hr>
-            <div class="product">Product</div>
-            <div class="row">
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.product" class="custom-control-input toggle-status" id="product" data-id="">
-                    <label class="custom-control-label" for="product"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.product" class="custom-control-input toggle-status" id="product1" data-id="">
-                    <label class="custom-control-label" for="product1"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.product " class="custom-control-input toggle-status" id="product2" data-id="">
-                    <label class="custom-control-label" for="product2"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.product" class="custom-control-input toggle-status" id="product3" data-id="">
-                    <label class="custom-control-label" for="product3"></label>
-                </div>
-            </div>
-            <hr>
-            <div class="product">Laboratory</div>
-            <div class="row">
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.labo" class="custom-control-input toggle-status" id="laboratory" data-id="">
-                    <label class="custom-control-label" for="laboratory"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.labo" class="custom-control-input toggle-status" id="laboratory1" data-id="">
-                    <label class="custom-control-label" for="laboratory1"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.labo" class="custom-control-input toggle-status" id="laboratory2" data-id="">
-                    <label class="custom-control-label" for="laboratory2"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.labo" class="custom-control-input toggle-status" id="laboratory3" data-id="">
-                    <label class="custom-control-label" for="laboratory3"></label>
-                </div>
-            </div>
-            <hr>
-            <div class="product">Blog</div>
-            <div class="row">
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.blog" class="custom-control-input toggle-status" id="blog" data-id="">
-                    <label class="custom-control-label" for="blog"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Create</label>
-                    <input type="checkbox" name="permissions[]" value="create.blog" class="custom-control-input toggle-status" id="blog1" data-id="">
-                    <label class="custom-control-label" for="blog1"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Edit</label>
-                    <input type="checkbox" name="permissions[]" value="edit.blog" class="custom-control-input toggle-status" id="blog2" data-id="">
-                    <label class="custom-control-label" for="blog2"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.blog" class="custom-control-input toggle-status" id="blog3" data-id="">
-                    <label class="custom-control-label" for="blog3"></label>
-                </div>
-            </div>
-            <hr>
-            <div class="product">Contact</div>
-            <div class="row">
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.contact" class="custom-control-input toggle-status" id="contact" data-id="">
-                    <label class="custom-control-label" for="contact"></label>
-                </div>
-                <div class="custom-control col-3 custom-switch">
-                    <label for="" style="position: absolute">Delete</label>
-                    <input type="checkbox" name="permissions[]" value="delete.contact" class="custom-control-input toggle-status" id="contact3" data-id="">
-                    <label class="custom-control-label" for="contact3"></label>
+                    <label style="position: absolute">View</label>
+                    <input type="checkbox" name="permissions[]" value="view.setting" class="custom-control-input toggle-status" id="setting" data-id="">
+                    <label class="custom-control-label" for="setting"></label>
                 </div>
             </div>
             <hr>
