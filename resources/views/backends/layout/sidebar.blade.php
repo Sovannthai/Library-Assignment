@@ -151,7 +151,7 @@
                     </a>
                     <ul class="nav nav-treeview" id="collapse_setting">
                         <li class="nav-item">
-                            <a href="" class="nav-link custom-ml">
+                            <a href="{{ route('logout') }}" class="nav-link custom-ml">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Business Setting</p>
                             </a>

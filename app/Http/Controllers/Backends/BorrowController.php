@@ -66,7 +66,7 @@ class BorrowController extends Controller
     }
     public function fetchBooks($cate_id)
     {
-        $borrowedBookIds = Borrow::pluck('book_id')->flatten()->unique()->toArray();
+        $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
         $books = Book::whereNotIn('id', $borrowedBookIds)
             ->where('cate_id',$cate_id)
             ->where('status', 1)
