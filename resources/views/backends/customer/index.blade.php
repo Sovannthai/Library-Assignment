@@ -37,7 +37,7 @@
         @endif
     </div>
     <div class="card-body">
-        <table class="table datatable table-bordered table-striped table-hover">
+        <table id="example1" class="table table-bordered table-striped table-hover">
             <thead class="">
                 <tr>
                     <th>Code</th>

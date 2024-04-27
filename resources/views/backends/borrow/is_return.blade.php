@@ -46,7 +46,7 @@
         @endif
     </div>
     <div class="card-body">
-        <table class="table datatable table-bordered table-striped table-hover nowrap table-responsive-lg">
+        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive-lg">
             <thead class="">
                 <tr>
                     <th>Customer Name</th>

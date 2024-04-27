@@ -46,7 +46,7 @@
         @endif
     </div>
     <div class="card-body">
-        <table class="table datatable table-bordered table-striped table-hover nowrap table-responsive-lg">
+        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive-lg">
             <thead class="">
                 <tr>
                     <th>Customer Name</th>
@@ -56,7 +56,7 @@
                     <th>Find Amount</th> --}}
                     <th>Borrow Date</th>
                     <th>Due Date</th>
-                    <th>Return Date</th>
+                    {{-- <th>Return Date</th> --}}
                     <th>Action</th>
                     {{-- <th style="display: none;"></th> --}}
                 </tr>
@@ -82,7 +82,7 @@
                     <td>$ {{ $borrow->find_amount }}</td> --}}
                     <td>{{ $borrow->borrow_date }}</td>
                     <td>{{ $borrow->due_date }}</td>
-                    <td>{{ $borrow->return_date }}</td>
+                    {{-- <td>{{ $borrow->return_date }}</td> --}}
                     <td>
                         @if (auth()->user()->can('view.borrow'))
                         <a href="{{ route('borrow.show',['borrow'=>$borrow->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
