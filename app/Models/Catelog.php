@@ -13,4 +13,8 @@ class Catelog extends Model
     {
         return $this->hasMany(Book::class);
     }
+    public function borrow()
+    {
+        return $this->hasMany(Borrow::class);
+    }
 }

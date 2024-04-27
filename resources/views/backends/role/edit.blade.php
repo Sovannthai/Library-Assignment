@@ -160,6 +160,30 @@
                 </div>
             </div>
             <hr>
+            <div class="user">Borrow</div>
+            <div class="row">
+                <div class="custom-control col-3 custom-switch">
+                    <label style="position: absolute">View</label>
+                    <input type="checkbox" name="permissions[]" value="view.borrow" @if (in_array('view.borrow', $role_permissions)) checked @endif class="custom-control-input toggle-status" id="borrow" data-id="">
+                    <label class="custom-control-label" for="borrow"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">Create</label>
+                    <input type="checkbox" name="permissions[]" value="create.borrow" @if (in_array('create.borrow', $role_permissions)) checked @endif class="custom-control-input toggle-status" id="borrow1" data-id="">
+                    <label class="custom-control-label" for="borrow1"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">Edit</label>
+                    <input type="checkbox" name="permissions[]" value="edit.borrow" @if (in_array('edit.borrow', $role_permissions)) checked @endif class="custom-control-input toggle-status" id="borrow2" data-id="">
+                    <label class="custom-control-label" for="borrow2"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">Delete</label>
+                    <input type="checkbox" name="permissions[]" value="delete.borrow" @if (in_array('delete.borrow', $role_permissions)) checked @endif class="custom-control-input toggle-status" id="borrow3" data-id="">
+                    <label class="custom-control-label" for="borrow3"></label>
+                </div>
+            </div>
+            <hr>
             <div class="user mt-4">Setting</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">

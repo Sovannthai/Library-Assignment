@@ -14,4 +14,8 @@ class Book extends Model
     {
         return $this->belongsTo(Catelog::class,'cate_id');
     }
+    public function borrow()
+    {
+        return $this->hasMany(Borrow::class);
+    }
 }

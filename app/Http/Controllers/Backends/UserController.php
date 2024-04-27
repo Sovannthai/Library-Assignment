@@ -58,7 +58,8 @@ class UserController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $users = User::all();
-        return view('backends.user.index', compact('users'));
+        $role = Role::all();
+        return view('backends.user.index', compact('users','role'));
     }
 
     /**

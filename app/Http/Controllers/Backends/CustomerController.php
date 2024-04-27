@@ -94,7 +94,10 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer_types = CustomerType::all();
+        $genders = ['male' => 'Male', 'female' => 'Female', 'another' => 'Another'];
+        return view('backends.customer.show', compact('customer_types', 'genders','customer'));
     }
 
     /**

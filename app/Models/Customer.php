@@ -13,4 +13,8 @@ class Customer extends Model
     {
         return $this->belongsTo(CustomerType::class,'customer_type_id');
     }
+    public function borrow()
+    {
+        return $this->hasMany(Borrow::class);
+    }
 }

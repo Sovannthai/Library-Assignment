@@ -113,7 +113,9 @@
                     </ul>
                 </li>
                 @endif
-                <li class="nav-item" id="menu_employee_mg">
+                @if (auth()->user()->can('view.borrow'))
+
+                <li class="nav-item @if(Route::is('borrow.*')||Route::is('is_return.*')) menu-open @endif" id="menu_employee_mg">
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-exchange-alt"></i>
@@ -123,19 +125,20 @@
                     </a>
                     <ul class="nav nav-treeview" id="collapse_employee">
                         <li class="nav-item">
-                            <a href="{{ route('book.index') }}" class="nav-link custom-ml @if(Route::is('book.index')) active @endif" id="menu_employess">
+                            <a href="{{ route('borrow.index') }}" class="nav-link custom-ml @if(Route::is('borrow.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Book</p>
+                                <p>Borrow List</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('catelog.index') }}" class="nav-link custom-ml @if(Route::is('catelog.index')) active @endif" id="menu_employess">
+                            <a href="{{ route('is_return.index') }}" class="nav-link custom-ml @if(Route::is('is_return.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Catelog</p>
+                                <p>Return List</p>
                             </a>
                         </li>
                     </ul>
                 </li>
+                @endif
                 @if (auth()->user()->can('view.setting'))
                 <li class="nav-item" id="menu_setting">
                     {{-- menu-open --}}

@@ -66,6 +66,7 @@
                         </div>
                     </td>
                     <td>
+                        <a href="{{ route('customer.show',['customer'=>$customer->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
                         @if (auth()->user()->can('edit.customer'))
                         <a href="{{ route('customer.edit',['customer'=>$customer->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
                         @endif

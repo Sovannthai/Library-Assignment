@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backends\BookController;
+use App\Http\Controllers\Backends\BorrowController;
 use App\Http\Controllers\Backends\CatelogController;
 use App\Http\Controllers\Backends\CustomerController;
 use App\Http\Controllers\Backends\CustomerTypeController;
@@ -53,4 +54,11 @@ Route::group(['middleware' => ['auth']], function () {
     //Customer
     Route::resource('customer',CustomerController::class);
     Route::post('/update-status-customer', [CustomerController::class, 'updateStatus'])->name('customer.status_update');
+    //Borrow
+    Route::resource('/borrow',BorrowController::class);
+    Route::get('/fetch-books/{cate_id}', [BorrowController::class, 'fetchBooks']);
+    Route::get('/fetch-books-edit/{cate_id}', [BorrowController::class, 'EditfetchBooks']);
+    Route::get('/is_return',[BorrowController::class,'is_return'])->name('is_return.index');
+    Route::get('/is-return/show/{id}',[BorrowController::class,'showIs_return'])->name('is_return.show');
+
 });
