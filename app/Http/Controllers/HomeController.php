@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Borrow;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Middleware\Authorize;
@@ -30,6 +31,7 @@ class HomeController extends Controller
         $books = Book::count();
         $users = User::count();
         $customer = Customer::count();
-        return view('backends.index',compact('books','users','customer'));
+        $borrows = Borrow::where('is_return','1')->count();
+        return view('backends.index',compact('books','users','customer','borrows'));
     }
 }
