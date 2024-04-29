@@ -13,12 +13,24 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="customer_id">Customer</label>
-                    <select id="customer-filter" class="form-control">
+                    <select id="customer-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
                         <option value="" {{ !request()->filled('customer_id') ? 'selected' : '' }}>All Customer
                         </option>
                         @foreach ($customers as $customer)
                         <option value="{{ $customer->id }}" {{ request('customer_id') == $customer->id ? 'selected' : '' }}>
                             {{ $customer->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="catelog_id">Catelog</label>
+                    <select id="catelog-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
+                        <option value="" {{ !request()->filled('catelog_id') ? 'selected' : '' }}>All Book
+                        </option>
+                        @foreach ($catelogs as $catelog)
+                        <option value="{{ $catelog->id }}" {{ request('catelog_id') == $catelog->id ? 'selected' : '' }}>
+                            {{ $catelog->cate_name }}
                         </option>
                         @endforeach
                     </select>
@@ -104,13 +116,22 @@
 <script>
     function applyFilters() {
         var customer_id = document.getElementById('customer-filter').value;
+        var catelog_id = document.getElementById('catelog-filter').value;
+        // var book_id = document.getElementById('book-filter').value;
         var url = "{{ route('is_return.index') }}";
         if (customer_id !== '') {
             url += "?customer_id=" + customer_id;
         }
+        if (catelog_id !== '') {
+            url += (url.includes('?') ? '&' : '?') + "catelog_id=" + catelog_id;
+        }
+        // if (book_id !== '') {
+        //     url += (url.includes('?') ? '&' : '?') + "book_id=" + book_id;
+        // }
         window.location.href = url;
     }
     document.getElementById('customer-filter').addEventListener('change', applyFilters);
-
+    document.getElementById('catelog-filter').addEventListener('change', applyFilters);
+    // document.getElementById('book-filter').addEventListener('change', applyFilters);
 </script>
 @endsection

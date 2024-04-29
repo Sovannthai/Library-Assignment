@@ -53,7 +53,7 @@
                     <td>{{ $book->catelog->cate_name }}</td>
                     <td>{{ $book->description }}</td>
                     <td>
-                        <div class="custom-control custom-switch">
+                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                             <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $book->id }}" data-id="{{ $book->id }}" {{ $book->status =='1' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitches{{ $book->id }}"></label>
                         </div>

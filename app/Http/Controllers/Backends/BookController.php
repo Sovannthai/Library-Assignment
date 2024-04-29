@@ -62,7 +62,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'book_code' => 'required',
+            'book_code' => 'required|unique:books,book_code',
             'cate_id' => 'required'
         ]);
         try {
@@ -107,6 +107,10 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'book_code' => 'required|unique:books,book_code,'.$id,
+            'cate_id' => 'required'
+        ]);
         try {
             $book = Book::find($id);
             $book->cate_id = $request->cate_id;

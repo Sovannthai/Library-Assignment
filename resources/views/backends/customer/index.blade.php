@@ -60,7 +60,7 @@
                     <td>{{ $customer->phone }}</td>
                     <td>{{ $customer->dob }}</td>
                     <td>
-                        <div class="custom-control custom-switch">
+                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success"">
                             <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $customer->id }}" data-id="{{ $customer->id }}" {{ $customer->status =='1' ? 'checked' : '' }}>
                             <label class="custom-control-label" for="customSwitches{{ $customer->id }}"></label>
                         </div>

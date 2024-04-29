@@ -31,7 +31,14 @@ class HomeController extends Controller
         $books = Book::count();
         $users = User::count();
         $customer = Customer::count();
-        $borrows = Borrow::where('is_return','1')->count();
-        return view('backends.index',compact('books','users','customer','borrows'));
+        $borrows = Borrow::where('is_return', '1')->get();
+        $totalBookIds = [];
+        foreach ($borrows as $borrow) {
+            $totalBookIds = array_merge($totalBookIds, $borrow->book_id);
+        }
+        $totalBookCount = count($totalBookIds);
+        $deposte_amount = Borrow::where('is_return', '1')->sum('deposit_amount');
+        $find_amount = Borrow::where('is_return', '0')->sum('find_amount');
+        return view('backends.index', compact('books', 'users', 'customer', 'borrows', 'deposte_amount', 'find_amount','totalBookCount'));
     }
 }

@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="customer_id">Customer</label>
-                    <select id="customer-filter" class="form-control">
+                    <select id="customer-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
                         <option value="" {{ !request()->filled('customer_id') ? 'selected' : '' }}>All Customer
                         </option>
                         @foreach ($customers as $customer)
@@ -23,21 +23,33 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-sm-4">
+                    <label for="catelog_id">Catelog</label>
+                    <select id="catelog-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
+                        <option value="" {{ !request()->filled('catelog_id') ? 'selected' : '' }}>All Book
+                        </option>
+                        @foreach ($catelogs as $catelog)
+                        <option value="{{ $catelog->id }}" {{ request('catelog_id') == $catelog->id ? 'selected' : '' }}>
+                            {{ $catelog->cate_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
                 {{-- <div class="col-sm-4">
-                        <label for="book_id">Book</label>
-                        <select id="book-filter" class="form-control ambitious-form-loading select2">
-                            <option value="" {{ !request()->filled('book_id') ? 'selected' : '' }}>All Book
-                </option>
-                @foreach ($books as $book)
-                <option value="{{ $book->id }}" {{ request('book_id') == $book->id ? 'selected' : '' }}>
-                    {{ $book->book_code }}
-                </option>
-                @endforeach
-                </select>
-            </div> --}}
+                    <label for="book_id">book</label>
+                    <select id="book-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
+                        <option value="" {{ !request()->filled('book_id') ? 'selected' : '' }}>All Book
+                        </option>
+                        @foreach ($books as $book)
+                        <option value="{{ $book->id }}" {{ request('book_id') == $book->id ? 'selected' : '' }}>
+                            {{ $book->book_code }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div> --}}
+            </div>
         </div>
     </div>
-</div>
 </div>
 <div class="card">
     <div class="card-header text-uppercase">Borrow List
@@ -109,18 +121,22 @@
 <script>
     function applyFilters() {
         var customer_id = document.getElementById('customer-filter').value;
-        var book_id = document.getElementById('book-filter').value;
+        var catelog_id = document.getElementById('catelog-filter').value;
+        // var book_id = document.getElementById('book-filter').value;
         var url = "{{ route('borrow.index') }}";
         if (customer_id !== '') {
             url += "?customer_id=" + customer_id;
         }
-        if (book_id !== '') {
-            url += (url.includes('?') ? '&' : '?') + "book_id=" + book_id;
+        if (catelog_id !== '') {
+            url += (url.includes('?') ? '&' : '?') + "catelog_id=" + catelog_id;
         }
+        // if (book_id !== '') {
+        //     url += (url.includes('?') ? '&' : '?') + "book_id=" + book_id;
+        // }
         window.location.href = url;
     }
     document.getElementById('customer-filter').addEventListener('change', applyFilters);
-    document.getElementById('book-filter').addEventListener('change', applyFilters);
-
+    document.getElementById('catelog-filter').addEventListener('change', applyFilters);
+    // document.getElementById('book-filter').addEventListener('change', applyFilters);
 </script>
 @endsection

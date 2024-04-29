@@ -22,18 +22,21 @@ class BorrowController extends Controller
         }
         $borrows = Borrow::query();
         $customers = Customer::where('status',1)->get();
-
+        $catelogs = Catelog::where('status',1)->get();
         $books = Book::where('status',1)->get();
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
+        }
+        if ($request->filled('catelog_id')) {
+            $borrows->where('catelog_id', $request->catelog_id);
         }
         if ($request->filled('book_id')) {
             $borrows->where('book_id', $request->book_id);
         }
         $borrows = $borrows
                    ->where('is_return','1')
-                   ->paginate(1000);
-        return view('backends.borrow.index', compact('borrows','customers','books'));
+                   ->paginate(10000);
+        return view('backends.borrow.index', compact('borrows','customers','catelogs','books'));
     }
     public function is_return(Request $request)
     {
@@ -42,16 +45,20 @@ class BorrowController extends Controller
         }
         $borrows = Borrow::query();
         $customers = Customer::where('status',1)->get();
+        $catelogs = Catelog::where('status',1)->get();
         $books = Book::where('status',1)->get();
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
+        }
+        if ($request->filled('catelog_id')) {
+            $borrows->where('catelog_id', $request->catelog_id);
         }
         if ($request->filled('book_id')) {
             $borrows->where('book_id', $request->book_id);
         }
         $borrows = $borrows->where('is_return','0')
-                           ->paginate(1000);
-        return view('backends.borrow.is_return',compact('borrows','customers','books'));
+                           ->paginate(10000);
+        return view('backends.borrow.is_return',compact('borrows','customers','books','catelogs'));
     }
 
     /**
