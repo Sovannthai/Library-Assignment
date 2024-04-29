@@ -43,7 +43,7 @@ class BookController extends Controller
         if ($request->filled('cate_id')) {
             $books->where('cate_id', $request->cate_id);
         }
-        $books = $books->paginate(10000);
+        $books = $books->get();
         return view('backends.catelog_and_book.book.index', compact('books', 'catelogs'));
     }
 

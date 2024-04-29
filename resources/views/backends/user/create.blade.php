@@ -60,7 +60,7 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary float-lg-right ml-1">Save</button>
+            <button type="submit" class="btn btn-success float-lg-right ml-1">Save</button>
             <a href="{{ route('user.index') }}" class="btn btn-secondary float-lg-right">Close</a>
         </form>
     </div>

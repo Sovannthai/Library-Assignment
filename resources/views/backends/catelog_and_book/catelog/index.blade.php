@@ -42,7 +42,7 @@
                         <td>{{ $catelog->publishyear }}</td>
                         <td>{{ $catelog->publish_edition }}</td>
                         <td>
-                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success"">
+                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                 <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $catelog->id }}" data-id="{{ $catelog->id }}" {{ $catelog->status =='1' ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="customSwitches{{ $catelog->id }}"></label>
                             </div>

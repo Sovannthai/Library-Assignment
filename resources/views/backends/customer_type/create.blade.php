@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary float-sm-right ml-1">Save</button>
+                    <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
                     <button type="button" class="btn btn-secondary float-sm-right" data-dismiss="modal">Close</button>
                 </div>
             </form>

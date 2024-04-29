@@ -8,7 +8,6 @@ use App\Models\Borrow;
 use App\Models\Catelog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Laravel\Ui\Presets\React;
 
 class BorrowController extends Controller
 {
@@ -35,7 +34,7 @@ class BorrowController extends Controller
         }
         $borrows = $borrows
                    ->where('is_return','1')
-                   ->paginate(10000);
+                   ->get();
         return view('backends.borrow.index', compact('borrows','customers','catelogs','books'));
     }
     public function is_return(Request $request)
@@ -57,7 +56,7 @@ class BorrowController extends Controller
             $borrows->where('book_id', $request->book_id);
         }
         $borrows = $borrows->where('is_return','0')
-                           ->paginate(10000);
+                           ->get();
         return view('backends.borrow.is_return',compact('borrows','customers','books','catelogs'));
     }
 

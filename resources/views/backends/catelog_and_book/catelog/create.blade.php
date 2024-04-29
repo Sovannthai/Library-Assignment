@@ -51,7 +51,7 @@
                         @enderror
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary float-sm-right ml-1">Save</button>
+                <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
                 <button type="button" class="btn btn-secondary float-sm-right" data-dismiss="modal">Close</button>
             </form>
         </div>

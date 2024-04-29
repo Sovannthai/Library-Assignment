@@ -111,7 +111,7 @@ Admin Dashboard
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $deposte_amount }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fa-solid fa-circle-dollar-to-slot fa-2x text-gray-300"></i>
+                            <i class="fa-solid fa-hand-holding-dollar fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
