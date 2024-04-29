@@ -1,6 +1,12 @@
 @extends('backends.master')
 @section('title','Create Customer')
 @section('contents')
+<div class="back-btn">
+    <a href="{{ route('customer.index') }}" class="float-left" data-value="veiw">
+        <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
+        Back to all Customer
+    </a><br>
+</div><br>
 <div class="card">
     <div class="card-header text-uppercase">Create Customer</div>
     <div class="card-body">

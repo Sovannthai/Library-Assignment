@@ -1,6 +1,12 @@
 @extends('backends.master')
 @section('title', 'Edit Borrow')
 @section('contents')
+<div class="back-btn">
+    <a href="{{ route('borrow.index') }}" class="float-left" data-value="veiw">
+        <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
+        Back to all Borrow List
+    </a><br>
+</div><br>
 <div class="card">
     <div class="card-header text-uppercase">Create Borrow</div>
     <div class="card-body">

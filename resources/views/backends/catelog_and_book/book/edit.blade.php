@@ -1,6 +1,12 @@
 @extends('backends.master')
 @section('title','Create Book')
 @section('contents')
+<div class="back-btn">
+    <a href="{{ route('book.index') }}" class="float-left" data-value="veiw">
+        <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
+        Back to all Book
+    </a><br>
+</div><br>
 <div class="card">
     <div class="card-header text-uppercase">Edit Book</div>
     <div class="card-body">
@@ -39,7 +45,7 @@
                 </div>
             </div>
             <div class="mt-2">
-                <button type="submit" class="btn btn-primary float-sm-right ml-1">Save</button>
+                <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
                 <a href="{{ route('book.index') }}" class="btn btn-secondary float-sm-right" >Close</a>
             </div>
         </form>

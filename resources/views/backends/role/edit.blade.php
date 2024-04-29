@@ -14,6 +14,12 @@
     }
 
 </style>
+<div class="back-btn">
+    <a href="{{ route('role.index') }}" class="float-left" data-value="veiw">
+        <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
+        Back to all Role
+    </a><br>
+</div><br>
 <div class="card">
     <div class="card-body">
         <form action="{{ route('update_role',['id'=>$role->id]) }}" method="POST" class="">
@@ -193,7 +199,7 @@
                 </div>
             </div>
             <hr>
-            <button type="submit" class="btn btn-primary float-lg-right ml-1">Update</button>
+            <button type="submit" class="btn btn-success float-lg-right ml-1">Update</button>
             <a href="{{ route('role.index') }}" class="btn btn-secondary float-lg-right">Close</a>
         </form>
     </div>

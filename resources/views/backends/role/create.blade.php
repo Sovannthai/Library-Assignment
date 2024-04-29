@@ -14,6 +14,12 @@
     }
 
 </style>
+<div class="back-btn">
+    <a href="{{ route('role.index') }}" class="float-left" data-value="veiw">
+        <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
+        Back to all Role
+    </a><br>
+</div><br>
 <div class="card">
     <div class="card-body">
         <form action="{{ route('store_role') }}" method="POST" class="">
