@@ -20,22 +20,22 @@ class BorrowController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $borrows = Borrow::query();
-        $customers = Customer::where('status',1)->get();
-        $catelogs = Catelog::where('status',1)->get();
-        $books = Book::where('status',1)->get();
+        $customers = Customer::where('status', 1)->get();
+        $catelogs = Catelog::where('status', 1)->get();
+        $books = Book::where('status', 1)->get();
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
         }
-        if ($request->filled('catelog_id')) {
-            $borrows->where('catelog_id', $request->catelog_id);
-        }
-        if ($request->filled('book_id')) {
-            $borrows->where('book_id', $request->book_id);
-        }
+        // if ($request->filled('catelog_id')) {
+        //     $borrows->where('catelog_id', $request->catelog_id);
+        // }
+        // if ($request->filled('book_id')) {
+        //     $borrows->where('book_id', $request->book_id);
+        // }
         $borrows = $borrows
-                   ->where('is_return','1')
-                   ->get();
-        return view('backends.borrow.index', compact('borrows','customers','catelogs','books'));
+            ->where('is_return', '1')
+            ->get();
+        return view('backends.borrow.index', compact('borrows', 'customers', 'catelogs', 'books'));
     }
     public function is_return(Request $request)
     {
@@ -43,21 +43,21 @@ class BorrowController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $borrows = Borrow::query();
-        $customers = Customer::where('status',1)->get();
-        $catelogs = Catelog::where('status',1)->get();
-        $books = Book::where('status',1)->get();
+        $customers = Customer::where('status', 1)->get();
+        $catelogs = Catelog::where('status', 1)->get();
+        $books = Book::where('status', 1)->get();
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
         }
-        if ($request->filled('catelog_id')) {
-            $borrows->where('catelog_id', $request->catelog_id);
-        }
-        if ($request->filled('book_id')) {
-            $borrows->where('book_id', $request->book_id);
-        }
-        $borrows = $borrows->where('is_return','0')
-                           ->get();
-        return view('backends.borrow.is_return',compact('borrows','customers','books','catelogs'));
+        // if ($request->filled('catelog_id')) {
+        //     $borrows->where('catelog_id', $request->catelog_id);
+        // }
+        // if ($request->filled('book_id')) {
+        //     $borrows->where('book_id', $request->book_id);
+        // }
+        $borrows = $borrows->where('is_return', '0')
+            ->get();
+        return view('backends.borrow.is_return', compact('borrows', 'customers', 'books', 'catelogs'));
     }
 
     /**
@@ -66,25 +66,29 @@ class BorrowController extends Controller
     public function create()
     {
         $catelogs = Catelog::all();
-        $books = Book::where('status', 1)->get();
-        $customers = Customer::where('status',1)->get();
+        $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
+        $books = Book::where('status', 1)
+            ->whereNotIn('id', $borrowedBookIds)
+            ->get();
+        $customers = Customer::where('status', 1)->get();
         return view('backends.borrow.create', compact('books', 'catelogs', 'customers'));
     }
-    public function fetchBooks($cate_id)
-    {
-        $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
-        $books = Book::whereNotIn('id', $borrowedBookIds)
-            ->where('cate_id',$cate_id)
-            ->where('status', 1)
-            ->pluck('book_code', 'id');
-        return response()->json($books);
-    }
+    // public function fetchBooks($cate_id)
+    // {
+    //     $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
+    //     $books = Book::whereNotIn('id', $borrowedBookIds)
+    //         ->where('cate_id',$cate_id)
+    //         ->where('status', 1)
+    //         ->pluck('book_code', 'id');
+    //     return response()->json($books);
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'customer_id' => 'required',
             'book_id' => 'required',
@@ -140,43 +144,51 @@ class BorrowController extends Controller
         $borrow = Borrow::find($id);
         $catelogs = Catelog::all();
         $books = Book::where('status', 1)->get();
-        $customers = Customer::where('status',1)->get();
-        return view('backends.borrow.show', compact('books', 'catelogs', 'customers','borrow'));
+        $customers = Customer::where('status', 1)->get();
+        return view('backends.borrow.show', compact('books', 'catelogs', 'customers', 'borrow'));
     }
     public function showIs_return(string $id)
     {
         $borrow = Borrow::find($id);
         $catelogs = Catelog::all();
         $books = Book::where('status', 1)->get();
-        $customers = Customer::where('status',1)->get();
-        return view('backends.borrow.show_is_return', compact('books', 'catelogs', 'customers','borrow'));
+        $customers = Customer::where('status', 1)->get();
+        return view('backends.borrow.show_is_return', compact('books', 'catelogs', 'customers', 'borrow'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function EditfetchBooks($cate_id)
-    {
-        $borrowedBookIds = Borrow::where('is_return', 0)->pluck('book_id');
-        $books = Book::where('cate_id', $cate_id)
-            ->where('status', 1)
-            ->whereNotIn('id', $borrowedBookIds)
-            ->pluck('book_code', 'id');
-        return response()->json($books);
-    }
+    // public function EditfetchBooks($cate_id)
+    // {
+    //     $borrowedBookIds = Borrow::where('is_return', 0)->pluck('book_id');
+    //     $books = Book::where('cate_id', $cate_id)
+    //         ->where('status', 1)
+    //         ->whereNotIn('id', $borrowedBookIds)
+    //         ->pluck('book_code', 'id');
+    //     return response()->json($books);
+    // }
+    // public function edit(string $id)
+    // {
+    //     $borrow = Borrow::findOrFail($id);
+    //     $catelogs = Catelog::all();
+    //     $customers = Customer::all();
+    //     $borrowedBookIds = Borrow::pluck('book_id')->flatten()->unique()->toArray();
+    //     $borrowedBookIds = array_values(array_diff($borrowedBookIds, $borrow->book_id));
+    //     // dd($borrow->book_id,$borrowedBookIds);
+    //     $books = Book::where('cate_id', $borrow->catelog_id)
+    //         ->where('status', 1)
+    //         ->whereNotIn('id', $borrowedBookIds)
+    //         ->pluck('book_code', 'id');
+
+    //     return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books'));
+    // }
     public function edit(string $id)
     {
         $borrow = Borrow::findOrFail($id);
         $catelogs = Catelog::all();
         $customers = Customer::all();
-        $borrowedBookIds = Borrow::pluck('book_id')->flatten()->unique()->toArray();
-        $borrowedBookIds = array_values(array_diff($borrowedBookIds, $borrow->book_id));
-        // dd($borrow->book_id,$borrowedBookIds);
-        $books = Book::where('cate_id', $borrow->catelog_id)
-            ->where('status', 1)
-            ->whereNotIn('id', $borrowedBookIds)
-            ->pluck('book_code', 'id');
-
+        $books = Book::all();
         return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books'));
     }
 

@@ -151,9 +151,19 @@
                     </a>
                     <ul class="nav nav-treeview" id="collapse_setting">
                         <li class="nav-item">
-                            <a href="" class="nav-link custom-ml">
+                            <a href="" class="nav-link custom-ml" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Business Setting</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" style="display: none;" id="logout-form">
+                                @csrf
+                            </form>
+                            {{-- <a class="nav-link" href="#" >Logout</a> --}}
+                            <a href="#" class="nav-link custom-ml" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa-solid fa-plus nav-icon"></i>
+                                <p>Logout</p>
                             </a>
                         </li>
                     </ul>

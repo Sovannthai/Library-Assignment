@@ -29,7 +29,7 @@
                         @endphp
                         @if ($book)
                         <li>
-                            {{ $book->book_code }}
+                            {{ $book->book_code }} ({{ $book->catelog->cate_name }})
                         </li>
                         @endif
                         @endforeach

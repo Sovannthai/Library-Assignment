@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Catelog;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Auth\Middleware\Authorize;
@@ -37,8 +38,9 @@ class HomeController extends Controller
             $totalBookIds = array_merge($totalBookIds, $borrow->book_id);
         }
         $totalBookCount = count($totalBookIds);
+        $catelogs = Catelog::where('status',1)->count();
         $deposte_amount = Borrow::where('is_return', '1')->sum('deposit_amount');
         $find_amount = Borrow::where('is_return', '0')->sum('find_amount');
-        return view('backends.index', compact('books', 'users', 'customer', 'borrows', 'deposte_amount', 'find_amount','totalBookCount'));
+        return view('backends.index', compact('books', 'users', 'customer', 'borrows', 'deposte_amount', 'find_amount','totalBookCount','catelogs'));
     }
 }

@@ -32,71 +32,87 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-4">
+                {{-- <div class="col-sm-4">
                     <label for="">Catelog</label>
                     <select class="form-control ambitious-form-loading select2" name="catelog_id" id="cate_id" placeholder="Select catelog">
                         <option value="{{ old('catelog') }}" disabled selected>Select Catelog</option>
-                        @foreach ($catelogs as $catelog)
-                        @if (old('catelog') == $catelog->id)
-                        <option value="{{ $catelog->id }}" {{ $catelog->id == $borrow->catelog_id ? 'selected' : '' }} selected>
-                            {{ $catelog->cate_name }}</option>
-                        @else
-                        <option value="{{ $catelog->id }}" {{ $catelog->id == $borrow->catelog_id ? 'selected' : '' }}>
-                            {{ $catelog->cate_name }}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                    @error('catelog_id')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="col-sm-4">
-                    {{-- @dd($books, $borrow->book_id) --}}
-                    <label for="">Book</label>
-                    <select class="form-control ambitious-form-loading select2" multiple="multiple" name="book_id[]" id="book_id" placeholder="Select book">
-                        @foreach ($books as $book_id => $book_code)
-                            <option value="{{ $book_id }}" @if (in_array($book_id, $borrow->book_id)) selected @endif>{{ $book_code }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Borrow Code</label>
-                    <input type="text" class="form-control" name="borrow_code" value="{{ $borrow->borrow_code }}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Deposit Amount</label>
-                    <input type="number" class="form-control" name="deposit_amount" value="{{ $borrow->deposit_amount }}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Find Amount</label>
-                    <input type="number" class="form-control" name="find_amount" value="{{ $borrow->find_amount }}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Borrow Date</label>
-                    <input type="date" class="form-control" name="borrow_date" value="{{ $borrow->borrow_date }}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Due Date</label>
-                    <input type="date" class="form-control" name="due_date" value="{{ $borrow->due_date }}">
-                </div>
-                <div class="col-sm-4">
-                    <label for="">Return Date</label>
-                    <input type="date" class="form-control" name="return_date" value="{{ $borrow->return_date }}">
-                </div>
-                <div class="col-sm-12   ">
-                    <label for="">Note</label>
-                    <textarea name="note" rows="4" class="form-control">{{ $borrow->note }}</textarea>
-                </div>
+                @foreach ($catelogs as $catelog)
+                @if (old('catelog') == $catelog->id)
+                <option value="{{ $catelog->id }}" {{ $catelog->id == $borrow->catelog_id ? 'selected' : '' }} selected>
+                    {{ $catelog->cate_name }}</option>
+                @else
+                <option value="{{ $catelog->id }}" {{ $catelog->id == $borrow->catelog_id ? 'selected' : '' }}>
+                    {{ $catelog->cate_name }}</option>
+                @endif
+                @endforeach
+                </select>
+                @error('catelog_id')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
-            <div class="mt-2">
-                <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
-                <a href="{{ route('borrow.index') }}" class="btn btn-secondary float-sm-right">Close</a>
+            <div class="col-sm-4">
+                <label for="">Book</label>
+                <select class="form-control ambitious-form-loading select2" multiple="multiple" name="book_id[]" id="book_id" placeholder="Select book">
+                    @foreach ($books as $book_id => $book_code)
+                    <option value="{{ $book_id }}" @if (in_array($book_id, $borrow->book_id)) selected @endif>{{ $book_code }}</option>
+                    @endforeach
+                </select>
+            </div> --}}
+            <div class="col-sm-4">
+                <label for="">Book</label>
+
+                <select multiple class="form-control ambitious-form-loading select2" name="book_id[]" id="book_id">
+                    @foreach ($books as $book)
+                    @php
+                    $selected = $borrow->book_id && in_array($book->id, $borrow->book_id) ? 'selected' : '';
+                    @endphp
+                    <option value="{{ $book->id }}" {{ $selected }}>
+                        {{ $book->book_code }} ({{ $book->catelog->cate_name }})
+                    </option>
+                    @endforeach
+                </select>
+                @error('book_id')
+                <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
-        </form>
+            <div class="col-sm-4">
+                <label for="">Borrow Code</label>
+                <input type="text" class="form-control" name="borrow_code" value="{{ $borrow->borrow_code }}">
+            </div>
+            <div class="col-sm-4">
+                <label for="">Deposit Amount</label>
+                <input type="number" class="form-control" name="deposit_amount" value="{{ $borrow->deposit_amount }}">
+            </div>
+            <div class="col-sm-4">
+                <label for="">Find Amount</label>
+                <input type="number" class="form-control" name="find_amount" value="{{ $borrow->find_amount }}">
+            </div>
+            <div class="col-sm-4">
+                <label for="">Borrow Date</label>
+                <input type="date" class="form-control" name="borrow_date" value="{{ $borrow->borrow_date }}">
+            </div>
+            <div class="col-sm-4">
+                <label for="">Due Date</label>
+                <input type="date" class="form-control" name="due_date" value="{{ $borrow->due_date }}">
+            </div>
+            <div class="col-sm-4">
+                <label for="">Return Date</label>
+                <input type="date" class="form-control" name="return_date" value="{{ $borrow->return_date }}">
+            </div>
+            <div class="col-sm-12   ">
+                <label for="">Note</label>
+                <textarea name="note" rows="4" class="form-control">{{ $borrow->note }}</textarea>
+            </div>
     </div>
+    <div class="mt-2">
+        <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
+        <a href="{{ route('borrow.index') }}" class="btn btn-secondary float-sm-right">Close</a>
+    </div>
+    </form>
+</div>
 </div>
 @push('js')
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#cate_id').change(function() {
             var cate_id = $(this).val();
@@ -108,14 +124,16 @@
                     , success: function(data) {
                         $('#book_id').empty();
                         $.each(data, function(key, value) {
-                            $('#book_id').append('<option value="' + key + '">' + value + '</option>');
+                            $('#book_id').append('<option value="' + key + '">' +
+                                value + '</option>');
                         });
                         $('#book_id').prop('disabled', false);
                         var bookIdsString = $('#book_id').data('book-ids');
                         var editedBookIds = JSON.parse(bookIdsString);
                         if (Array.isArray(editedBookIds)) {
                             editedBookIds.forEach(function(id) {
-                                $('#book_id option[value="' + id + '"]').prop('selected', true);
+                                $('#book_id option[value="' + id + '"]').prop(
+                                    'selected', true);
                             });
                         }
                     }
@@ -125,8 +143,7 @@
                 $('#book_id').prop('enable', true);
             }
         });
-        // $('#cate_id').trigger('change');
     });
-</script>
+</script> --}}
 @endpush
 @endsection
