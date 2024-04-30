@@ -66,11 +66,14 @@ class BorrowController extends Controller
     public function create()
     {
         $catelogs = Catelog::all();
-        $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
+        $borrowedBookIds = Borrow::where('is_return', '1')->pluck('book_id')->flatten()->unique()->toArray();
         $books = Book::where('status', 1)
             ->whereNotIn('id', $borrowedBookIds)
             ->get();
-        $customers = Customer::where('status', 1)->get();
+        $customerBorrowId = Borrow::where('is_return', '1')->pluck('customer_id');
+        $customers = Customer::where('status', 1)
+            ->whereNotIn('id', $customerBorrowId)
+            ->get();
         return view('backends.borrow.create', compact('books', 'catelogs', 'customers'));
     }
     // public function fetchBooks($cate_id)
