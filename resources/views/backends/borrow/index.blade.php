@@ -134,22 +134,20 @@
     <script>
         function applyFilters() {
             var customer_id = document.getElementById('customer-filter').value;
-            var catelog_id = document.getElementById('catelog-filter').value;
+            // var catelog_id = document.getElementById('catelog-filter').value;
             // var book_id = document.getElementById('book-filter').value;
             var url = "{{ route('borrow.index') }}";
             if (customer_id !== '') {
                 url += "?customer_id=" + customer_id;
             }
-            if (catelog_id !== '') {
-                url += (url.includes('?') ? '&' : '?') + "catelog_id=" + catelog_id;
-            }
+            //
             // if (book_id !== '') {
             //     url += (url.includes('?') ? '&' : '?') + "book_id=" + book_id;
             // }
             window.location.href = url;
         }
         document.getElementById('customer-filter').addEventListener('change', applyFilters);
-        document.getElementById('catelog-filter').addEventListener('change', applyFilters);
+        //document.getElementById('catelog-filter').addEventListener('change', applyFilters);
         // document.getElementById('book-filter').addEventListener('change', applyFilters);
     </script>
 @endsection

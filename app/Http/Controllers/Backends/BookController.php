@@ -52,7 +52,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $catelogs = Catelog::all();
+        $catelogs = Catelog::where('status',1)->get();
         return view('backends.catelog_and_book.book.create', compact('catelogs'));
     }
 
