@@ -159,12 +159,12 @@
                                 <p>Book Report</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="" class="nav-link custom-ml" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Customer Report</p>
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 @if (auth()->user()->can('view.setting'))
