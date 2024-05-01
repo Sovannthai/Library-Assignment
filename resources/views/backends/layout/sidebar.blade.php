@@ -114,7 +114,6 @@
                 </li>
                 @endif
                 @if (auth()->user()->can('view.borrow'))
-
                 <li class="nav-item @if(Route::is('borrow.*')||Route::is('is_return.*')) menu-open @endif" id="menu_employee_mg">
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
@@ -139,6 +138,35 @@
                     </ul>
                 </li>
                 @endif
+                <li class="nav-item @if(Route::is('report.*')||Route::is('book_report.*')) menu-open @endif" id="menu_employee_mg">
+                    {{-- menu-open --}}
+                    <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
+                        <i class="nav-icon fas fa-square-poll-vertical"></i>
+                        <p>Report
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" id="collapse_employee">
+                        <li class="nav-item">
+                            <a href="{{ route('report.index') }}" class="nav-link custom-ml @if(Route::is('report.index')) active @endif" id="menu_employess">
+                                <i class="fa-solid fa-plus nav-icon"></i>
+                                <p>Borrow Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('book_report.index') }}" class="nav-link custom-ml @if(Route::is('book_report.index')) active @endif" id="menu_employess">
+                                <i class="fa-solid fa-plus nav-icon"></i>
+                                <p>Book Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link custom-ml" id="menu_employess">
+                                <i class="fa-solid fa-plus nav-icon"></i>
+                                <p>Customer Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @if (auth()->user()->can('view.setting'))
                 <li class="nav-item" id="menu_setting">
                     {{-- menu-open --}}

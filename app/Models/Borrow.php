@@ -27,4 +27,8 @@ class Borrow extends Model
     {
         return $this->belongsTo(Catelog::class,'catelog_id');
     }
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class,'created_by');
+    }
 }

@@ -70,6 +70,7 @@ class BookController extends Controller
             $book->cate_id = $request->cate_id;
             $book->book_code = $request->book_code;
             $book->description = $request->description;
+            $book->created_by = auth()->user()->id;
             $book->save();
             $output = [
                 'success' => 1,
@@ -116,6 +117,7 @@ class BookController extends Controller
             $book->cate_id = $request->cate_id;
             $book->book_code = $request->book_code;
             $book->description = $request->description;
+            $book->created_by = auth()->user()->id;
             $book->save();
             $output = [
                 'success' => 1,

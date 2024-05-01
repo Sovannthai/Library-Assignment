@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Backends\PermissionController;
+use App\Http\Controllers\Backends\ReportController;
 use App\Http\Controllers\Backends\UserController;
 use App\Models\Customer;
 use Illuminate\Routing\RouteRegistrar;
@@ -60,5 +61,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/fetch-books-edit/{cate_id}', [BorrowController::class, 'EditfetchBooks']);
     Route::get('/is_return',[BorrowController::class,'is_return'])->name('is_return.index');
     Route::get('/is-return/show/{id}',[BorrowController::class,'showIs_return'])->name('is_return.show');
+
+    //Report
+    Route::get('borrow-report',[ReportController::class,'index'])->name('report.index');
+    Route::get('book-report',[ReportController::class,'book_report'])->name('book_report.index');
 
 });
