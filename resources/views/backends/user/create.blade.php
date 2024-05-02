@@ -24,13 +24,13 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-6">
                     <label for="">Username</label>
                     <input type="text" class="form-control" name="username" placeholder="Enter username">
                     @error('username')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="col-sm-6">
                     <label for="">Password</label>
                     <input type="password" class="form-control" name="password" placeholder="Enter password">

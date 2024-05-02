@@ -23,6 +23,18 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-sm-4">
+                    <label for="customer_type_id">Type</label>
+                    <select id="type-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
+                        <option value="" {{ !request()->filled('customer_type_id') ? 'selected' : '' }}>All
+                        </option>
+                        @foreach ($customer_types as $customer_type)
+                        <option value="{{ $customer_type->id }}" {{ request('customer_type_id') == $customer_type->id ? 'selected' : '' }}>
+                            {{ $customer_type->name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -55,19 +67,19 @@
 @push('js')
 <script>
     function applyFilters() {
-        var cate_id = document.getElementById('catelog-filter').value;
         var created_by = document.getElementById('created_by-filter').value;
-        var url = "{{ route('book_report.index') }}";
-        if (cate_id !== '') {
-            url += "?cate_id=" + cate_id;
-        }
+        var customer_type_id = document.getElementById('type-filter').value;
+        var url = "{{ route('customer_report.index') }}";
         if (created_by !== '') {
             url += (url.includes('?') ? '&' : '?') + "created_by=" + created_by;
         }
+        if (customer_type_id !== '') {
+            url += (url.includes('?') ? '&' : '?') + "customer_type_id=" + customer_type_id;
+        }
         window.location.href = url;
     }
-    document.getElementById('catelog-filter').addEventListener('change', applyFilters);
     document.getElementById('created_by-filter').addEventListener('change', applyFilters);
+    document.getElementById('type-filter').addEventListener('change', applyFilters);
 
 </script>
 @endpush

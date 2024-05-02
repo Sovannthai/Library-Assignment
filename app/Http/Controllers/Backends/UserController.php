@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $extension = $image->getClientOriginalExtension();
         $imageName = Carbon::now()->toDateString() . "-" . uniqid() . "." . $extension;
-        $image->move(public_path('uploads/all_photo'), $imageName);
+        $image->move(public_path('uploads/all_photo/'), $imageName);
         return $imageName;
     }
     public function edit_profile(Request $request, $id)
@@ -29,12 +29,17 @@ class UserController extends Controller
     {
         try {
             $user = User::find($id);
+            $old_photo_path = $user->photo;
+
             $user->name = $request->name;
-            $user->username = $request->username;
+            // $user->username = $request->username;
             $user->email = $request->email;
             $user->password = $request->password;
             if ($request->hasFile('photo')) {
                 $user->photo = $this->uploadImage($request->file('photo'));
+                if ($old_photo_path && File::exists(public_path('uploads/all_photo/' . $old_photo_path))) {
+                    File::delete(public_path('uploads/all_photo/' . $old_photo_path));
+                }
             }
             $user->save();
             $output = [
@@ -47,6 +52,7 @@ class UserController extends Controller
                 'msg' => trans('Something went wrong')
             ];
         }
+
         return redirect()->route('home')->with($output);
     }
     /**
@@ -59,7 +65,7 @@ class UserController extends Controller
         }
         $users = User::all();
         $role = Role::all();
-        return view('backends.user.index', compact('users','role'));
+        return view('backends.user.index', compact('users', 'role'));
     }
 
     /**
@@ -68,7 +74,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('backends.user.create',compact('roles'));
+        return view('backends.user.create', compact('roles'));
     }
 
     /**
@@ -78,12 +84,12 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'required|unique:users,email',
-            'username' => 'required|unique:users,username'
+            'password' => 'required',
         ]);
         try {
             $user = new User();
             $user->name = $request->name;
-            $user->username = $request->username;
+            // $user->username = $request->username;
             $user->email = $request->email;
             $user->password = $request->password;
             if ($request->hasFile('photo')) {
@@ -122,7 +128,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::all();
-        return view('backends.user.edit', compact('user','roles'));
+        return view('backends.user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -132,18 +138,21 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'required|unique:users,email,' . $id,
-            'username' => 'required|unique:users,username,' . $id
+            // 'username' => 'required|unique:users,username,' . $id
         ]);
         try {
             $user = User::find($id);
+            $old_photo_path = $user->photo;
             $user->name = $request->name;
-            $user->username = $request->username;
+            // $user->username = $request->username;
             $user->email = $request->email;
             $user->password = $request->password;
             if ($request->hasFile('photo')) {
                 $user->photo = $this->uploadImage($request->file('photo'));
+                if ($old_photo_path && File::exists(public_path('uploads/all_photo/' . $old_photo_path))) {
+                    File::delete(public_path('uploads/all_photo/' . $old_photo_path));
+                }
             }
-
             $role = Role::findOrFail($request->role);
             $user->assignRole($role->name);
 

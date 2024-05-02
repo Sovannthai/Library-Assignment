@@ -94,7 +94,8 @@
                     <td>{{ $borrow->return_date }}</td>
                     <td>
                         @if (auth()->user()->can('view.borrow'))
-                        <a href="{{ route('is_return.show',['id'=>$borrow->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('View')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                        <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#is_show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('View')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                        @include('backends.borrow.show_is_return')
                         @endif
                         @if (auth()->user()->can('delete.borrow'))
                         <form id="deleteForm" action="{{ route('borrow.destroy', ['borrow' => $borrow->id]) }}" method="POST" class="d-inline-block">
@@ -109,6 +110,18 @@
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ $total_deposite }}</td>
+                    <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ $total_find_amount }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

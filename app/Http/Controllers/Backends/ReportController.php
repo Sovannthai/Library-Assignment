@@ -9,6 +9,7 @@ use App\Models\Catelog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CustomerType;
 
 class ReportController extends Controller
 {
@@ -42,12 +43,6 @@ class ReportController extends Controller
                 $query->where('cate_id', $cateId);
             });
         }
-        // if ($request->filled('catelog_id')) {
-        //     $borrows->where('catelog_id', $request->catelog_id);
-        // }
-        // if ($request->filled('book_id')) {
-        //     $borrows->where('book_id', $request->book_id);
-        // }
         $borrows = $borrows->get();
         $catelogs = Catelog::where('status', 1)->get();
         return view('backends.report.borrow_report', compact('borrows', 'customers', 'catelogs', 'books', 'filterValue', 'cateId', 'Users', 'request'));
@@ -69,17 +64,17 @@ class ReportController extends Controller
     }
     public function customer_report(Request $request)
     {
-        $books = Book::query();
         $catelogs = Catelog::all();
+        $customer_types = CustomerType::all();
         $librarains = User::all();
-        $customers = Customer::where('status',1)->get();
-        if ($request->filled('cate_id')) {
-            $books->where('cate_id', $request->cate_id);
-        }
+        $customers = Customer::query();
         if ($request->filled('created_by')) {
-            $books->where('created_by', $request->created_by);
+            $customers->where('created_by', $request->created_by);
         }
-        $books = $books->where('status', 1)->get();
-        return view('backends.report.customer_report', compact('books', 'catelogs', 'librarains','customers'));
+        if ($request->filled('customer_type_id')) {
+            $customers->where('customer_type_id', $request->customer_type_id);
+        }
+        $customers = $customers->where('status',1)->get();
+        return view('backends.report.customer_report', compact('catelogs', 'librarains','customers','customer_types'));
     }
 }

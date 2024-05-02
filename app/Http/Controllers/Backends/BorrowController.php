@@ -35,7 +35,9 @@ class BorrowController extends Controller
         $borrows = $borrows
             ->where('is_return', '1')
             ->get();
-        return view('backends.borrow.index', compact('borrows', 'customers', 'catelogs', 'books'));
+        $total_deposite = Borrow::where('is_return', '1')->sum('deposit_amount');
+        $total_find_amount = Borrow::where('is_return', '1')->sum('find_amount');
+        return view('backends.borrow.index', compact('borrows', 'customers', 'catelogs', 'books','total_deposite','total_find_amount'));
     }
     public function is_return(Request $request)
     {
@@ -57,7 +59,9 @@ class BorrowController extends Controller
         // }
         $borrows = $borrows->where('is_return', '0')
             ->get();
-        return view('backends.borrow.is_return', compact('borrows', 'customers', 'books', 'catelogs'));
+            $total_deposite = Borrow::where('is_return', '0')->sum('deposit_amount');
+            $total_find_amount = Borrow::where('is_return', '0')->sum('find_amount');
+        return view('backends.borrow.is_return', compact('borrows', 'customers', 'books', 'catelogs','total_deposite','total_find_amount'));
     }
 
     /**

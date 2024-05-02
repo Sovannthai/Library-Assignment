@@ -5,7 +5,7 @@
       object-fit: contain;margin-left: 0; height: 200px;max-height: 100px;">
     </a> --}}
     <a href="{{ route('home') }}" class="brand-link">
-        <img src="{{ asset('uploads/all_photo/library-logo.png') }}" alt="AdminLTE Logo" class="brand-image" style="width: 60%;
+        <img src="{{ asset('uploads/all_photo/'.session('business_logo')) }}" alt="AdminLTE Logo" class="brand-image" style="width: 60%;
       object-fit: contain;margin-left: 35px ; height: 200px;max-height: 100px;">
     </a>
     <!-- Sidebar -->
@@ -168,7 +168,7 @@
                     </ul>
                 </li>
                 @if (auth()->user()->can('view.setting'))
-                <li class="nav-item" id="menu_setting">
+                <li class="nav-item @if(Route::is('business_setting.*')) menu-open @endif" id="menu_setting">
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_setting_bg">
                         <i class="nav-icon fa fa-cog"></i>
@@ -179,7 +179,7 @@
                     </a>
                     <ul class="nav nav-treeview" id="collapse_setting">
                         <li class="nav-item">
-                            <a href="" class="nav-link custom-ml" id="menu_employess">
+                            <a href="{{ route('business_setting.index') }}" class="nav-link custom-ml @if (Route::is('business_setting.index')) @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Business Setting</p>
                             </a>

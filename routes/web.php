@@ -1,19 +1,18 @@
 <?php
 
-use App\Http\Controllers\Backends\BookController;
-use App\Http\Controllers\Backends\BorrowController;
-use App\Http\Controllers\Backends\CatelogController;
-use App\Http\Controllers\Backends\CustomerController;
-use App\Http\Controllers\Backends\CustomerTypeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\SetSessionData;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Backends\PermissionController;
-use App\Http\Controllers\Backends\ReportController;
+use App\Http\Controllers\Backends\BookController;
 use App\Http\Controllers\Backends\UserController;
-use App\Models\Customer;
-use Illuminate\Routing\RouteRegistrar;
-
+use App\Http\Controllers\Backends\BorrowController;
+use App\Http\Controllers\Backends\ReportController;
+use App\Http\Controllers\Backends\CatelogController;
+use App\Http\Controllers\Backends\CustomerController;
+use App\Http\Controllers\Backends\PermissionController;
+use App\Http\Controllers\Backends\CustomerTypeController;
+use App\Http\Controllers\Backends\BusinessSettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +29,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware(['auth',SetSessionData::class])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::controller(RoleController::class)->group(function () {
         Route::get('/all_permission', 'AllRole')->name('role.index');
@@ -66,4 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('borrow-report',[ReportController::class,'index'])->name('report.index');
     Route::get('book-report',[ReportController::class,'book_report'])->name('book_report.index');
     Route::get('customer-report',[ReportController::class,'customer_report'])->name('customer_report.index');
+    //Business Setting
+    Route::get('business-setting',[BusinessSettingController::class,'index'])->name('business_setting.index');
+    Route::put('update-business-setting',[BusinessSettingController::class,'update'])->name('business_setting.update');
 });
