@@ -72,7 +72,7 @@ class ReportController extends Controller
         $books = Book::query();
         $catelogs = Catelog::all();
         $librarains = User::all();
-
+        $customers = Customer::where('status',1)->get();
         if ($request->filled('cate_id')) {
             $books->where('cate_id', $request->cate_id);
         }
@@ -80,6 +80,6 @@ class ReportController extends Controller
             $books->where('created_by', $request->created_by);
         }
         $books = $books->where('status', 1)->get();
-        return view('backends.report.customer_report', compact('books', 'catelogs', 'librarains'));
+        return view('backends.report.customer_report', compact('books', 'catelogs', 'librarains','customers'));
     }
 }

@@ -52,12 +52,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($books as $book)
+                @foreach ($customers as $customer)
                 <tr>
-                    <td>{{ $book->book_code }}</td>
-                    <td>{{ $book->catelog->cate_name }}</< /td>
-                    <td>{{ $book->created_at->format('Y/m/d h:i A') }}</< /td>
-                    <td>{{ $book->createdBy->name }}</< /td>
+                    <td>{{ $customer->name }}</td>
+                    <td>{{ $customer->customer_type->name }}</< /td>
+                    <td>{{ $customer->created_at->format('Y/m/d h:i A') }}</< /td>
+                    <td>{{ $customer->createdBy->name }}</< /td>
                 </tr>
                 @endforeach
             </tbody>
