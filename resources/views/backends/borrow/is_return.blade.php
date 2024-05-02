@@ -58,18 +58,17 @@
         @endif
     </div>
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive-lg">
+        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive">
             <thead class="">
                 <tr>
                     <th>Customer Name</th>
                     <th>Borrow Code</th>
                     <th>Book Name</th>
-                    {{-- <th>Deposite Amount</th>
-                    <th>Find Amount</th> --}}
+                    <th>Deposite Amount</th>
+                    <th>Find Amount</th>
                     <th>Borrow Date</th>
                     <th>Return Date</th>
                     <th>Action</th>
-                    {{-- <th style="display: none;"></th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -89,8 +88,8 @@
                         @endif
                         @endforeach
                     </td>
-                    {{-- <td>$ {{ $borrow->deposit_amount }}</td>
-                    <td>$ {{ $borrow->find_amount }}</td> --}}
+                    <td>$ {{ $borrow->deposit_amount }}</td>
+                    <td>$ {{ $borrow->find_amount }}</td>
                     <td>{{ $borrow->borrow_date }}</td>
                     <td>{{ $borrow->return_date }}</td>
                     <td>

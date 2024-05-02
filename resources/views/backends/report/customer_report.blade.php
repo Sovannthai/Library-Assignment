@@ -1,5 +1,5 @@
 @extends('backends.master')
-@section('title', 'Book Report')
+@section('title', 'Customer Report')
 @section('contents')
 <div class="card">
     <h5 class="card-header">
@@ -40,7 +40,7 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-header text-uppercase">Book Report</div>
+    <div class="card-header text-uppercase">Customer Report</div>
     <div class="card-body">
         <table id="example1" class="table table-bordered table-striped table-hover">
             <thead class="">

@@ -9,7 +9,7 @@
             @endif
         </div>
         <div class="card-body">
-            <table class="table datatable table-bordered table-striped table-hover">
+            <table class="table datatable table-bordered table-striped table-hover nowrap table-responsive">
                 <thead class="text-uppercase">
                     <tr>
                         <th>Cover</th>

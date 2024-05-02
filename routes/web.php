@@ -65,5 +65,5 @@ Route::group(['middleware' => ['auth']], function () {
     //Report
     Route::get('borrow-report',[ReportController::class,'index'])->name('report.index');
     Route::get('book-report',[ReportController::class,'book_report'])->name('book_report.index');
-
+    Route::get('customer-report',[ReportController::class,'customer_report'])->name('customer_report.index');
 });

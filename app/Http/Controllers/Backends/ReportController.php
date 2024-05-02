@@ -67,4 +67,19 @@ class ReportController extends Controller
         $books = $books->where('status', 1)->get();
         return view('backends.report.book_report', compact('books', 'catelogs', 'librarains'));
     }
+    public function customer_report(Request $request)
+    {
+        $books = Book::query();
+        $catelogs = Catelog::all();
+        $librarains = User::all();
+
+        if ($request->filled('cate_id')) {
+            $books->where('cate_id', $request->cate_id);
+        }
+        if ($request->filled('created_by')) {
+            $books->where('created_by', $request->created_by);
+        }
+        $books = $books->where('status', 1)->get();
+        return view('backends.report.customer_report', compact('books', 'catelogs', 'librarains'));
+    }
 }

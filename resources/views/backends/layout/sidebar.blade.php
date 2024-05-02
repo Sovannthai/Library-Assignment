@@ -138,7 +138,7 @@
                     </ul>
                 </li>
                 @endif
-                <li class="nav-item @if(Route::is('report.*')||Route::is('book_report.*')) menu-open @endif" id="menu_employee_mg">
+                <li class="nav-item @if(Route::is('report.*')||Route::is('book_report.*')||Route::is('customer_report.*')) menu-open @endif" id="menu_employee_mg">
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-square-poll-vertical"></i>
@@ -159,12 +159,12 @@
                                 <p>Book Report</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="" class="nav-link custom-ml" id="menu_employess">
+                        <li class="nav-item">
+                            <a href="{{ route('customer_report.index') }}" class="nav-link custom-ml @if(Route::is('customer_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Customer Report</p>
                             </a>
-                        </li> --}}
+                        </li>
                     </ul>
                 </li>
                 @if (auth()->user()->can('view.setting'))
