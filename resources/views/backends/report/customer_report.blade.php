@@ -12,18 +12,6 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="cate_id">Catelog</label>
-                    <select id="catelog-filter" class="form-control">
-                        <option value="" {{ !request()->filled('cate_id') ? 'selected' : '' }}>All Catelog
-                        </option>
-                        @foreach ($catelogs as $catelog)
-                        <option value="{{ $catelog->id }}" {{ request('cate_id') == $catelog->id ? 'selected' : '' }}>
-                            {{ $catelog->cate_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-sm-4">
                     <label for="created_by">Created By</label>
                     <select id="created_by-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
                         <option value="" {{ !request()->filled('created_by') ? 'selected' : '' }}>All
@@ -45,8 +33,8 @@
         <table id="example1" class="table table-bordered table-striped table-hover">
             <thead class="">
                 <tr>
-                    <th>Code</th>
-                    <th>Catelog Name</th>
+                    <th>Customer Name</th>
+                    <th>Type</th>
                     <th>Created At</th>
                     <th>Created By</th>
                 </tr>
