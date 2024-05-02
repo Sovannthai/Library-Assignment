@@ -55,9 +55,9 @@
                 @foreach ($books as $book)
                 <tr>
                     <td>{{ $book->book_code }}</td>
-                    <td>{{ $book->catelog->cate_name }}</< /td>
+                    <td>{{ @$book->catelog->cate_name }}</< /td>
                     <td>{{ $book->created_at->format('Y/m/d h:i A') }}</< /td>
-                    <td>{{ $book->createdBy->name }}</< /td>
+                    <td>{{ @$book->createdBy->name }}</< /td>
                 </tr>
                 @endforeach
             </tbody>

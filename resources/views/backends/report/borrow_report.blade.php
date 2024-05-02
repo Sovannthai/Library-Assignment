@@ -102,7 +102,7 @@
             <tbody>
                 @foreach ($borrows as $borrow)
                 <tr>
-                    <td>{{ $borrow->customer->name }}</td>
+                    <td>{{ @$borrow->customer->name }}</td>
                     <td>{{ $borrow->borrow_code }}</td>
                     <td>
                         @foreach ($borrow->book_id as $bookId)
@@ -111,7 +111,7 @@
                         @endphp
                         @if ($book)
                         <li>
-                            {{ $book->book_code }} ({{ $book->catelog->cate_name }})
+                            {{ $book->book_code }} ({{ @$book->catelog->cate_name }})
                         </li>
                         @endif
                         @endforeach

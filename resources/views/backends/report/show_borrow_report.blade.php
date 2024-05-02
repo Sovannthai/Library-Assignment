@@ -16,7 +16,7 @@
                         </div>
                         <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                             <label class="font-weight-bold mb-1 text-uppercase">@lang('Customer Name')</label>
-                            <p>{{ $borrow->customer->name }}</p>
+                            <p>{{ @$borrow->customer->name }}</p>
                         </div>
                         <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                             <label class="font-weight-bold mb-1 text-uppercase">@lang('Book')</label>
@@ -27,7 +27,7 @@
                                     @endphp
                                     @if ($book)
                                         <li>
-                                            {{ $book->book_code }} ({{ $book->catelog->cate_name }})
+                                            {{ $book->book_code }} ({{ @$book->catelog->cate_name }})
                                         </li>
                                     @endif
                                 @endforeach
@@ -61,10 +61,10 @@
                                 <p>{{ $borrow->note }}</p>
                             </div>
                         @endif
-                        @if ($borrow->createdBy->name)
+                        @if (@$borrow->createdBy->name)
                             <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                                 <label class="font-weight-bold mb-1 text-uppercase">@lang('Created By')</label>
-                                <p>{{ $borrow->createdBy->name }}</p>
+                                <p>{{ @$borrow->createdBy->name }}</p>
                             </div>
                         @endif
                     </div>

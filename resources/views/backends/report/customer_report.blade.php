@@ -43,9 +43,9 @@
                 @foreach ($customers as $customer)
                 <tr>
                     <td>{{ $customer->name }}</td>
-                    <td>{{ $customer->customer_type->name }}</< /td>
+                    <td>{{ @$customer->customer_type->name }}</< /td>
                     <td>{{ $customer->created_at->format('Y/m/d h:i A') }}</< /td>
-                    <td>{{ $customer->createdBy->name }}</< /td>
+                    <td>{{ @$customer->createdBy->name }}</< /td>
                 </tr>
                 @endforeach
             </tbody>
