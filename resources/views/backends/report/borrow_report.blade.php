@@ -84,7 +84,7 @@
 <div class="card">
     <div class="card-header text-uppercase">Borrow Report</div>
     <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive-lg">
+        <table class="table table-bordered datatable table-striped table-hover nowrap table-responsive-lg">
             <thead class="">
                 <tr>
                     <th>Customer</th>

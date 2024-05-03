@@ -118,8 +118,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ $total_deposite }}</td>
-                    <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ $total_find_amount }}</td>
+                    <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ number_format($total_deposite,2) }}</td>
+                    <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ number_format($total_find_amount, 2) }}</td>
                     <td></td>
                     <td></td>
                     <td></td>
