@@ -20,10 +20,10 @@
                         @foreach ($customers as $customer)
                         @if (old('customer') == $customer->id)
                         <option value="{{ $customer->id }}" selected>
-                            {{ $customer->name }}</option>
+                            {{ $customer->name }} ({{ $customer->code }})</option>
                         @else
                         <option value="{{ $customer->id }}">
-                            {{ $customer->name }}</option>
+                            {{ $customer->name }} ({{ $customer->code }})</option>
                         @endif
                         @endforeach
                     </select>
