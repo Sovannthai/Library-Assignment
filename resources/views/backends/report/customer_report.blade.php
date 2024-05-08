@@ -45,7 +45,8 @@
         <table class="table table-bordered datatable table-striped table-hover">
             <thead class="">
                 <tr>
-                    <th>Customer Name</th>
+                    <th>Code</th>
+                    <th>Name</th>
                     <th>Type</th>
                     <th>Created At</th>
                     <th>Created By</th>
@@ -54,6 +55,7 @@
             <tbody>
                 @foreach ($customers as $customer)
                 <tr>
+                    <td>{{ $customer->code }}</td>
                     <td>{{ $customer->name }}</td>
                     <td>{{ @$customer->customer_type->name }}</< /td>
                     <td>{{ $customer->created_at->format('Y/m/d h:i A') }}</< /td>
