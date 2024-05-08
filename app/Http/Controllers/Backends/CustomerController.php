@@ -51,6 +51,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create.customer')) {
+            abort(403, 'Unauthorized action.');
+        }
         $customer_types = CustomerType::all();
         $genders = ['male' => 'Male', 'female' => 'Female', 'another' => 'Another'];
         return view('backends.customer.create', compact('customer_types', 'genders'));
@@ -105,6 +108,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->can('edit.customer')) {
+            abort(403, 'Unauthorized action.');
+        }
         $customer_types = CustomerType::all();
         $customer = Customer::find($id);
         $genders = ['male' => 'Male', 'female' => 'Female', 'another' => 'Another'];

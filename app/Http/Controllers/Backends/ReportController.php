@@ -15,6 +15,9 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
+        if (!auth()->user()->can('view.borrow_report')) {
+            abort(403, 'Unauthorized action.');
+        }
         $filterValue = $request->input('filter');
         $cateId = $request->input('cate_id');
         $startDate = $request->input('start_date');
@@ -49,6 +52,9 @@ class ReportController extends Controller
     }
     public function book_report(Request $request)
     {
+        if (!auth()->user()->can('view.book_report')) {
+            abort(403, 'Unauthorized action.');
+        }
         $books = Book::query();
         $catelogs = Catelog::all();
         $librarains = User::all();
@@ -64,6 +70,9 @@ class ReportController extends Controller
     }
     public function customer_report(Request $request)
     {
+        if (!auth()->user()->can('view.customer_report')) {
+            abort(403, 'Unauthorized action.');
+        }
         $catelogs = Catelog::all();
         $customer_types = CustomerType::all();
         $librarains = User::all();

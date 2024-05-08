@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
+                <div class="card" style="background-color:black;">
                     <div class="card-body">
                         <div>
                             <img src="{{ asset('uploads/all_photo/library-logo.png') }}" alt="" class="img-logo">
@@ -25,7 +25,7 @@
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label for="email">{{ __('Email') }}</label>
+                                    <label for="email" class="text-white">{{ __('Email') }}</label>
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label for="password">{{ __('Password') }}</label>
+                                    <label for="password" class="text-white">{{ __('Password') }}</label>
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="current-password">
@@ -54,7 +54,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                             {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="remember">
+                                        <label class="form-check-label text-white" for="remember">
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>

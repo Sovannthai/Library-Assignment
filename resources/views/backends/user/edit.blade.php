@@ -51,7 +51,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="photo" class="col-form-label">@lang('Profile')</label>
                     <input name="photo" type="file" class="dropify" data-height="100" data-default-file="{{ url('uploads/all_photo/' . $user->photo) }}" value="{{ $user->photo }}" /><br>
                     <input type="hidden" name="video" value="{{ $user->photo }}">

@@ -18,7 +18,7 @@ class SetSessionData
     {
         $business_setting = BusinessSetting::first();
 
-        $business_logo = $business_setting->business_logo;
+        $business_logo = @$business_setting->business_logo;
 
         $request->session()->put('business_logo',$business_logo);
         return $next($request);

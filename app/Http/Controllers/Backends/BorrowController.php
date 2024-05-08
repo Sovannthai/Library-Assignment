@@ -34,6 +34,7 @@ class BorrowController extends Controller
         // }
         $borrows = $borrows
             ->where('is_return', '1')
+            ->latest()
             ->get();
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
@@ -68,6 +69,9 @@ class BorrowController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create.borrow')) {
+            abort(403, 'Unauthorized action.');
+        }
         $catelogs = Catelog::all();
         $borrowedBookIds = Borrow::where('is_return', '1')->pluck('book_id')->flatten()->unique()->toArray();
         $books = Book::where('status', 1)
@@ -191,6 +195,9 @@ class BorrowController extends Controller
     // }
     public function edit(string $id)
     {
+        if (!auth()->user()->can('update.borrow')) {
+            abort(403, 'Unauthorized action.');
+        }
         $borrow = Borrow::findOrFail($id);
         $catelogs = Catelog::all();
         $customers = Customer::all();

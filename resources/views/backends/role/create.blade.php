@@ -189,6 +189,30 @@
                 </div>
             </div>
             <hr>
+            <div class="user">Report</div>
+            <div class="row">
+                <div class="custom-control col-3 custom-switch">
+                    <label style="position: absolute">View Report</label>
+                    <input type="checkbox" name="permissions[]" value="view.report" class="custom-control-input toggle-status" id="report" data-id="">
+                    <label class="custom-control-label" for="report"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">View Borrow Report</label>
+                    <input type="checkbox" name="permissions[]" value="view.borrow_report" class="custom-control-input toggle-status" id="report1" data-id="">
+                    <label class="custom-control-label" for="report1"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">View Book Report</label>
+                    <input type="checkbox" name="permissions[]" value="view.book_report" class="custom-control-input toggle-status" id="report2" data-id="">
+                    <label class="custom-control-label" for="report2"></label>
+                </div>
+                <div class="custom-control col-3 custom-switch">
+                    <label for="" style="position: absolute">View Customer Report</label>
+                    <input type="checkbox" name="permissions[]" value="view.customer_report" class="custom-control-input toggle-status" id="report3" data-id="">
+                    <label class="custom-control-label" for="report3"></label>
+                </div>
+            </div>
+            <hr>
             <div class="user mt-4">Setting</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">

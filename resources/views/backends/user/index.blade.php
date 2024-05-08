@@ -13,8 +13,9 @@
             <thead class="">
                 <tr>
                     <th>Profile</th>
-                    <th>Full Name</th>
-                    <th>User Name</th>
+                    <th>Name</th>
+                    {{-- <th>User Name</th> --}}
+                    <th>Role</th>
                     <th>Email</th>
                     <th>Action</th>
                 </tr>
@@ -30,7 +31,8 @@
                         </span>
                     </td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->username }}</td>
+                    {{-- <td>{{ $user->username }}</td> --}}
+                    <td>{{ $user->roles->first()->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         @if (auth()->user()->can('edit.user'))

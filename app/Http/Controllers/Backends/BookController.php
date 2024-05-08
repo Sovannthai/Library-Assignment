@@ -52,6 +52,9 @@ class BookController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create.book')) {
+            abort(403, 'Unauthorized action.');
+        }
         $catelogs = Catelog::where('status',1)->get();
         return view('backends.catelog_and_book.book.create', compact('catelogs'));
     }
@@ -98,6 +101,9 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->can('edit.book')) {
+            abort(403, 'Unauthorized action.');
+        }
         $catelogs = Catelog::all();
         $book = Book::find($id);
         return view('backends.catelog_and_book.book.edit', compact('catelogs', 'book'));

@@ -115,7 +115,7 @@
     $(function() {
         $("#example1").DataTable({
             "lengthChange": true
-            , "ordering": true
+            , "ordering": false
             , "autoWidth": true
             , "responsive": false
             , "searching": true
@@ -124,7 +124,7 @@
             , "buttons": ["excel", "pdf","colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $(".datatable").DataTable({
-            "lengthChange": true
+                "lengthChange": true
             , "ordering": true
             , "autoWidth": true
             , "responsive": false
@@ -147,8 +147,8 @@
 
 
         bsCustomFileInput.init();
-        var success_audio = "{{ URL::asset('sound/success.mp3')}}";
-        var error_audio = "{{ URL::asset('sound/error.mp3')}}";
+        var success_audio = "{{ URL::asset('sound/')}}";
+        var error_audio = "{{ URL::asset('sound/')}}";
         var success = new Audio(success_audio);
         var error = new Audio(error_audio);
 

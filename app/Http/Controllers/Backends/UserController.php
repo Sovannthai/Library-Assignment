@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -73,6 +74,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create.user')) {
+            abort(403, 'Unauthorized action.');
+        }
         $roles = Role::all();
         return view('backends.user.create', compact('roles'));
     }
@@ -82,10 +86,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users,email',
-            'password' => 'required',
+            'password' => 'required|min:6|confirmed',
         ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         try {
             $user = new User();
             $user->name = $request->name;
@@ -126,6 +133,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        if (!auth()->user()->can('edit.user')) {
+            abort(403, 'Unauthorized action.');
+        }
         $user = User::find($id);
         $roles = Role::all();
         return view('backends.user.edit', compact('user', 'roles'));

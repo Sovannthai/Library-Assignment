@@ -52,12 +52,14 @@
                                 <p>User</p>
                             </a>
                         </li>
+                        @if (auth()->user()->can('view.role'))
                         <li class="nav-item">
                             <a href="{{ route('role.index') }}" class="nav-link custom-ml @if(Route::is('role.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Role</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
                 @endif
@@ -138,6 +140,7 @@
                     </ul>
                 </li>
                 @endif
+                @if (auth()->user()->can('view.report'))
                 <li class="nav-item @if(Route::is('report.*')||Route::is('book_report.*')||Route::is('customer_report.*')) menu-open @endif" id="menu_employee_mg">
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
@@ -147,26 +150,33 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview" id="collapse_employee">
+                        @if (auth()->user()->can('view.borrow_report'))
                         <li class="nav-item">
                             <a href="{{ route('report.index') }}" class="nav-link custom-ml @if(Route::is('report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Borrow Report</p>
                             </a>
                         </li>
+                        @endif
+                        @if (auth()->user()->can('view.book_report'))
                         <li class="nav-item">
                             <a href="{{ route('book_report.index') }}" class="nav-link custom-ml @if(Route::is('book_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Book Report</p>
                             </a>
                         </li>
+                        @endif
+                        @if (auth()->user()->can('view.customer_report'))
                         <li class="nav-item">
                             <a href="{{ route('customer_report.index') }}" class="nav-link custom-ml @if(Route::is('customer_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Customer Report</p>
                             </a>
                         </li>
+                        @endif
                     </ul>
                 </li>
+                @endif
                 @if (auth()->user()->can('view.setting'))
                 <li class="nav-item @if(Route::is('business_setting.*')) menu-open @endif" id="menu_setting">
                     {{-- menu-open --}}

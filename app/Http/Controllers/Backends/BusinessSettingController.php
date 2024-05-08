@@ -58,7 +58,7 @@ class BusinessSettingController extends Controller
     public function update(Request $request)
     {
         try {
-            $business_setting = BusinessSetting::firstOrNew(); 
+            $business_setting = BusinessSetting::firstOrNew();
             $old_logo_path = $business_setting->business_logo;
 
             if ($request->hasFile('business_logo')) {
@@ -78,7 +78,7 @@ class BusinessSettingController extends Controller
 
             $output = [
                 'success' => 1,
-                'msg' => _('Business Setting Updated Successfully')
+                'msg' => _('Setting Updated Successfully')
             ];
         } catch (Exception $e) {
             dd($e);

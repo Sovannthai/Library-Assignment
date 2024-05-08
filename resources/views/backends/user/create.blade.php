@@ -15,11 +15,11 @@
             <div class="form-group row">
                 <div class="col-sm-6">
                     <label for="">Full Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Enter full name">
+                    <input type="text" class="form-control" name="name" placeholder="Enter full name" value="{{ old('name') }}">
                 </div>
                 <div class="col-sm-6">
                     <label for="">Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter email">
+                    <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ old('email') }}">
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -33,7 +33,14 @@
                 </div> --}}
                 <div class="col-sm-6">
                     <label for="">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Enter password">
+                    <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
+                    @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-sm-6">
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                 </div>
                 <div class="col-sm-6">
                     <label for="">Role</label>
@@ -50,7 +57,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <label for="image" class="col-form-label">@lang('Profile')</label>
                     <input name="photo" type="file" class="dropify" data-height="100" /><br>
                     @error('photo')
