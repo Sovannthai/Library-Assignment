@@ -13,43 +13,18 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="customer_id">Customer</label>
-                    <select id="customer-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                        <option value="" {{ !request()->filled('customer_id') ? 'selected' : '' }}>All Customer
-                        </option>
-                        @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}" {{ request('customer_id') == $customer->id ? 'selected' : '' }}>
-                            {{ $customer->name }}
+                    <select name="customer_id" id="customer_id" class="form-control select2">
+                        <option value="">{{ __('Select Student') }}</option>
+                        @foreach ($customers as $row)
+                        <option value="{{ $row->id }}" {{ $row->id == request('customer_id') ? 'selected' : '' }}>
+                            {{ $row->name }}
                         </option>
                         @endforeach
                     </select>
                 </div>
-                {{-- <div class="col-sm-4">
-                    <label for="catelog_id">Catelog</label>
-                    <select id="catelog-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                        <option value="" {{ !request()->filled('catelog_id') ? 'selected' : '' }}>All Book
-                        </option>
-                        @foreach ($catelogs as $catelog)
-                        <option value="{{ $catelog->id }}" {{ request('catelog_id') == $catelog->id ? 'selected' : '' }}>
-                            {{ $catelog->cate_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div> --}}
-                {{-- <div class="col-sm-4">
-                        <label for="cate_id">Book</label>
-                        <select id="catelog-filter" class="form-control">
-                            <option value="" {{ !request()->filled('cate_id') ? 'selected' : '' }}>All Book
-                </option>
-                @foreach ($catelogs as $catelog)
-                <option value="{{ $catelog->id }}" {{ request('cate_id') == $catelog->id ? 'selected' : '' }}>
-                    {{ $catelog->cate_name }}
-                </option>
-                @endforeach
-                </select>
-            </div> --}}
+            </div>
         </div>
     </div>
-</div>
 </div>
 <div class="card">
     <div class="card-header text-uppercase">Return List
@@ -57,93 +32,44 @@
         <a href="{{ route('borrow.create') }}" class="btn btn-success float-lg-right">+ Add New</a>
         @endif
     </div>
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped table-hover nowrap table-responsive">
-            <thead class="">
-                <tr>
-                    <th>Customer Name</th>
-                    <th>Borrow Code</th>
-                    <th>Book Name</th>
-                    <th>Deposite Amount</th>
-                    <th>Find Amount</th>
-                    <th>Borrow Date</th>
-                    <th>Return Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($borrows as $borrow)
-                <tr>
-                    <td>{{ $borrow->customer->name }}</td>
-                    <td>{{ $borrow->borrow_code }}</td>
-                    <td>{{ @$borrow->catelog->cate_name }}
-                        @foreach ($borrow->book_id as $bookId)
-                        @php
-                        $book = \App\Models\Book::find($bookId);
-                        @endphp
-                        @if ($book)
-                        <li>
-                            {{ $book->book_code }} ({{ $book->catelog->cate_name }})
-                        </li>
-                        @endif
-                        @endforeach
-                    </td>
-                    <td>$ {{ $borrow->deposit_amount }}</td>
-                    <td>$ {{ $borrow->find_amount }}</td>
-                    <td>{{ $borrow->borrow_date }}</td>
-                    <td>{{ $borrow->return_date }}</td>
-                    <td>
-                        @if (auth()->user()->can('view.borrow'))
-                        <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#is_show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('View')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
-                        @include('backends.borrow.show_is_return')
-                        @endif
-                        @if (auth()->user()->can('delete.borrow'))
-                        <form id="deleteForm" action="{{ route('borrow.destroy', ['borrow' => $borrow->id]) }}" method="POST" class="d-inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                                <i class="fa fa-trash-can ambitious-padding-btn"></i>
-                            </button>
-                        </form>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ number_format($total_deposite,2) }}</td>
-                    <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ number_format($total_find_amount, 2) }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+    @include('backends.borrow._table_is_return')
 </div>
+@push('js')
 <script>
-    function applyFilters() {
-        var customer_id = document.getElementById('customer-filter').value;
-        // var catelog_id = document.getElementById('catelog-filter').value;
-        // var book_id = document.getElementById('book-filter').value;
-        var url = "{{ route('is_return.index') }}";
-        if (customer_id !== '') {
-            url += "?customer_id=" + customer_id;
-        }
-        // if (catelog_id !== '') {
-        //     url += (url.includes('?') ? '&' : '?') + "catelog_id=" + catelog_id;
-        // }
-        // if (book_id !== '') {
-        //     url += (url.includes('?') ? '&' : '?') + "book_id=" + book_id;
-        // }
-        window.location.href = url;
-    }
-    document.getElementById('customer-filter').addEventListener('change', applyFilters);
-    // document.getElementById('catelog-filter').addEventListener('change', applyFilters);
-    // document.getElementById('book-filter').addEventListener('change', applyFilters);
+    $(document).ready(function() {
+        $(document).on('change', '#customer_id, #book_id', function(e) {
+            e.preventDefault();
+            var customer_id = $('#customer_id').val(); // Get the selected customer ID
+            var book_ids = $('#book_id').val(); // Get the selected book IDs as an array
+
+            // Ensure book_ids is an array
+            if (!Array.isArray(book_ids)) {
+                book_ids = [book_ids];
+            }
+
+            $.ajax({
+                type: "GET"
+                , url: '{{ route('is_return.index') }}'
+                , data: {
+                    'customer_id': customer_id
+                    , 'book_ids': book_ids
+                }
+                , dataType: "json"
+                , success: function(response) {
+                    console.log(response);
+                    if (response.view) {
+                        $('.datatable').html(response.view);
+                    }
+                }
+                , error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        $('#customer_id').select2();
+        $('#book_id').select2();
+    });
+
 </script>
+@endpush
 @endsection

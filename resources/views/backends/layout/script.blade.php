@@ -125,7 +125,7 @@
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $(".datatable").DataTable({
                 "lengthChange": true
-            , "ordering": true
+            , "ordering": false
             , "autoWidth": true
             , "responsive": false
             , "searching": true

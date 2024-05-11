@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
                     <label style="position: absolute">View</label>
-                    <input type="checkbox" name="permissions[]" value="view.dash" class="custom-control-input toggle-status" id="dashboard" data-id="">
+                    <input type="checkbox" name="permissions[]" value="view.dash" class="custom-control-input toggle-status" id="dashboard" data-id="" checked>
                     <label class="custom-control-label" for="dashboard"></label>
                 </div>
             </div>

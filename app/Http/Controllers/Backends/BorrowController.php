@@ -19,49 +19,52 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $borrows = Borrow::query();
-        $customers = Customer::where('status', 1)->get();
-        $catelogs = Catelog::where('status', 1)->get();
-        $books = Book::where('status', 1)->get();
+        $borrows = Borrow::where('is_return', 1);
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
         }
-        // if ($request->filled('catelog_id')) {
-        //     $borrows->where('catelog_id', $request->catelog_id);
-        // }
-        // if ($request->filled('book_id')) {
-        //     $borrows->where('book_id', $request->book_id);
-        // }
-        $borrows = $borrows
-            ->where('is_return', '1')
-            ->latest()
-            ->get();
+        if ($request->filled('book_ids')) {
+            $borrows->whereIn('book_id', $request->book_ids);
+        }
+        $borrows = $borrows->latest()->get();
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
-        return view('backends.borrow.index', compact('borrows', 'customers', 'catelogs', 'books','total_deposite','total_find_amount'));
+        $customers = Customer::where('status', 1)->get();
+        $catalogs = Catelog::where('status', 1)->get();
+        $books = Book::where('status', 1)->get();
+        if ($request->ajax()) {
+            $view = view('backends.borrow._table_borrow', compact('borrows', 'customers', 'catalogs', 'books', 'total_deposite', 'total_find_amount'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
+        }
+        return view('backends.borrow.index', compact('borrows', 'customers', 'catalogs', 'books', 'total_deposite', 'total_find_amount'));
     }
     public function is_return(Request $request)
     {
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $borrows = Borrow::query();
-        $customers = Customer::where('status', 1)->get();
-        $catelogs = Catelog::where('status', 1)->get();
-        $books = Book::where('status', 1)->get();
+        $borrows = Borrow::where('is_return', '0');
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
         }
-        // if ($request->filled('catelog_id')) {
-        //     $borrows->where('catelog_id', $request->catelog_id);
-        // }
-        // if ($request->filled('book_id')) {
-        //     $borrows->where('book_id', $request->book_id);
-        // }
-        $borrows = $borrows->where('is_return', '0')->get();
-            $total_deposite = $borrows->sum('deposit_amount');
-            $total_find_amount = $borrows->sum('find_amount');
-        return view('backends.borrow.is_return', compact('borrows', 'customers', 'books', 'catelogs','total_deposite','total_find_amount'));
+        if ($request->filled('book_ids')) {
+            $borrows->whereIn('book_id', $request->book_ids);
+        }
+        $borrows = $borrows->latest()->get();
+        $total_deposite = $borrows->sum('deposit_amount');
+        $total_find_amount = $borrows->sum('find_amount');
+        $customers = Customer::where('status', 1)->get();
+        $catalogs = Catelog::where('status', 1)->get();
+        $books = Book::where('status', 1)->get();
+        if ($request->ajax()) {
+            $view = view('backends.borrow._table_is_return', compact('borrows', 'customers','total_deposite', 'total_find_amount'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
+        }
+        return view('backends.borrow.is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount'));
     }
 
     /**

@@ -14,14 +14,12 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="cate_id">Catelog</label>
-                    <select id="catelog-filter" class="form-control">
-                        <option value="" {{ !request()->filled('cate_id') ? 'selected' : '' }}>All Catelog
+                    <select name="cate_id" id="cate_id" class="form-control select2">
+                        <option value="">{{ __('Select Student') }}</option>
+                        @foreach ($catelogs as $row)
+                        <option value="{{ $row->id }}" {{ $row->id == request('cate_id') ? 'selected' : '' }}>
+                            {{ $row->cate_name }}
                         </option>
-                        @foreach ($catelogs as $catelog)
-                            <option value="{{ $catelog->id }}"
-                                {{ request('cate_id') == $catelog->id ? 'selected' : '' }}>
-                                {{ $catelog->cate_name }}
-                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -35,60 +33,42 @@
         <a href="{{ route('book.create') }}" class="btn btn-success float-lg-right">+ Add New</a>
         @endif
     </div>
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped table-hover">
-            <thead class="">
-                <tr>
-                    <th>Book Code</th>
-                    <th>Catelog Name</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($books as $book)
-                <tr>
-                    <td>{{ $book->book_code }}</td>
-                    <td>{{ $book->catelog->cate_name }}</td>
-                    <td>{{ $book->description }}</td>
-                    <td>
-                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                            <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $book->id }}" data-id="{{ $book->id }}" {{ $book->status =='1' ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="customSwitches{{ $book->id }}"></label>
-                        </div>
-                    </td>
-                    <td>
-                        @if (auth()->user()->can('edit.book'))
-                        <a href="{{ route('book.edit',['book'=>$book->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
-                        @endif
-                        @if (auth()->user()->can('delete.book'))
-                        <form id="deleteForm" action="{{ route('book.destroy',['book'=>$book->id]) }}" method="POST" class="d-inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                                <i class="fa fa-trash-can ambitious-padding-btn"></i>
-                            </button>
-                        </form>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    @include('backends.catelog_and_book.book._table_book')
 </div>
 @push('js')
 <script>
-    function applyFilters() {
-        var cate_id = document.getElementById('catelog-filter').value;
-        var url = "{{ route('book.index') }}";
-        if (cate_id !== '') {
-            url += "?cate_id=" + cate_id;
-        }
-        window.location.href = url;
-    }
-    document.getElementById('catelog-filter').addEventListener('change', applyFilters);
+    $(document).ready(function() {
+        $(document).on('change', '#cate_id, #book_id', function(e) {
+            e.preventDefault();
+            var cate_id = $('#cate_id').val();
+            var book_ids = $('#book_id').val();
+            if (!Array.isArray(book_ids)) {
+                book_ids = [book_ids];
+            }
+
+            $.ajax({
+                type: "GET"
+                , url: '{{ route('book.index') }}'
+                , data: {
+                    'cate_id': cate_id
+                    , 'book_ids': book_ids
+                }
+                , dataType: "json"
+                , success: function(response) {
+                    console.log(response);
+                    if (response.view) {
+                        $('.table-wrap').replaceWith(response.view);
+                    }
+                }
+                , error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        $('#cate_id').select2();
+        $('#book_id').select2();
+    });
+
 </script>
 <script>
     $('.toggle-status').on('change', function() {

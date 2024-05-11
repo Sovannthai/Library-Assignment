@@ -37,13 +37,17 @@ class BookController extends Controller
         if (!auth()->user()->can('view.book')) {
             abort(403, 'Unauthorized action.');
         }
-        $books = Book::query();
-        $catelogs = Catelog::all();
 
-        if ($request->filled('cate_id')) {
-            $books->where('cate_id', $request->cate_id);
+        $catelogs = Catelog::all();
+        $books = Book::when($request->cate_id, function ($query) use ($request) {
+            $query->where('cate_id', $request->cate_id);
+        })->latest()->paginate(25);
+        if ($request->ajax()) {
+            $view = view('backends.catelog_and_book.book._table_book', compact('books', 'catelogs'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
         }
-        $books = $books->get();
         return view('backends.catelog_and_book.book.index', compact('books', 'catelogs'));
     }
 
