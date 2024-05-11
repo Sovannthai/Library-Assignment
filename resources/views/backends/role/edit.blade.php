@@ -37,6 +37,15 @@
                 <span>Select Role</span>
             </div>
             <hr>
+            <div class="user mt-4"><h5>Check All Role</h5></div>
+            <div class="row">
+                <div class="custom-control col-3 custom-switch">
+                    <label style="position: absolute">Checked</label>
+                    <input type="checkbox" name="permissions[]" value="checked.all" @if (in_array('checked.all', $role_permissions)) checked @endif class="custom-control-input toggle-status" id="checked_all" data-id="">
+                    <label class="custom-control-label" for="checked_all"></label>
+                </div>
+            </div>
+            <hr>
             <div class="user mt-4">Dashboard</div>
             <div class="row">
                 <div class="custom-control col-3 custom-switch">
@@ -231,4 +240,19 @@
 </div>
 <!-- switchery js -->
 <script src="src/plugins/switchery/switchery.min.js"></script>
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dashboardSwitch = document.getElementById('checked_all');
+        var userSwitches = document.querySelectorAll('.custom-control-input');
+
+        dashboardSwitch.addEventListener('change', function() {
+            var dashboardState = this.checked;
+            userSwitches.forEach(function(switchElement) {
+                switchElement.checked = dashboardState;
+            });
+        });
+    });
+</script>
+@endpush
 @endsection
