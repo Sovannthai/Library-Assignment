@@ -19,14 +19,9 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $borrows = Borrow::where('is_return', 1);
-        if ($request->filled('customer_id')) {
-            $borrows->where('customer_id', $request->customer_id);
-        }
-        if ($request->filled('book_ids')) {
-            $borrows->whereIn('book_id', $request->book_ids);
-        }
-        $borrows = $borrows->latest()->get();
+        $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
+            $query->where('customer_id', $request->customer_id);
+        })->where('is_return','1')->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
@@ -45,14 +40,9 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $borrows = Borrow::where('is_return', '0');
-        if ($request->filled('customer_id')) {
-            $borrows->where('customer_id', $request->customer_id);
-        }
-        if ($request->filled('book_ids')) {
-            $borrows->whereIn('book_id', $request->book_ids);
-        }
-        $borrows = $borrows->latest()->get();
+        $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
+            $query->where('customer_id', $request->customer_id);
+        })->where('is_return','0')->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
@@ -198,9 +188,9 @@ class BorrowController extends Controller
     // }
     public function edit(string $id)
     {
-        if (!auth()->user()->can('update.borrow')) {
-            abort(403, 'Unauthorized action.');
-        }
+        // if (!auth()->user()->can('update.borrow')) {
+        //     abort(403, 'Unauthorized action.');
+        // }
         $borrow = Borrow::findOrFail($id);
         $catelogs = Catelog::all();
         $customers = Customer::all();

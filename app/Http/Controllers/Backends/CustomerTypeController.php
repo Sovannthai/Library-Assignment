@@ -13,7 +13,7 @@ class CustomerTypeController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->can('view.customer_type')) {
+        if (!auth()->user()->can('view.customer')) {
             abort(403, 'Unauthorized action.');
         }
         $customer_types = CustomerType::paginate(10);

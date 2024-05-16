@@ -1,5 +1,7 @@
 @extends('backends.master')
 @section('title', 'Customer')
+@push('css')
+@endpush
 @section('contents')
 <div class="card">
     <h6 class="card-header">
@@ -13,12 +15,11 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="customer_type_id">Type</label>
-                    <select id="customer_type-filter" class="form-control">
-                        <option value="" {{ !request()->filled('customer_type_id') ? 'selected' : '' }}>All Type
-                        </option>
-                        @foreach ($customer_types as $customer_type)
-                        <option value="{{ $customer_type->id }}" {{ request('customer_type_id') == $customer_type->id ? 'selected' : '' }}>
-                            {{ $customer_type->name }}
+                    <select name="customer_type_id" id="customer_type_id" class="form-control select2">
+                        <option value="">{{ __('Select Type') }}</option>
+                        @foreach ($customer_types as $row)
+                        <option value="{{ $row->id }}" {{ $row->id == request('customer_type_id') ? 'selected' : '' }}>
+                            {{ $row->name }}
                         </option>
                         @endforeach
                     </select>
@@ -33,68 +34,41 @@
         <a href="{{ route('customer.create') }}" class="btn btn-success float-lg-right">+ Add New</a>
         @endif
     </div>
-    <div class="card-body">
-        <table id="example1" class="table table-bordered table-striped table-hover">
-            <thead class="">
-                <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Type</th>
-                    <th>phone</th>
-                    <th>Date of Birth</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($customers as $customer)
-                <tr>
-                    <td>{{ $customer->code }}</td>
-                    <td>{{ $customer->name }}</td>
-                    <td>{{ $customer->sex }}</td>
-                    <td>{{ $customer->customer_type->name }}</td>
-                    <td>{{ $customer->phone }}</td>
-                    <td>{{ $customer->dob }}</td>
-                    <td>
-                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                            <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $customer->id }}" data-id="{{ $customer->id }}" {{ $customer->status =='1' ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="customSwitches{{ $customer->id }}"></label>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#show-{{ $customer->id }}" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
-                        @include('backends.customer.show')
-                        @if (auth()->user()->can('edit.customer'))
-                        <a href="{{ route('customer.edit', ['customer' => $customer->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
-                        @endif
-                        @if (auth()->user()->can('delete.customer'))
-                        <form id="deleteForm" action="{{ route('customer.destroy', ['customer' => $customer->id]) }}" method="POST" class="d-inline-block">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                                <i class="fa fa-trash-can ambitious-padding-btn"></i>
-                            </button>
-                        </form>
-                        @endif
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    @include('backends.customer._table_customer')
 </div>
 @push('js')
 <script>
-    function applyFilters() {
-        var customer_type_id = document.getElementById('customer_type-filter').value;
-        var url = "{{ route('customer.index') }}";
-        if (customer_type_id !== '') {
-            url += "?customer_type_id=" + customer_type_id;
-        }
-        window.location.href = url;
-    }
-    document.getElementById('customer_type-filter').addEventListener('change', applyFilters);
+    $(document).ready(function() {
+        $(document).on('change', '#customer_type_id, #book_id', function(e) {
+            e.preventDefault();
+            var customer_type_id = $('#customer_type_id').val();
+            var book_ids = $('#book_id').val();
+            if (!Array.isArray(book_ids)) {
+                book_ids = [book_ids];
+            }
+
+            $.ajax({
+                type: "GET"
+                , url: '{{ route('customer.index') }}'
+                , data: {
+                    'customer_type_id': customer_type_id
+                    , 'book_ids': book_ids
+                }
+                , dataType: "json"
+                , success: function(response) {
+                    console.log(response);
+                    if (response.view) {
+                        $('.table-wrap').replaceWith(response.view);
+                    }
+                }
+                , error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        $('#customer_type_id').select2();
+        $('#book_id').select2();
+    });
 
 </script>
 <script>

@@ -37,13 +37,17 @@ class CustomerController extends Controller
         if (!auth()->user()->can('view.customer')) {
             abort(403, 'Unauthorized action.');
         }
-        $customers = Customer::query();
         $customer_types = CustomerType::all();
-        if ($request->filled('customer_type_id')) {
-            $customers->where('customer_type_id', $request->customer_type_id);
+        $customers = Customer::when($request->customer_type_id, function ($query) use ($request) {
+            $query->where('customer_type_id', $request->customer_type_id);
+        })->paginate(10);
+        if ($request->ajax()) {
+            $view = view('backends.customer._table_customer', compact('customers', 'customer_types'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
         }
-        $customers = $customers->paginate(10);
-        return view('backends.customer.index', compact('customers','customer_types'));
+        return view('backends.customer.index', compact('customers', 'customer_types'));
     }
 
     /**

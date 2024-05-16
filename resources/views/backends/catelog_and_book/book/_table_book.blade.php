@@ -1,5 +1,5 @@
-<div class="card-body table-wrap">
-    <table id="" class="table table-striped table-bordered text-nowrap">
+<div class="card-body p-0 table-wrap">
+    <table id="" class="table table-striped table-bordered text-nowrap table-hover">
         <thead class="">
             <tr>
                 <th>Book Code</th>
@@ -45,6 +45,6 @@
             {{ $books->lastItem() }} {{ __('of') }} {{ $books->total() }}
             {{ __('entries') }}
         </div>
-        {{-- <div class="col-12 col-sm-6"> {{ $books->appends(request()->input())->links() }}</div> --}}
+        <div class="col-12 col-sm-6"> {{ $books->appends(request()->input())->links() }}</div>
     </div>
 </div>

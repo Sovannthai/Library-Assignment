@@ -41,7 +41,7 @@ class BookController extends Controller
         $catelogs = Catelog::all();
         $books = Book::when($request->cate_id, function ($query) use ($request) {
             $query->where('cate_id', $request->cate_id);
-        })->latest()->paginate(25);
+        })->latest()->paginate(10);
         if ($request->ajax()) {
             $view = view('backends.catelog_and_book.book._table_book', compact('books', 'catelogs'))->render();
             return response()->json([

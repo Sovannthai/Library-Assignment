@@ -1,5 +1,5 @@
-<div class="card-body">
-    <table id="" class="table table-bordered datatable table-striped table-hover nowrap table-responsive">
+<div class="card-body p-0 table-wrap">
+    <table id="" class="table table-bordered table-striped table-hover text-nowrap table-responsive">
         <thead class="">
             <tr>
                 <th>Customer Name</th>
@@ -54,17 +54,21 @@
             </tr>
             @endforeach
         </tbody>
-        <tfoot>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ number_format($total_deposite,2) }}</td>
-                <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ number_format($total_find_amount, 2) }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tfoot>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="font-size: 18px;" class="font-bold">Total Deposit: $ {{ number_format($total_deposite,2) }}</td>
+        <td style="font-size: 18px;" class="font-bold">Total Find Amount: $ {{ number_format($total_find_amount, 2) }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
     </table>
+    <div class="col-12 d-flex flex-row flex-wrap">
+        <div class="col-12 col-sm-6 text-center text-sm-left" style="margin-block: 20px">
+            {{ __('Showing') }} {{ $borrows->firstItem() }} {{ __('to') }}
+            {{ $borrows->lastItem() }} {{ __('of') }} {{ $borrows->total() }}
+            {{ __('entries') }}
+        </div>
+        <div class="col-12 col-sm-6"> {{ $borrows->appends(request()->input())->links() }}</div>
+    </div>
 </div>

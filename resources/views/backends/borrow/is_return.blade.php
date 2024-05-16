@@ -40,16 +40,10 @@
         $(document).on('change', '#customer_id, #book_id', function(e) {
             e.preventDefault();
             var customer_id = $('#customer_id').val(); // Get the selected customer ID
-            var book_ids = $('#book_id').val(); // Get the selected book IDs as an array
-
-            // Ensure book_ids is an array
-            if (!Array.isArray(book_ids)) {
-                book_ids = [book_ids];
-            }
-
+            var book_ids = $('#book_id').val();
             $.ajax({
                 type: "GET"
-                , url: '{{ route('is_return.index') }}'
+                , url: '{{ route('borrow.index') }}'
                 , data: {
                     'customer_id': customer_id
                     , 'book_ids': book_ids
@@ -58,7 +52,7 @@
                 , success: function(response) {
                     console.log(response);
                     if (response.view) {
-                        $('.datatable').html(response.view);
+                        $('.table-wrap').replaceWith(response.view);
                     }
                 }
                 , error: function(xhr, status, error) {

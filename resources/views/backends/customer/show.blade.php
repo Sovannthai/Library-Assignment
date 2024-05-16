@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                                     <label class="font-weight-bold mb-1 text-uppercase">@lang('Type')</label>
-                                    <p>{{ ($customer->customer_type->name)}}</p>
+                                    <p>{{ (@$customer->customer_type->name)}}</p>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                                     <label class="font-weight-bold mb-1 text-uppercase">@lang('Gender')</label>
