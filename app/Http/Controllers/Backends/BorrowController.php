@@ -19,9 +19,18 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
+        $search =  request('search');
         $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
             $query->where('customer_id', $request->customer_id);
-        })->where('is_return','1')->paginate(10);
+        })->when(request()->filled('search'), function ($query) use ($search) {
+            return $query->whereHas('customer', function ($customer) use ($search) {
+                $customer->where('name', 'LIKE', '%' . $search . '%');
+            })
+                ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
+                ->orWhereHas('books', function ($q) use ($search) {
+                    $q->where('book_code', 'LIKE', '%' . $search . '%');
+                });
+        })->where('is_return', '1')->OrderBy('borrow_code', 'desc')->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
@@ -42,14 +51,14 @@ class BorrowController extends Controller
         }
         $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
             $query->where('customer_id', $request->customer_id);
-        })->where('is_return','0')->paginate(10);
+        })->where('is_return', '0')->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
         $catalogs = Catelog::where('status', 1)->get();
         $books = Book::where('status', 1)->get();
         if ($request->ajax()) {
-            $view = view('backends.borrow._table_is_return', compact('borrows', 'customers','total_deposite', 'total_find_amount'))->render();
+            $view = view('backends.borrow._table_is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount'))->render();
             return response()->json([
                 'view' => $view
             ]);
@@ -118,8 +127,8 @@ class BorrowController extends Controller
                 $newBorrowCode = str_pad($newNumericPart, 5, '0', STR_PAD_LEFT);
             }
             $borrow->borrow_code = $newBorrowCode;
-            $borrow->deposit_amount = $request->deposit_amount;
-            $borrow->find_amount = $request->find_amount;
+            $borrow->deposit_amount = $request->deposit_amount ?? 0;
+            $borrow->find_amount = $request->find_amount ?? 0;
             $borrow->borrow_date = $request->borrow_date;
             $borrow->due_date = $request->due_date;
             $borrow->return_date = $request->return_date;
@@ -198,6 +207,30 @@ class BorrowController extends Controller
         return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books'));
     }
 
+    public function return_book(Request $request, $id)
+    {
+        try {
+            $borrow = Borrow::find($id);
+            $borrow->find_amount = $request->find_amount ?? 0;
+            $borrow->return_date = $request->return_date;
+            if ($request->input('return_date')) {
+                $borrow->is_return = '0';
+            }
+            $borrow->save();
+            $output = [
+                'success' => 1,
+                'msg' => _('Return successfully')
+            ];
+        } catch (\Exception $e) {
+            dd($e);
+            $output = [
+                'error' => 0,
+                'msg' => _('Something went wrong')
+            ];
+        }
+        return redirect()->route('borrow.index')->with($output);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -210,8 +243,8 @@ class BorrowController extends Controller
             $borrow->catelog_id = $request->catelog_id;
             $borrow->created_by = auth()->user()->id;
             $borrow->borrow_code = $request->borrow_code;
-            $borrow->deposit_amount = $request->deposit_amount;
-            $borrow->find_amount = $request->find_amount;
+            $borrow->deposit_amount = $request->deposit_amount ?? 0;
+            $borrow->find_amount = $request->find_amount ?? 0;
             $borrow->borrow_date = $request->borrow_date;
             $borrow->due_date = $request->due_date;
             $borrow->return_date = $request->return_date;

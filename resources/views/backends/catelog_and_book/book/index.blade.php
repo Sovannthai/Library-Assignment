@@ -15,12 +15,20 @@
                 <div class="col-sm-4">
                     <label for="cate_id">Catelog</label>
                     <select name="cate_id" id="cate_id" class="form-control select2">
-                        <option value="">{{ __('Select Student') }}</option>
+                        <option value="">{{ __('All') }}</option>
                         @foreach ($catelogs as $row)
                         <option value="{{ $row->id }}" {{ $row->id == request('cate_id') ? 'selected' : '' }}>
                             {{ $row->cate_name }}
                         </option>
                         @endforeach
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-control select2">
+                        <option value="" {{ !request()->filled('status') ? 'selected' : '' }}>All</option>
+                        <option value="1" {{ request('status')== '1' ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ request('status')== '0' ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
             </div>
@@ -38,20 +46,16 @@
 @push('js')
 <script>
     $(document).ready(function() {
-        $(document).on('change', '#cate_id, #book_id', function(e) {
+        $(document).on('change', '#cate_id,#status', function(e) {
             e.preventDefault();
             var cate_id = $('#cate_id').val();
-            var book_ids = $('#book_id').val();
-            if (!Array.isArray(book_ids)) {
-                book_ids = [book_ids];
-            }
-
+            var status = $('#status').val();
             $.ajax({
                 type: "GET"
                 , url: '{{ route('book.index') }}'
                 , data: {
                     'cate_id': cate_id
-                    , 'book_ids': book_ids
+                    , 'status': status
                 }
                 , dataType: "json"
                 , success: function(response) {
@@ -66,7 +70,7 @@
             });
         });
         $('#cate_id').select2();
-        $('#book_id').select2();
+        $('#status').select2();
     });
 
 </script>

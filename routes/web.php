@@ -58,6 +58,7 @@ Route::middleware(['auth',SetSessionData::class])->group(function () {
     Route::resource('/borrow',BorrowController::class);
     Route::get('/fetch-books/{cate_id}', [BorrowController::class, 'fetchBooks']);
     Route::get('/fetch-books-edit/{cate_id}', [BorrowController::class, 'EditfetchBooks']);
+    Route::put('/input-return-date/{id}',[BorrowController::class,'return_book'])->name('return.input');
     Route::get('/is_return',[BorrowController::class,'is_return'])->name('is_return.index');
     Route::get('/is-return/show/{id}',[BorrowController::class,'showIs_return'])->name('is_return.show');
 
@@ -65,6 +66,8 @@ Route::middleware(['auth',SetSessionData::class])->group(function () {
     Route::get('borrow-report',[ReportController::class,'index'])->name('report.index');
     Route::get('book-report',[ReportController::class,'book_report'])->name('book_report.index');
     Route::get('customer-report',[ReportController::class,'customer_report'])->name('customer_report.index');
+    Route::get('/report',[ReportController::class,'customerReport'])->name('report.customer');
+
     //Business Setting
     Route::get('business-setting',[BusinessSettingController::class,'index'])->name('business_setting.index');
     Route::put('update-business-setting',[BusinessSettingController::class,'update'])->name('business_setting.update');

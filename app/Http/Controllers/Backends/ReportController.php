@@ -10,6 +10,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerType;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -46,7 +47,7 @@ class ReportController extends Controller
                 $query->where('cate_id', $cateId);
             });
         }
-        $borrows = $borrows->get();
+        $borrows = $borrows->latest()->get();
         $catelogs = Catelog::where('status', 1)->get();
         return view('backends.report.borrow_report', compact('borrows', 'customers', 'catelogs', 'books', 'filterValue', 'cateId', 'Users', 'request'));
     }
@@ -68,6 +69,16 @@ class ReportController extends Controller
         $books = $books->where('status', 1)->get();
         return view('backends.report.book_report', compact('books', 'catelogs', 'librarains'));
     }
+    // public function customerReport()
+    // {
+    //     $reports = DB::table('borrows')
+    //         ->join('books', 'borrows.book_id', '=', 'books.id')
+    //         ->select('borrows.customer_id', 'books.id as book_id', 'books.book_code', 'books.description')
+    //         ->where('borrows.customer_id')
+    //         ->get();
+    //     dd($reports);
+    //     return view('backends.report.customer', compact('reports'));
+    // }
     public function customer_report(Request $request)
     {
         if (!auth()->user()->can('view.customer_report')) {

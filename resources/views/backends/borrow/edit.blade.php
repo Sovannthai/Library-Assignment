@@ -75,18 +75,18 @@
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="col-sm-4">
+            {{-- <div class="col-sm-4">
                 <label for="">Borrow Code</label>
                 <input type="text" class="form-control" name="borrow_code" value="{{ $borrow->borrow_code }}">
-            </div>
+            </div> --}}
             <div class="col-sm-4">
                 <label for="">Deposit Amount</label>
                 <input type="number" class="form-control" name="deposit_amount" value="{{ $borrow->deposit_amount }}">
             </div>
-            <div class="col-sm-4">
+            {{-- <div class="col-sm-4">
                 <label for="">Find Amount</label>
                 <input type="number" class="form-control" name="find_amount" value="{{ $borrow->find_amount }}">
-            </div>
+            </div> --}}
             <div class="col-sm-4">
                 <label for="">Borrow Date</label>
                 <input type="date" class="form-control" name="borrow_date" value="{{ $borrow->borrow_date }}">
@@ -95,10 +95,10 @@
                 <label for="">Due Date</label>
                 <input type="date" class="form-control" name="due_date" value="{{ $borrow->due_date }}">
             </div>
-            <div class="col-sm-4">
+            {{-- <div class="col-sm-4">
                 <label for="">Return Date</label>
                 <input type="date" class="form-control" name="return_date" value="{{ $borrow->return_date }}">
-            </div>
+            </div> --}}
             <div class="col-sm-12   ">
                 <label for="">Note</label>
                 <textarea name="note" rows="4" class="form-control">{{ $borrow->note }}</textarea>

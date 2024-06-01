@@ -16,7 +16,7 @@
                 <div class="col-sm-4">
                     <label for="customer_type_id">Type</label>
                     <select name="customer_type_id" id="customer_type_id" class="form-control select2">
-                        <option value="">{{ __('Select Type') }}</option>
+                        <option value="">{{ __('All') }}</option>
                         @foreach ($customer_types as $row)
                         <option value="{{ $row->id }}" {{ $row->id == request('customer_type_id') ? 'selected' : '' }}>
                             {{ $row->name }}

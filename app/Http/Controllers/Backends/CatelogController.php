@@ -20,7 +20,7 @@ class CatelogController extends Controller
             $catelog->update(['status' => $status]);
             $output = [
                 'success' => 1,
-                'msg' => _('Status update successfully')
+                'msg' =>trans('Status update successfully')
             ];
         } catch (Exception $e) {
             dd($e);
@@ -34,12 +34,20 @@ class CatelogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!auth()->user()->can('view.catelog')) {
             abort(403, 'Unauthorized action.');
         }
-        $catelogs = Catelog::paginate(10);
+        $catelogs = Catelog::when($request->status, function ($query) use ($request) {
+            $query->where('status', $request->status);
+        })->latest()->paginate(10);
+        if ($request->ajax()) {
+            $view = view('backends.catelog_and_book.catelog._table', compact('catelogs'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
+        }
         return view('backends.catelog_and_book.catelog.index',compact('catelogs'));
     }
 

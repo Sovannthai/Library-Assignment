@@ -1,7 +1,8 @@
 <div class="card-body p-0 table-wrap">
-    <table id="" class="table table-striped table-bordered text-nowrap table-hover">
+    <table id="" class="table table-bordered text-nowrap table-hover">
         <thead class="">
             <tr>
+                <th>No.</th>
                 <th>Book Code</th>
                 <th>Catelog Name</th>
                 <th>Description</th>
@@ -12,6 +13,7 @@
         <tbody>
             @foreach ($books as $book)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $book->book_code }}</td>
                 <td>{{ $book->catelog->cate_name }}</td>
                 <td>{{ $book->description }}</td>
@@ -23,14 +25,14 @@
                 </td>
                 <td>
                     @if (auth()->user()->can('edit.book'))
-                    <a href="{{ route('book.edit',['book'=>$book->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                    <a href="{{ route('book.edit',['book'=>$book->id]) }}" class="btn btn-outline-success btn-sm btn-md text-uppercase" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> Edit</i></a>&nbsp;&nbsp;
                     @endif
                     @if (auth()->user()->can('delete.book'))
                     <form id="deleteForm" action="{{ route('book.destroy',['book'=>$book->id]) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                            <i class="fa fa-trash-can ambitious-padding-btn"></i>
+                        <button type="button" class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
+                            <i class="fa fa-trash-can ambitious-padding-btn"> Delete</i>
                         </button>
                     </form>
                     @endif

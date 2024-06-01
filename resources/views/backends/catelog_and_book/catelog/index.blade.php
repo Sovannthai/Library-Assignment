@@ -1,6 +1,29 @@
 @extends('backends.master')
 @section('title','Catelog')
 @section('contents')
+<div class="card">
+    <h6 class="card-header">
+        <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
+            id="heading-example" class="d-block">
+            <i class="fa fa-filter"></i>
+            Filter
+        </a>
+    </h6>
+    <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="status">Status</label>
+                    <select id="status" name="status" class="form-control select2">
+                        <option value="" {{ !request()->filled('status') ? 'selected' : '' }}>All</option>
+                        <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <div class="card">
         <div class="card-header text-uppercase">List Catelog
             @if (auth()->user()->can('create.catelog'))
@@ -8,67 +31,39 @@
             @include('backends.catelog_and_book.catelog.create')
             @endif
         </div>
-        <div class="card-body">
-            <table class="table datatable table-bordered table-striped table-hover nowrap table-responsive">
-                <thead class="text-uppercase">
-                    <tr>
-                        <th>Cover</th>
-                        <th>code</th>
-                        <th>Name</th>
-                        <th>isbn</th>
-                        <th>Author Name</th>
-                        <th>Publisher</th>
-                        <th>Publish Year</th>
-                        <th>Pubish Edition</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($catelogs as $catelog)
-                    <tr>
-                        <td>
-                            <span>
-                                <a class="example-image-link" href="{{ url('uploads/all_photo/'.$catelog->photo) }}" data-lightbox="lightbox-' . $catelog->id . '">
-                                    <img class="example-image image-thumbnail" src="{{ url('uploads/all_photo/'.$catelog->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
-                                </a>
-                            </span>
-                        </td>
-                        <td>{{ $catelog->cate_code }}</td>
-                        <td>{{ $catelog->cate_name }}</td>
-                        <td>{{ $catelog->isbn }}</td>
-                        <td>{{ $catelog->author_name }}</td>
-                        <td>{{ $catelog->publisher }}</td>
-                        <td>{{ $catelog->publishyear }}</td>
-                        <td>{{ $catelog->publish_edition }}</td>
-                        <td>
-                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $catelog->id }}" data-id="{{ $catelog->id }}" {{ $catelog->status =='1' ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="customSwitches{{ $catelog->id }}"></label>
-                            </div>
-                        </td>
-                        <td>
-                            @if (auth()->user()->can('edit.catelog'))
-                            <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
-                            @include('backends.catelog_and_book.catelog.edit')
-                            @endif
-                            @if (auth()->user()->can('delete.catelog'))
-                            <form id="deleteForm" action="{{ route('catelog.destroy',['catelog'=>$catelog->id]) }}" method="POST" class="d-inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                                    <i class="fa fa-trash-can ambitious-padding-btn"></i>
-                                </button>
-                            </form>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        @include('backends.catelog_and_book.catelog._table')
     </div>
 @push('js')
+<script>
+    $(document).ready(function() {
+        $(document).on('change', '#cate_id, #status', function(e) {
+            e.preventDefault();
+            var cate_id = $('#cate_id').val();
+            var status = $('#status').val();
+            $.ajax({
+                type: "GET"
+                , url: '{{ route('catelog.index') }}'
+                , data: {
+                    'cate_id': cate_id
+                    , 'status': status
+                }
+                , dataType: "json"
+                , success: function(response) {
+                    console.log(response);
+                    if (response.view) {
+                        $('.table-wrap').replaceWith(response.view);
+                    }
+                }
+                , error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+        $('#cate_id').select2();
+        $('#status').select2();
+    });
+
+</script>
 <script>
     $('.toggle-status').on('change', function() {
     var status = $(this).prop('checked') ? 'true' : 'false';

@@ -70,10 +70,9 @@
                     <label for="end_date">To Date</label>
                     <input type="date" name="end_date" id="end_date" class="form-control" value="{{ old('end_date', $request->input('end_date')) }}">
                 </div>
-                <div class="col-sm-4">
-                    <label>&nbsp;</label><br>
-                    <button type="button" class="btn btn-danger float-lg-right ml-1" onclick="resetFilter()">Reset</button>
-                    <button type="submit" class="btn btn-success float-lg-right">Filter</button>
+                <div class="col-sm-4 mt-2">
+                    <button type="button" class="btn btn-outline-danger float-lg-right btn-lg ml-1" onclick="resetFilter()">Reset</button>
+                    <button type="submit" class="btn btn-outline-success float-lg-right btn-lg">Filter</button>
                 </div>
             </form>
         </div>
@@ -84,17 +83,18 @@
 <div class="card">
     <div class="card-header text-uppercase">Borrow Report</div>
     <div class="card-body">
-        <table class="table table-bordered datatable table-striped table-hover nowrap table-responsive-lg">
+        <table class="table table-bordered datatable table-hover nowrap table-responsive-lg">
             <thead class="">
                 <tr>
+                    <th>No.</th>
                     <th>Customer</th>
                     <th>Code</th>
-                    <th>Book</th>
+                    {{-- <th>Book</th> --}}
                     <th>Deposite($)</th>
                     <th>Find Amount</th>
-                    <th>Borrow</th>
-                    <th>Due</th>
-                    <th>Return</th>
+                    <th>Borrow Date</th>
+                    <th>Due Date</th>
+                    <th>Return Date</th>
                     <th>Action</th>
                     {{-- <th style="display: none;"></th> --}}
                 </tr>
@@ -102,9 +102,10 @@
             <tbody>
                 @foreach ($borrows as $borrow)
                 <tr>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ @$borrow->customer->name }}</td>
                     <td>{{ $borrow->borrow_code }}</td>
-                    <td>
+                    {{-- <td>
                         @foreach ($borrow->book_id as $bookId)
                         @php
                         $book = \App\Models\Book::find($bookId);
@@ -115,7 +116,7 @@
                         </li>
                         @endif
                         @endforeach
-                    </td>
+                    </td> --}}
                     <td>$ {{ $borrow->deposit_amount }}</td>
                     <td>$ {{ $borrow->find_amount }}</td>
                     <td>{{ $borrow->borrow_date }}</td>

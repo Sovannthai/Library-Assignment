@@ -10,9 +10,10 @@
             @endif
         </div>
         <div class="card-body">
-            <table class="table table-striped datatable nowrap table-bordered table-hover">
+            <table class="table datatable nowrap table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th>No.</th>
                         <th>Name</th>
                         <th>Action</th>
                     </tr>
@@ -20,13 +21,14 @@
                 <tbody>
                     @forelse ($roles as $role)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td class="table-plus">{{ $role->name }}</td>
                             <td>
                                 @if ($role->name != 'Admin')
                                     @if (auth()->user()->can('edit.role'))
                                         <a href="{{ route('edit_role', ['id' => $role->id]) }}"
-                                            class="btn btn-success btn-sm btn-style"><i
-                                                class="fa-regular fa-pen-to-square"></i></a>
+                                            class="btn btn-outline-success btn-sm text-uppercase"><i
+                                                class="fa-regular fa-pen-to-square"> Edit</i></a>
                                     @endif
                                     @if (auth()->user()->can('delete.role'))
                                         <form id="deleteForm" action="{{ route('destroy_role', ['id' => $role->id]) }}"
@@ -34,9 +36,9 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="button"
-                                                class="btn btn-danger btn-outline btn-circle btn-sm btn-md delete-btn btn-style"
+                                                class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase"
                                                 title="@lang('Delete')">
-                                                <i class="fa fa-trash ambitious-padding-btn"></i>
+                                                <i class="fa fa-trash ambitious-padding-btn"> Delete</i>
                                             </button>
                                         </form>
                                     @endif

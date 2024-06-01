@@ -42,7 +42,7 @@
 <div class="card">
     <div class="card-header text-uppercase">Customer Report</div>
     <div class="card-body">
-        <table class="table table-bordered datatable table-striped table-hover">
+        <table class="table table-bordered datatable table-hover">
             <thead class="">
                 <tr>
                     <th>Code</th>

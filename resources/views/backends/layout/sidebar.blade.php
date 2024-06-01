@@ -174,6 +174,12 @@
                             </a>
                         </li>
                         @endif
+                        {{-- <li class="nav-item">
+                            <a href="{{ route('report.customer') }}" class="nav-link custom-ml @if(Route::is('report.customer')) active @endif" id="menu_employess">
+                                <i class="fa-solid fa-plus nav-icon"></i>
+                                <p>Customer Report Test</p>
+                            </a>
+                        </li> --}}
                     </ul>
                 </li>
                 @endif
@@ -189,7 +195,7 @@
                     </a>
                     <ul class="nav nav-treeview" id="collapse_setting">
                         <li class="nav-item">
-                            <a href="{{ route('business_setting.index') }}" class="nav-link custom-ml @if (Route::is('business_setting.index')) @endif" id="menu_employess">
+                            <a href="{{ route('business_setting.index') }}" class="nav-link custom-ml @if (Route::is('business_setting.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>Business Setting</p>
                             </a>

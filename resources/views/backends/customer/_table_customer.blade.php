@@ -1,7 +1,8 @@
 <div class="card-body table-wrap">
-    <table id="" class="table table-bordered table-striped table-hover">
+    <table id="" class="table table-bordered table-hover">
         <thead class="">
             <tr>
+                <th>No.</th>
                 <th>Code</th>
                 <th>Name</th>
                 <th>Gender</th>
@@ -15,6 +16,7 @@
         <tbody>
             @foreach ($customers as $customer)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $customer->code }}</td>
                 <td>{{ $customer->name }}</td>
                 <td>{{ $customer->sex }}</td>
@@ -27,18 +29,18 @@
                         <label class="custom-control-label" for="customSwitches{{ $customer->id }}"></label>
                     </div>
                 </td>
-                <td>
-                    <a href="" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="modal" data-target="#show-{{ $customer->id }}" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                <td class="text-uppercase">
+                    <a href="" class="btn btn-outline-primary btn-sm btn-md" data-toggle="modal" data-target="#show-{{ $customer->id }}" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"> View</i></a>&nbsp;&nbsp;
                     @include('backends.customer.show')
                     @if (auth()->user()->can('edit.customer'))
-                    <a href="{{ route('customer.edit', ['customer' => $customer->id]) }}" class="btn btn-success btn-outline btn-style btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"></i></a>&nbsp;&nbsp;
+                    <a href="{{ route('customer.edit', ['customer' => $customer->id]) }}" class="btn btn-outline-success btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> Edit</i></a>&nbsp;&nbsp;
                     @endif
                     @if (auth()->user()->can('delete.customer'))
                     <form id="deleteForm" action="{{ route('customer.destroy', ['customer' => $customer->id]) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-danger btn-outline btn-style btn-sm btn-md delete-btn" title="@lang('Delete')">
-                            <i class="fa fa-trash-can ambitious-padding-btn"></i>
+                        <button type="button" class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
+                            <i class="fa fa-trash-can ambitious-padding-btn"> Delete</i>
                         </button>
                     </form>
                     @endif

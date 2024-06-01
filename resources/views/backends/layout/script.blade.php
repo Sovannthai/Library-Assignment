@@ -147,8 +147,8 @@
 
 
         bsCustomFileInput.init();
-        var success_audio = "{{ URL::asset('sound/')}}";
-        var error_audio = "{{ URL::asset('sound/')}}";
+        var success_audio = "{{ URL::asset('sound/success.mp3')}}";
+        var error_audio = "{{ URL::asset('sound/error.mp3')}}";
         var success = new Audio(success_audio);
         var error = new Audio(error_audio);
 
