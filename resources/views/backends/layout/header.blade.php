@@ -9,25 +9,19 @@
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
         <!-- Language Dropdown Menu -->
-        {{-- <li class="nav-item dropdown">
+        <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="flag-icon flag-icon-us"></i>
+                <i class="flag-icon flag-icon-{{ Session::get('locale', 'en') == 'en' ? 'gb' : Session::get('locale') }}" ></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right p-0">
-                <a href="#" class="dropdown-item active">
-                    <i class="flag-icon flag-icon-us mr-2"></i> English
+                <a href="{{ route('change_language', 'kh') }}" class="dropdown-item @if (Session::get('locale') == 'kh') active @endif">
+                    <i class="flag-icon flag-icon-kh mr-2"></i> Khmer
                 </a>
-                <a href="#" class="dropdown-item">
-                    <i class="flag-icon flag-icon-de mr-2"></i> German
-                </a>
-                <a href="#" class="dropdown-item">
-                    <i class="flag-icon flag-icon-fr mr-2"></i> French
-                </a>
-                <a href="#" class="dropdown-item">
-                    <i class="flag-icon flag-icon-es mr-2"></i> Spanish
+                <a href="{{ route('change_language', 'en') }}" class="dropdown-item @if (Session::get('locale', 'en') == 'en') active @endif">
+                    <i class="flag-icon flag-icon-gb mr-2"></i> English
                 </a>
             </div>
-        </li> --}}
+        </li>
 
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

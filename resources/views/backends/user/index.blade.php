@@ -3,21 +3,20 @@
 @section('contents')
 <div class="card">
     <div class="card-header text-uppercase">
-        User List
+        @lang('User List')
         @if (auth()->user()->can('create.user'))
-        <a href="{{ route('user.create') }}" class="btn btn-success btn-sm float-lg-right"><i class="fa-solid fa-plus"> Add New</i></a>
+        <a href="{{ route('user.create') }}" class="btn btn-success btn-sm float-lg-right"><i class="fa-solid fa-plus"> @lang('Add')</i></a>
         @endif
     </div>
     <div class="card-body">
         <table class="table datatable table-bordered table-hover">
             <thead class="">
                 <tr>
-                    <th>Profile</th>
-                    <th>Name</th>
-                    {{-- <th>User Name</th> --}}
-                    <th>Role</th>
-                    <th>Email</th>
-                    <th>Action</th>
+                    <th>@lang('Profile')</th>
+                    <th>@lang('Name')</th>
+                    <th>@lang('Role')</th>
+                    <th>@lang('Email')</th>
+                    <th>@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,19 +30,18 @@
                         </span>
                     </td>
                     <td>{{ $user->name }}</td>
-                    {{-- <td>{{ $user->username }}</td> --}}
                     <td>{{ $user->roles->first()->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         @if (auth()->user()->can('edit.user'))
-                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-outline-success btn-sm btn-md text-uppercase" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> Edit</i></a>&nbsp;&nbsp;
+                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-outline-success btn-sm btn-md text-uppercase" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
                         @endif
                         @if(auth()->user()->can('delete.user'))
                         <form id="deleteForm" action="{{ route('user.destroy',['user'=>$user->id]) }}" method="POST" class="d-inline-block">
                             @csrf
                             @method('DELETE')
                             <button type="button" class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
-                                <i class="fa fa-trash ambitious-padding-btn"> Delete</i>
+                                <i class="fa fa-trash ambitious-padding-btn"> @lang('Delete')</i>
                             </button>
                         </form>
                         @endif

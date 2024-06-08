@@ -28,10 +28,10 @@
                 @if (auth()->user()->can('view.dash'))
                 <li class="nav-item" id="menu_dashboard">
                     {{-- menu-open --}}
-                    <a href="{{ route('home') }}" class="nav-link custom-ml" id="menu_dashboard_bg">
+                    <a href="{{ route('home') }}" class="nav-link custom-ml​@if(Route::is('home')) active @endif" id="menu_dashboard_bg">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
-                            Dashboard
+                            @lang('Dashboard')
                         </p>
                     </a>
                 </li>
@@ -41,22 +41,22 @@
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-book-open-reader"></i>
-                        <p>Librarain Management
+                        <p>@lang('Librarain Management')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview" id="collapse_employee">
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link custom-ml @if(Route::is('user.index')) active @endif" id="menu_employess">
+                            <a href="{{ route('user.index') }}" class="nav-link custom-ml @if(Route::is('user.*')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>User</p>
+                                <p>@lang('User')</p>
                             </a>
                         </li>
                         @if (auth()->user()->can('view.role'))
                         <li class="nav-item">
-                            <a href="{{ route('role.index') }}" class="nav-link custom-ml @if(Route::is('role.index')) active @endif" id="menu_employess">
+                            <a href="{{ route('role.index') }}" class="nav-link custom-ml @if(Route::is('role.*')||Route::is('add_role*')||Route::is('edit_role*')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Role</p>
+                                <p>@lang('Role')</p>
                             </a>
                         </li>
                         @endif
@@ -68,7 +68,7 @@
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-user"></i>
-                        <p>Customer
+                        <p>@lang('Customer')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -76,13 +76,13 @@
                         <li class="nav-item">
                             <a href="{{ route('customer.index') }}" class="nav-link custom-ml @if(Route::is('customer.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Customer</p>
+                                <p>@lang('Customer List')</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('customer_type.index') }}" class="nav-link custom-ml @if(Route::is('customer_type.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Customer Type</p>
+                                <p>@lang('Customer Type')</p>
                             </a>
                         </li>
                     </ul>
@@ -93,7 +93,7 @@
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-book-open"></i>
-                        <p>Catelogs & Books
+                        <p>@lang('Catelogs & Books')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -102,14 +102,14 @@
                         <li class="nav-item">
                             <a href="{{ route('book.index') }}" class="nav-link custom-ml @if(Route::is('book.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Book</p>
+                                <p>@lang('Book')</p>
                             </a>
                         </li>
                         @endif
                         <li class="nav-item">
                             <a href="{{ route('catelog.index') }}" class="nav-link custom-ml @if(Route::is('catelog.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Catelog</p>
+                                <p>@lang('Catelog')</p>
                             </a>
                         </li>
                     </ul>
@@ -120,7 +120,7 @@
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-exchange-alt"></i>
-                        <p>Brrow
+                        <p>@lang('Brrow')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -128,13 +128,13 @@
                         <li class="nav-item">
                             <a href="{{ route('borrow.index') }}" class="nav-link custom-ml @if(Route::is('borrow.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Borrow List</p>
+                                <p>@lang('Borrow List')</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('is_return.index') }}" class="nav-link custom-ml @if(Route::is('is_return.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Return List</p>
+                                <p>@lang('Return List')</p>
                             </a>
                         </li>
                     </ul>
@@ -145,7 +145,7 @@
                     {{-- menu-open --}}
                     <a href="#" class="nav-link custom-ml" id="menu_employee_bg">
                         <i class="nav-icon fas fa-square-poll-vertical"></i>
-                        <p>Report
+                        <p>@lang('Report')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -154,7 +154,7 @@
                         <li class="nav-item">
                             <a href="{{ route('report.index') }}" class="nav-link custom-ml @if(Route::is('report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Borrow Report</p>
+                                <p>@lang('Borrow Report')</p>
                             </a>
                         </li>
                         @endif
@@ -162,7 +162,7 @@
                         <li class="nav-item">
                             <a href="{{ route('book_report.index') }}" class="nav-link custom-ml @if(Route::is('book_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Book Report</p>
+                                <p>@lang('Book Report')</p>
                             </a>
                         </li>
                         @endif
@@ -170,7 +170,7 @@
                         <li class="nav-item">
                             <a href="{{ route('customer_report.index') }}" class="nav-link custom-ml @if(Route::is('customer_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Customer Report</p>
+                                <p>@lang('Customer Report')</p>
                             </a>
                         </li>
                         @endif
@@ -189,7 +189,7 @@
                     <a href="#" class="nav-link custom-ml" id="menu_setting_bg">
                         <i class="nav-icon fa fa-cog"></i>
                         <p>
-                            Setting
+                            @lang('Setting')
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -197,7 +197,7 @@
                         <li class="nav-item">
                             <a href="{{ route('business_setting.index') }}" class="nav-link custom-ml @if (Route::is('business_setting.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Business Setting</p>
+                                <p>@lang('Business Setting')</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -207,7 +207,7 @@
                             {{-- <a class="nav-link" href="#" >Logout</a> --}}
                             <a href="#" class="nav-link custom-ml" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa-solid fa-plus nav-icon"></i>
-                                <p>Logout</p>
+                                <p>@lang('Logout')</p>
                             </a>
                         </li>
                     </ul>

@@ -35,7 +35,9 @@ class UserController extends Controller
             $user->name = $request->name;
             // $user->username = $request->username;
             $user->email = $request->email;
-            $user->password = $request->password;
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
             if ($request->hasFile('photo')) {
                 $user->photo = $this->uploadImage($request->file('photo'));
                 if ($old_photo_path && File::exists(public_path('uploads/all_photo/' . $old_photo_path))) {
@@ -86,14 +88,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-        ]);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|unique:users,email',
+                'password' => 'required|min:6|confirmed',
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            try {
             $user = new User();
             $user->name = $request->name;
             // $user->username = $request->username;

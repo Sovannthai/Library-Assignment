@@ -2,7 +2,7 @@
 @section('title','Profile')
 @section('contents')
 <div class="card">
-    <div class="card-header text-uppercase">Update Profile</div>
+    <div class="card-header text-uppercase">@lang('Update Profile')</div>
     <div class="card-body">
         <form action="{{ route('profile.update',['id'=>$user->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf

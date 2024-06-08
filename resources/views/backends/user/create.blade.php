@@ -8,17 +8,17 @@
     </a><br>
 </div><br>
 <div class="card">
-    <div class="card-header text-uppercase">Create User</div>
+    <div class="card-header text-uppercase">@lang('Create User')</div>
     <div class="card-body">
         <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
                 <div class="col-sm-6">
-                    <label for="">Full Name</label>
+                    <label for="">@lang('Full Name')</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter full name" value="{{ old('name') }}">
                 </div>
                 <div class="col-sm-6">
-                    <label for="">Email</label>
+                    <label for="">@lang('Email')</label>
                     <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ old('email') }}">
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
@@ -32,20 +32,20 @@
                     @enderror
                 </div> --}}
                 <div class="col-sm-6">
-                    <label for="">Password</label>
+                    <label for="">@lang('Password')</label>
                     <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
                     @error('password')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-sm-6">
-                    <label for="password_confirmation">Confirm Password</label>
+                    <label for="password_confirmation">@lang('Confirm Password')</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                 </div>
                 <div class="col-sm-6">
-                    <label for="">Role</label>
+                    <label for="">@lang('Role')</label>
                     <select class="form-control ambitious-form-loading select2" name="role" id="role" placeholder="Select role">
-                        <option value="{{ old('role') }}" disabled selected>Select role</option>
+                        <option value="{{ old('role') }}" disabled selected>@lang('Select role')</option>
                         @foreach ($roles as $role)
                         @if (old('role') == $role->id)
                         <option value="{{ $role->id }}" selected>
@@ -67,8 +67,8 @@
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-success float-lg-right ml-1">Save</button>
-            <a href="{{ route('user.index') }}" class="btn btn-secondary float-lg-right">Close</a>
+            <button type="submit" class="btn btn-success float-lg-right ml-1">@lang('Save')</button>
+            <a href="{{ route('user.index') }}" class="btn btn-secondary float-lg-right">@lang('Close')</a>
         </form>
     </div>
 </div>
