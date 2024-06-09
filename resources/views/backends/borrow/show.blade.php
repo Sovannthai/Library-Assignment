@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
-                <h5 class="modal-title" id="exampleModalLabel">Borrow Detail</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@lang('Borrow Detail')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,11 +11,11 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="form-group col-xs-6 col-sm-4 col-md-3  ">
-                            <label class="font-weight-bold mb-1 text-uppercase">@lang('Borrowo Code')</label>
+                            <label class="font-weight-bold mb-1 text-uppercase">@lang('Borrow Code')</label>
                             <p>{{ $borrow->borrow_code }}</p>
                         </div>
                         <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
-                            <label class="font-weight-bold mb-1 text-uppercase">@lang('Customer Name')</label>
+                            <label class="font-weight-bold mb-1 text-uppercase">@lang('Customer')</label>
                             <p>{{ $borrow->customer->name }}</p>
                         </div>
                         <div class="form-group col-xs-6 col-sm-4 col-md-3 ">

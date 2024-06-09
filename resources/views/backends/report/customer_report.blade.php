@@ -5,16 +5,16 @@
     <h5 class="card-header">
         <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
             <i class="fa fa-filter"></i>
-            Filter
+            @lang('Filter')
         </a>
     </h5>
     <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="created_by">Created By</label>
+                    <label for="created_by">@lang('Created By')</label>
                     <select id="created_by-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                        <option value="" {{ !request()->filled('created_by') ? 'selected' : '' }}>All
+                        <option value="" {{ !request()->filled('created_by') ? 'selected' : '' }}>@lang('All')
                         </option>
                         @foreach ($librarains as $librarain)
                         <option value="{{ $librarain->id }}" {{ request('created_by') == $librarain->id ? 'selected' : '' }}>
@@ -24,9 +24,9 @@
                     </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="customer_type_id">Type</label>
+                    <label for="customer_type_id">@lang('Type')</label>
                     <select id="type-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                        <option value="" {{ !request()->filled('customer_type_id') ? 'selected' : '' }}>All
+                        <option value="" {{ !request()->filled('customer_type_id') ? 'selected' : '' }}>@lang('All')
                         </option>
                         @foreach ($customer_types as $customer_type)
                         <option value="{{ $customer_type->id }}" {{ request('customer_type_id') == $customer_type->id ? 'selected' : '' }}>
@@ -40,16 +40,16 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-header text-uppercase">Customer Report</div>
+    <div class="card-header text-uppercase">@lang('Customer Report')</div>
     <div class="card-body">
         <table class="table table-bordered datatable table-hover">
             <thead class="">
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Created At</th>
-                    <th>Created By</th>
+                    <th>@lang('Code')</th>
+                    <th>@lang('Name')</th>
+                    <th>@lang('Type')</th>
+                    <th>@lang('Created at')</th>
+                    <th>@lang('Created By')</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,9 +57,9 @@
                 <tr>
                     <td>{{ $customer->code }}</td>
                     <td>{{ $customer->name }}</td>
-                    <td>{{ @$customer->customer_type->name }}</< /td>
-                    <td>{{ $customer->created_at->format('Y/m/d h:i A') }}</< /td>
-                    <td>{{ @$customer->createdBy->name }}</< /td>
+                    <td>{{ @$customer->customer_type->name }}</td>
+                    <td>{{ $customer->created_at->format('Y/m/d h:i A') }}</td>
+                    <td>{{ @$customer->createdBy->name }}</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -7,14 +7,14 @@
     <h6 class="card-header">
         <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
             <i class="fa fa-filter"></i>
-            Filter
+            @lang('Filter')
         </a>
     </h6>
     <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="customer_type_id">Type</label>
+                    <label for="customer_type_id">@lang('Type')</label>
                     <select name="customer_type_id" id="customer_type_id" class="form-control select2">
                         <option value="">{{ __('All') }}</option>
                         @foreach ($customer_types as $row)
@@ -29,9 +29,9 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-header text-uppercase">List customer
+    <div class="card-header text-uppercase">@lang('List customer')
         @if (auth()->user()->can('create.customer'))
-        <a href="{{ route('customer.create') }}" class="btn btn-success float-lg-right">+ Add New</a>
+        <a href="{{ route('customer.create') }}" class="btn btn-success float-lg-right">+ @lang('Add')</a>
         @endif
     </div>
     @include('backends.customer._table_customer')

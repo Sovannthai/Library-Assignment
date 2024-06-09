@@ -35,7 +35,7 @@
                                     <p>{{ $customer->dob }}</p>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-4 col-md-3  ">
-                                    <label class="font-weight-bold mb-1 text-uppercase">@lang('Place of Birth')</label>
+                                    <label class="font-weight-bold mb-1 text-uppercase">@lang('Place Of Birth')</label>
                                     <p>{{ $customer->pob }}</p>
                                 </div>
                                 <div class="form-group col-xs-6 col-sm-4 col-md-3 ">

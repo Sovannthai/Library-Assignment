@@ -4,27 +4,27 @@
 <div class="back-btn">
     <a href="{{ route('book.index') }}" class="float-left" data-value="veiw">
         <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
-        Back to all Book
+        @lang('Back to all')
     </a><br>
 </div><br>
 <div class="card">
-    <div class="card-header text-uppercase">Edit Book</div>
+    <div class="card-header text-uppercase">@lang('Edit')</div>
     <div class="card-body">
         <form action="{{ route('book.update',['book'=>$book->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="">Book Code</label>
+                    <label for="">@lang('Book Code')</label>
                     <input type="text" class="form-control" name="book_code" value="{{ $book->book_code }}">
                     @error('book_code')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="col-sm-6">
-                    <label for="">Catelog</label>
+                    <label for="">@lang('Catelog')</label>
                     <select class="form-control ambitious-form-loading select2" name="cate_id" id="cate_id" placeholder="Select catelog">
-                        <option value="{{ old('catelog') }}" disabled selected>Select Catelog</option>
+                        <option value="{{ old('catelog') }}" disabled selected>@lang('Select Catelog')</option>
                         @foreach ($catelogs as $catelog)
                         @if (old('catelog') == $catelog->id)
                         <option value="{{ $catelog->id }}" {{ $catelog->id == $book->cate_id ? 'selected':'' }} selected>
@@ -40,13 +40,13 @@
                     @enderror
                 </div>
                 <div class="col-sm-12   ">
-                    <label for="">Description</label>
+                    <label for="">@lang('Description')</label>
                     <textarea name="description" rows="4" class="form-control">{{ $book->description }}</textarea>
                 </div>
             </div>
             <div class="mt-2">
-                <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
-                <a href="{{ route('book.index') }}" class="btn btn-secondary float-sm-right" >Close</a>
+                <button type="submit" class="btn btn-success float-sm-right ml-1">@lang('Save')</button>
+                <a href="{{ route('book.index') }}" class="btn btn-secondary float-sm-right" >@lang('Cancel')</a>
             </div>
         </form>
     </div>

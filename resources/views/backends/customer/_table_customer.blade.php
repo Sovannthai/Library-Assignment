@@ -2,15 +2,15 @@
     <table id="" class="table table-bordered table-hover">
         <thead class="">
             <tr>
-                <th>No.</th>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Type</th>
-                <th>phone</th>
-                <th>Date of Birth</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>@lang('No.')</th>
+                <th>@lang('Code')</th>
+                <th>@lang('Name')</th>
+                <th>@lang('Gender')</th>
+                <th>@lang('Type')</th>
+                <th>@lang('Phone')</th>
+                <th>@lang('Date of Birth')</th>
+                <th>@lang('Status')</th>
+                <th>@lang('Action')</th>
             </tr>
         </thead>
         <tbody>
@@ -30,17 +30,17 @@
                     </div>
                 </td>
                 <td class="text-uppercase">
-                    <a href="" class="btn btn-outline-primary btn-sm btn-md" data-toggle="modal" data-target="#show-{{ $customer->id }}" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"> View</i></a>&nbsp;&nbsp;
+                    <a href="" class="btn btn-outline-primary btn-sm btn-md" data-toggle="modal" data-target="#show-{{ $customer->id }}" data-toggle="tooltip" title="@lang('Show')"><i class="fa fa-eye ambitious-padding-btn"> @lang('View')</i></a>&nbsp;&nbsp;
                     @include('backends.customer.show')
                     @if (auth()->user()->can('edit.customer'))
-                    <a href="{{ route('customer.edit', ['customer' => $customer->id]) }}" class="btn btn-outline-success btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> Edit</i></a>&nbsp;&nbsp;
+                    <a href="{{ route('customer.edit', ['customer' => $customer->id]) }}" class="btn btn-outline-success btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
                     @endif
                     @if (auth()->user()->can('delete.customer'))
                     <form id="deleteForm" action="{{ route('customer.destroy', ['customer' => $customer->id]) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
-                            <i class="fa fa-trash-can ambitious-padding-btn"> Delete</i>
+                            <i class="fa fa-trash-can ambitious-padding-btn"> @lang('Delete')</i>
                         </button>
                     </form>
                     @endif

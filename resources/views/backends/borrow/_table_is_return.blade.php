@@ -1,16 +1,16 @@
-<div class="card-body p-0 table-wrap">
-    <table class="table table-bordered table-hover text-nowrap table-responsive">
+<div class="card-body p-0 table-wrap table-responsive">
+    <table class="table table-bordered table-hover text-nowrap">
         <thead class="">
             <tr>
-                <th>No.</th>
-                <th>Customer Name</th>
-                <th>Borrow Code</th>
+                <th>@lang('No.')</th>
+                <th>@lang('Customer')</th>
+                <th>@lang('Borrow Code')</th>
                 {{-- <th>Book Name</th> --}}
-                <th>Deposite Amount</th>
-                <th>Find Amount</th>
-                <th>Borrow Date</th>
-                <th>Return Date</th>
-                <th>Action</th>
+                <th>@lang('Deposite Amount')</th>
+                <th>@lang('Find Amount')</th>
+                <th>@lang('Borrow Date')</th>
+                <th>@lang('Return Date')</th>
+                <th>@lang('Action')</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                 <td>{{ $borrow->return_date }}</td>
                 <td class="text-uppercase">
                     @if (auth()->user()->can('view.borrow'))
-                    <a href="" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#is_show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('View')"><i class="fa fa-eye ambitious-padding-btn"> View</i></a>&nbsp;&nbsp;
+                    <a href="" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#is_show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('View')"><i class="fa fa-eye ambitious-padding-btn"> @lang('View')</i></a>&nbsp;&nbsp;
                     @include('backends.borrow.show_is_return')
                     @endif
                     @if (auth()->user()->can('delete.borrow'))
@@ -45,7 +45,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-outline-danger btn-sm delete-btn" title="@lang('Delete')">
-                            <i class="fa fa-trash-can ambitious-padding-btn"> Delete</i>
+                            <i class="fa fa-trash-can ambitious-padding-btn"> @lang('Delete')</i>
                         </button>
                     </form>
                     @endif
@@ -56,8 +56,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td style="font-size: 18px;" class="font-bold"><strong>Total Deposit: $ {{ number_format($total_deposite,2) }}</strong></td>
-        <td style="font-size: 18px;" class="font-bold"><strong>Total Find Amount: $ {{ number_format($total_find_amount, 2) }}</strong></td>
+        <td style="font-size: 18px;" class="font-bold"><strong>@lang('Total Deposit') $ {{ number_format($total_deposite,2) }}</strong></td>
+        <td style="font-size: 18px;" class="font-bold"><strong>@lang('Total Find Amount'): $ {{ number_format($total_find_amount, 2) }}</strong></td>
         <td></td>
         <td></td>
         <td></td>

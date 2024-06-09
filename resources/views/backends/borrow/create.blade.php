@@ -4,19 +4,19 @@
 <div class="back-btn">
     <a href="{{ route('borrow.index') }}" class="float-left" data-value="veiw">
         <i class="fa-solid fa-angles-left"></i>&nbsp;&nbsp;
-        Back to all Borrow List
+        @lang('Back to all')
     </a><br>
 </div><br>
 <div class="card">
-    <div class="card-header text-uppercase">Create Borrow</div>
+    <div class="card-header text-uppercase bg-success">@lang('Create')</div>
     <div class="card-body">
         <form action="{{ route('borrow.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="">Customer</label>
-                    <select class="form-control ambitious-form-loading select2" name="customer_id" id="customer_id" placeholder="Select customer">
-                        <option value="{{ old('customer') }}" disabled selected>Select customer</option>
+                    <label for="">@lang('Customer')</label>
+                    <select class="form-control ambitious-form-loading select2" name="customer_id" id="customer_id">
+                        <option value="{{ old('customer') }}" disabled selected>@lang('Select')</option>
                         @foreach ($customers as $customer)
                         @if (old('customer') == $customer->id)
                         <option value="{{ $customer->id }}" selected>
@@ -57,7 +57,7 @@
                 @enderror
             </div> --}}
             <div class="col-sm-4">
-                <label for="">Book</label>
+                <label for="">@lang('Book')</label>
                 <select multiple class="form-control ambitious-form-loading select2" name="book_id[]" id="book_id">
                     @foreach ($books as $book)
                     @if (old('book_id') == $book->id)
@@ -78,22 +78,22 @@
                 <input type="text" class="form-control" name="borrow_code" placeholder="optional">
             </div> --}}
             <div class="col-sm-4">
-                <label for="">Deposit Amount</label>
-                <input type="number" class="form-control" name="deposit_amount" placeholder="Enter amount">
+                <label for="">@lang('Deposit Amount')</label>
+                <input type="number" class="form-control" name="deposit_amount" placeholder="@lang('Enter amount')">
             </div>
             {{-- <div class="col-sm-4">
                 <label for="">Find Amount</label>
                 <input type="number" class="form-control" name="find_amount" placeholder="Enter amount">
             </div> --}}
             <div class="col-sm-4">
-                <label for="">Borrow Date</label>
+                <label for="">@lang('Borrow Date')</label>
                 <input type="date" class="form-control" name="borrow_date">
                 @error('borrow_date')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="col-sm-4">
-                <label for="">Due Date</label>
+                <label for="">@lang('Due Date')</label>
                 <input type="date" class="form-control" name="due_date">
             </div>
             {{-- <div class="col-sm-4">
@@ -101,13 +101,13 @@
                 <input type="date" class="form-control" name="return_date">
             </div> --}}
             <div class="col-sm-12   ">
-                <label for="">Note</label>
+                <label for="">@lang('Note')</label>
                 <textarea name="note" rows="4" class="form-control"></textarea>
             </div>
     </div>
     <div class="mt-2">
-        <button type="submit" class="btn btn-success float-sm-right ml-1">Save</button>
-        <a href="{{ route('borrow.index') }}" class="btn btn-secondary float-sm-right">Close</a>
+        <button type="submit" class="btn btn-success float-sm-right ml-1">@lang('Save')</button>
+        <a href="{{ route('borrow.index') }}" class="btn btn-secondary float-sm-right">@lang('Close')</a>
     </div>
     </form>
 </div>

@@ -2,17 +2,17 @@
     <table class="table table-bordered table-hover text-nowrap table-responsive">
         <thead class="text-uppercase">
             <tr>
-                <th>No.</th>
-                <th>Cover</th>
-                <th>code</th>
-                <th>Name</th>
-                <th>isbn</th>
-                <th>Author Name</th>
-                <th>Publisher</th>
-                <th>Publish Year</th>
-                <th>Pubish Edition</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>@lang('No.')</th>
+                <th>@lang('Cover')</th>
+                <th>@lang('Code')</th>
+                <th>@lang('Name')</th>
+                <th>@lang('isbn')</th>
+                <th>@lang('Author Name')</th>
+                <th>@lang('Publisher')</th>
+                <th>@lang('Publish Year')</th>
+                <th>@lang('Pubish Edition')</th>
+                <th>@lang('Status')</th>
+                <th>@lang('Action')</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     @if (auth()->user()->can('edit.catelog'))
-                    <a href="" class="btn btn-outline-success text-uppercase btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> Edit</i></a>&nbsp;&nbsp;
+                    <a href="" class="btn btn-outline-success text-uppercase btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
                     @include('backends.catelog_and_book.catelog.edit')
                     @endif
                     @if (auth()->user()->can('delete.catelog'))
@@ -49,7 +49,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-outline-danger text-uppercase btn-sm btn-md delete-btn" title="@lang('Delete')">
-                            <i class="fa fa-trash-can ambitious-padding-btn"> Delete</i>
+                            <i class="fa fa-trash-can ambitious-padding-btn"> @lang('Delete')</i>
                         </button>
                     </form>
                     @endif

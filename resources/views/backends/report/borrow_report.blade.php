@@ -5,16 +5,16 @@
     <h5 class="card-header">
         <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
             <i class="fa fa-filter"></i>
-            Filter
+            @lang('Filter')
         </a>
     </h5>
     <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="customer_id">Customer</label>
+                    <label for="customer_id">@lang('Customer')</label>
                     <select id="customer-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                        <option value="" {{ !request()->filled('customer_id') ? 'selected' : '' }}>All Customer
+                        <option value="" {{ !request()->filled('customer_id') ? 'selected' : '' }}>@lang('All Customer')
                         </option>
                         @foreach ($customers as $customer)
                         <option value="{{ $customer->id }}" {{ request('customer_id') == $customer->id ? 'selected' : '' }}>
@@ -37,9 +37,9 @@
             </div>
         </div> --}}
         <div class="col-sm-4">
-            <label for="created_by">Librarain</label>
+            <label for="created_by">@lang('Librarain')</label>
             <select id="created_by-filter" class="form-control custom-select rounded-0" id="exampleSelectRounded0">
-                <option value="" {{ !request()->filled('created_by') ? 'selected' : '' }}>All
+                <option value="" {{ !request()->filled('created_by') ? 'selected' : '' }}>@lang('All')
                 </option>
                 @foreach ($Users as $User)
                 <option value="{{ $User->id }}" {{ request('created_by') == $User->id ? 'selected' : '' }}>
@@ -49,13 +49,13 @@
             </select>
         </div>
         <div class="col-md-4">
-            <label for="filter-text">Status</label>
+            <label for="filter-text">@lang('Status')</label>
             <div class="form-group">
                 <form method="GET" action="{{ route('report.index') }}">
                     <select name="filter" id="filter" class="form-control" onchange="this.form.submit()">
-                        <option value="" {{ $filterValue === null ? 'selected' : '' }}>All</option>
-                        <option value="1" {{ $filterValue == '1' ? 'selected' : '' }}>Is Borrow</option>
-                        <option value="0" {{ $filterValue == '0' ? 'selected' : '' }}>Is Returned</option>
+                        <option value="" {{ $filterValue === null ? 'selected' : '' }}>@lang('All')</option>
+                        <option value="1" {{ $filterValue == '1' ? 'selected' : '' }}>@lang('Is Borrow')</option>
+                        <option value="0" {{ $filterValue == '0' ? 'selected' : '' }}>@lang('Is Returned')</option>
                     </select>
                 </form>
             </div>
@@ -63,16 +63,16 @@
         <div class="col-sm-12">
             <form id="filterForm" method="GET" action="{{ route('report.index') }}">
                 <div class="col-sm-4">
-                    <label for="start_date">From Date</label>
+                    <label for="start_date">@lang('From Date')</label>
                     <input type="date" name="start_date" id="start_date" class="form-control" value="{{ old('start_date', $request->input('start_date')) }}">
                 </div>
                 <div class="col-sm-4">
-                    <label for="end_date">To Date</label>
+                    <label for="end_date">@lang('To Date')</label>
                     <input type="date" name="end_date" id="end_date" class="form-control" value="{{ old('end_date', $request->input('end_date')) }}">
                 </div>
                 <div class="col-sm-4 mt-2">
-                    <button type="button" class="btn btn-outline-danger float-lg-right btn-lg ml-1" onclick="resetFilter()">Reset</button>
-                    <button type="submit" class="btn btn-outline-success float-lg-right btn-lg">Filter</button>
+                    <button type="button" class="btn btn-outline-danger float-lg-right btn-lg ml-1" onclick="resetFilter()">@lang('Reset')</button>
+                    <button type="submit" class="btn btn-outline-success float-lg-right btn-lg">@lang('Filter')</button>
                 </div>
             </form>
         </div>
@@ -81,22 +81,21 @@
 </div>
 </div>
 <div class="card">
-    <div class="card-header text-uppercase">Borrow Report</div>
-    <div class="card-body">
-        <table class="table table-bordered datatable table-hover nowrap table-responsive-lg">
+    <div class="card-header text-uppercase">@lang('Borrow Report')</div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered datatable table-hover text-nowrap">
             <thead class="">
                 <tr>
-                    <th>No.</th>
-                    <th>Customer</th>
-                    <th>Code</th>
+                    <th>@lang('No.')</th>
+                    <th>@lang('Customer')</th>
+                    <th>@lang('Code')</th>
                     {{-- <th>Book</th> --}}
-                    <th>Deposite($)</th>
-                    <th>Find Amount</th>
-                    <th>Borrow Date</th>
-                    <th>Due Date</th>
-                    <th>Return Date</th>
-                    <th>Action</th>
-                    {{-- <th style="display: none;"></th> --}}
+                    <th>@lang('Deposite Amount')($)</th>
+                    <th>@lang('Find Amount')</th>
+                    <th>@lang('Borrow Date')</th>
+                    <th>@lang('Due Date')</th>
+                    <th>@lang('Return Date')</th>
+                    <th>@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -123,7 +122,7 @@
                     <td>{{ $borrow->due_date }}</td>
                     <td>{{ $borrow->return_date }}</td>
                     <td>
-                        <a href="#" class="btn btn-outline-success text-uppercase" data-toggle="modal" data-target="#show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('Show')">View</a>&nbsp;&nbsp;
+                        <a href="#" class="btn btn-outline-success text-uppercase" data-toggle="modal" data-target="#show-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('Show')"> @lang('View')</a>&nbsp;&nbsp;
                         @include('backends.report.show_borrow_report')
                     </td>
                 </tr>

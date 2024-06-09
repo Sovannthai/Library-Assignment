@@ -5,16 +5,16 @@
     <h6 class="card-header">
         <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
             <i class="fa fa-filter"></i>
-            Filter
+            @lang('Filter')
         </a>
     </h6>
     <div id="collapse-example" class="collapse show" aria-labelledby="heading-example">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="customer_id">Customer</label>
+                    <label for="customer_id">@lang('Customer')</label>
                     <select name="customer_id" id="customer_id" class="form-control select2">
-                        <option value="">{{ __('Select Student') }}</option>
+                        <option value="">{{ __('Select') }}</option>
                         @foreach ($customers as $row)
                         <option value="{{ $row->id }}" {{ $row->id == request('customer_id') ? 'selected' : '' }}>
                             {{ $row->name }}
@@ -27,9 +27,9 @@
     </div>
 </div>
 <div class="card">
-    <div class="card-header text-uppercase">Return List
+    <div class="card-header text-uppercase">@lang('Return List')
         @if (auth()->user()->can('create.borrow'))
-        <a href="{{ route('borrow.create') }}" class="btn btn-success float-lg-right">+ Add New</a>
+        <a href="{{ route('borrow.create') }}" class="btn btn-success float-lg-right">+ @lang('Add Borrow')</a>
         @endif
     </div>
     @include('backends.borrow._table_is_return')
@@ -43,7 +43,7 @@
             var book_ids = $('#book_id').val();
             $.ajax({
                 type: "GET"
-                , url: '{{ route('borrow.index') }}'
+                , url: '{{ route('is_return.index') }}'
                 , data: {
                     'customer_id': customer_id
                     , 'book_ids': book_ids
