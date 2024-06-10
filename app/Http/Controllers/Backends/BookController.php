@@ -18,13 +18,13 @@ class BookController extends Controller
             $book->update(['status' => $status]);
             $output = [
                 'success' => 1,
-                'msg' =>_('Status update successfully')
+                'msg' => _('Status update successfully')
             ];
         } catch (Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' =>_('Something went wrong')
+                'msg' => _('Something went wrong')
             ];
         }
         return response()->json($output);
@@ -41,9 +41,12 @@ class BookController extends Controller
         $catelogs = Catelog::all();
         $books = Book::when($request->cate_id, function ($query) use ($request) {
             $query->where('cate_id', $request->cate_id);
-        })->when($request->status, function ($query) use ($request) {
-            $query->where('status', $request->status);
-        })->latest()->paginate(10);
+        })
+            ->when($request->status !== null, function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->latest()
+            ->paginate(10);
         if ($request->ajax()) {
             $view = view('backends.catelog_and_book.book._table_book', compact('books', 'catelogs'))->render();
             return response()->json([
@@ -61,7 +64,7 @@ class BookController extends Controller
         if (!auth()->user()->can('create.book')) {
             abort(403, 'Unauthorized action.');
         }
-        $catelogs = Catelog::where('status',1)->get();
+        $catelogs = Catelog::where('status', 1)->get();
         return view('backends.catelog_and_book.book.create', compact('catelogs'));
     }
 
@@ -121,7 +124,7 @@ class BookController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'book_code' => 'required|unique:books,book_code,'.$id,
+            'book_code' => 'required|unique:books,book_code,' . $id,
             'cate_id' => 'required'
         ]);
         try {

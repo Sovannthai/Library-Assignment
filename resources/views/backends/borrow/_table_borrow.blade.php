@@ -1,5 +1,5 @@
-<div class="card-body p-0 table-wrap">
-    <table id="" class="table table-bordered table-hover text-nowrap table-responsive-lg">
+<div class="card-body p-0 table-wrap table-responsive">
+    <table id="" class="table table-bordered table-hover text-nowrap">
         <thead class="text-center">
             <tr>
                 <th>@lang('No.')</th>

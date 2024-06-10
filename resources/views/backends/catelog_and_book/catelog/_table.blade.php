@@ -1,5 +1,5 @@
-<div class="card-body p-0 table-wrap">
-    <table class="table table-bordered table-hover text-nowrap table-responsive">
+<div class="card-body p-0 table-wrap table-responsive">
+    <table class="table table-bordered table-hover text-nowrap">
         <thead class="text-uppercase">
             <tr>
                 <th>@lang('No.')</th>
@@ -58,4 +58,12 @@
             @endforeach
         </tbody>
     </table>
+    <div class="col-12 d-flex flex-row flex-wrap">
+        <div class="col-12 col-sm-6 text-center text-sm-left" style="margin-block: 20px">
+            {{ __('Showing') }} {{ $catelogs->firstItem() }} {{ __('to') }}
+            {{ $catelogs->lastItem() }} {{ __('of') }} {{ $catelogs->total() }}
+            {{ __('entries') }}
+        </div>
+        <div class="col-12 col-sm-6"> {{ $catelogs->appends(request()->input())->links() }}</div>
+    </div>
 </div>

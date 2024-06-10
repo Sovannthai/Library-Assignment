@@ -62,4 +62,12 @@
         <td></td>
         <td></td>
     </table>
+    <div class="col-12 d-flex flex-row flex-wrap">
+        <div class="col-12 col-sm-6 text-center text-sm-left" style="margin-block: 20px">
+            {{ __('Showing') }} {{ $borrows->firstItem() }} {{ __('to') }}
+            {{ $borrows->lastItem() }} {{ __('of') }} {{ $borrows->total() }}
+            {{ __('entries') }}
+        </div>
+        <div class="col-12 col-sm-6"> {{ $borrows->appends(request()->input())->links() }}</div>
+    </div>
 </div>

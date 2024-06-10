@@ -24,6 +24,14 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-sm-4">
+                    <label for="status">@lang('Status')</label>
+                    <select id="status" name="status" class="form-control select2">
+                        <option value="" {{ !request()->filled('status') ? 'selected' : '' }}>@lang('All')</option>
+                        <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -39,20 +47,16 @@
 @push('js')
 <script>
     $(document).ready(function() {
-        $(document).on('change', '#customer_type_id, #book_id', function(e) {
+        $(document).on('change', '#customer_type_id, #status', function(e) {
             e.preventDefault();
             var customer_type_id = $('#customer_type_id').val();
-            var book_ids = $('#book_id').val();
-            if (!Array.isArray(book_ids)) {
-                book_ids = [book_ids];
-            }
-
+            var status = $('#status').val();
             $.ajax({
                 type: "GET"
                 , url: '{{ route('customer.index') }}'
                 , data: {
                     'customer_type_id': customer_type_id
-                    , 'book_ids': book_ids
+                    , 'status': status
                 }
                 , dataType: "json"
                 , success: function(response) {
@@ -67,7 +71,7 @@
             });
         });
         $('#customer_type_id').select2();
-        $('#book_id').select2();
+        $('#status').select2();
     });
 
 </script>

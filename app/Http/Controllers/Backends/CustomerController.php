@@ -40,6 +40,9 @@ class CustomerController extends Controller
         $customer_types = CustomerType::all();
         $customers = Customer::when($request->customer_type_id, function ($query) use ($request) {
             $query->where('customer_type_id', $request->customer_type_id);
+        })
+        ->when($request->status !== null, function ($query) use ($request) {
+            $query->where('status', $request->status);
         })->paginate(10);
         if ($request->ajax()) {
             $view = view('backends.customer._table_customer', compact('customers', 'customer_types'))->render();

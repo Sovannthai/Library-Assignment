@@ -39,7 +39,7 @@ class CatelogController extends Controller
         if (!auth()->user()->can('view.catelog')) {
             abort(403, 'Unauthorized action.');
         }
-        $catelogs = Catelog::when($request->status, function ($query) use ($request) {
+        $catelogs = Catelog::when($request->status !== null, function ($query) use ($request) {
             $query->where('status', $request->status);
         })->latest()->paginate(10);
         if ($request->ajax()) {
