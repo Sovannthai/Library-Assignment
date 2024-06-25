@@ -5,15 +5,12 @@
 @push('css')
 @endpush
 <style>
-    .border-left-success {
-        border: 15px solid #ff6347;
-    }
-
     .home-dash {
-        transition: 0.5s;
+        transition: 0.1s;
     }
 
     .home-dash:hover {
+        border: 3px solid #2e3ff6 !important;
         transform: 1.5s;
         transform: translateY(-15px);
     }
@@ -23,6 +20,7 @@
     }
 
     .home-dash-3:hover {
+        border: 3px solid #2e3ff6 !important;
         transform: 1.5s;
         transform: translateY(15px);
     }
@@ -71,7 +69,7 @@
                 </div> --}}
                 <!-- Book -->
                 <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-success border-danger shadow h-100 py-2 home-dash">
+                    <div class="card custom-border border-left-success border-danger shadow h-100 py-2 home-dash">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
@@ -154,31 +152,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="far fa-chart-bar"></i>
-                                Top Borrow Book
-                            </h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="bar-chart"></canvas>
-                        </div>
-
-                    </div>
-                </div>
             </div>
             <section class=" col-md-12">
                 <div class="row">
+                    <div class="col-md-8">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="far fa-chart-bar"></i>
+                                    Top Borrow Book
+                                </h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="bar-chart"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
                     {{-- <div class="col-md-4">
 
                     <div class="card card-primary card-outline">

@@ -5,7 +5,7 @@
                 <th>@lang('No.')</th>
                 <th>@lang('Customer')</th>
                 <th>@lang('Borrow Code')</th>
-                <th>Book Name</th>
+                <th>@lang('Book')</th>
                 <th>@lang('Deposite Amount')</th>
                 {{-- <th>Find Amount</th> --}}
                 <th>@lang('Borrow Date')</th>
