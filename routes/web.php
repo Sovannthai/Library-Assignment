@@ -38,7 +38,7 @@ Route::get('language/{locale}', function ($locale) {
 })->name('change_language');
 
 Auth::routes();
-Route::middleware(['auth',SetSessionData::class,'local_lang','default_lang'])->group(function () {
+Route::middleware(['auth', SetSessionData::class, 'local_lang', 'default_lang'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::controller(RoleController::class)->group(function () {
         Route::get('/all_permission', 'AllRole')->name('role.index');
@@ -49,35 +49,37 @@ Route::middleware(['auth',SetSessionData::class,'local_lang','default_lang'])->g
         Route::delete('/delete/{id}', 'DestroyRole')->name('destroy_role');
     });
     //User
-    Route::resource('user',UserController::class);
-    Route::get('profile/edit/{id}',[UserController::class,'edit_profile'])->name('profile.edit');
-    Route::put('profile/update/{id}',[UserController::class,'update_profile'])->name('profile.update');
+    Route::resource('user', UserController::class);
+    Route::get('profile/edit/{id}', [UserController::class, 'edit_profile'])->name('profile.edit');
+    Route::put('profile/update/{id}', [UserController::class, 'update_profile'])->name('profile.update');
     //Catelogs
-    Route::resource('catelog',CatelogController::class);
+    Route::resource('catelog', CatelogController::class);
     Route::post('/update-status-catelog', [CatelogController::class, 'updateStatus'])->name('catelog.status-update');
     //Books
-    Route::resource('book',BookController::class);
+    Route::resource('book', BookController::class);
     Route::post('/update-status', [BookController::class, 'updateStatus'])->name('book.update_status');
     //Customer Type
-    Route::resource('customer_type',CustomerTypeController::class);
+    Route::resource('customer_type', CustomerTypeController::class);
     //Customer
-    Route::resource('customer',CustomerController::class);
+    Route::resource('customer', CustomerController::class);
     Route::post('/update-status-customer', [CustomerController::class, 'updateStatus'])->name('customer.status_update');
     //Borrow
-    Route::resource('/borrow',BorrowController::class);
+    Route::resource('/borrow', BorrowController::class);
     Route::get('/fetch-books/{cate_id}', [BorrowController::class, 'fetchBooks']);
     Route::get('/fetch-books-edit/{cate_id}', [BorrowController::class, 'EditfetchBooks']);
-    Route::put('/input-return-date/{id}',[BorrowController::class,'return_book'])->name('return.input');
-    Route::get('/is_return',[BorrowController::class,'is_return'])->name('is_return.index');
-    Route::get('/is-return/show/{id}',[BorrowController::class,'showIs_return'])->name('is_return.show');
+    Route::put('/input-return-date/{id}', [BorrowController::class, 'return_book'])->name('return.input');
+    Route::get('/is_return', [BorrowController::class, 'is_return'])->name('is_return.index');
+    Route::get('/is-return/show/{id}', [BorrowController::class, 'showIs_return'])->name('is_return.show');
 
     //Report
-    Route::get('borrow-report',[ReportController::class,'index'])->name('report.index');
-    Route::get('book-report',[ReportController::class,'book_report'])->name('book_report.index');
-    Route::get('customer-report',[ReportController::class,'customer_report'])->name('customer_report.index');
-    Route::get('/report',[ReportController::class,'customerReport'])->name('report.customer');
+    Route::get('borrow-report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('book-report', [ReportController::class, 'book_report'])->name('book_report.index');
+    Route::get('customer-report', [ReportController::class, 'customer_report'])->name('customer_report.index');
+    Route::get('/report', [ReportController::class, 'customerReport'])->name('report.customer');
+    Route::post('/send-telegram-notification/{borrow}', [BorrowController::class, 'sendTelegramNotification'])->name('send.telegram.notification');
+
 
     //Business Setting
-    Route::get('business-setting',[BusinessSettingController::class,'index'])->name('business_setting.index');
-    Route::put('update-business-setting',[BusinessSettingController::class,'update'])->name('business_setting.update');
+    Route::get('business-setting', [BusinessSettingController::class, 'index'])->name('business_setting.index');
+    Route::put('update-business-setting', [BusinessSettingController::class, 'update'])->name('business_setting.update');
 });

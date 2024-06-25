@@ -77,6 +77,9 @@ class CustomerController extends Controller
         ]);
         try {
             $customer = new Customer();
+            $customer->telegram_token = $request->telegram_token;
+            $customer->telegram_chat_id = $request->telegram_chat_id;
+            $customer->telegram_username = $request->telegram_username ?? $customer->name = $request->name;
             $customer->code = $request->code;
             $customer->name = $request->name;
             $customer->customer_type_id = $request->customer_type_id;
@@ -135,6 +138,9 @@ class CustomerController extends Controller
         ]);
         try {
             $customer = Customer::find($id);
+            $customer->telegram_token = $request->telegram_token;
+            $customer->telegram_chat_id = $request->telegram_chat_id;
+            $customer->telegram_username = $request->telegram_username ?? $customer->name = $request->name;
             $customer->code = $request->code;
             $customer->name = $request->name;
             $customer->customer_type_id = $request->customer_type_id;

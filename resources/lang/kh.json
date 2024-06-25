@@ -82,7 +82,7 @@
     "Created at" : "កាលបរិច្ឆេទបង្កើត",
     "Permissions" : "ការអនុញ្ញាត",
     "Gender" : "ភេទ",
-    "Cover" : "ផ្តាំងកម្រប",
+    "Cover" : "ផ្ទាំងកម្រប",
     "Author Name" : "ឈ្មោះអ្នកនិពន្ធ",
     "Publisher" : "គ្រឹះស្ថានបោះពុម្ព",
     "Publish Year" : "ឆ្នាំបោះពុម្ភ",
@@ -115,13 +115,8 @@
     "Logo" : "និមិត្តសញ្ញា",
     "Update Business Setting" : "ធ្វើបច្ចុប្បន្នភាព",
     "Is Borrow" : "កំពុងខ្ចី",
-    "Is Returned" : "បានសង"
-
-
-
-
-
-
-
-
+    "Is Returned" : "បានសង",
+    "Yes, delete it!": "យល់ព្រម",
+    "Yes, Send it!" : "យល់ព្រម",
+    "Customer Detail" : "ព័ត៌មានលម្អិតអតិថិជន"
 }

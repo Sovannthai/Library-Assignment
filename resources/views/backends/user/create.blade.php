@@ -13,36 +13,44 @@
         <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-4">
+                    <label for="">@lang('Telegram Token')</label>
+                    <input type="text" class="form-control" name="telegram_token" placeholder="Enter token" value="{{ old('name') }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram ID')</label>
+                    <input type="text" class="form-control" name="telegram_chat_id" placeholder="Enter id" value="{{ old('name') }}">
+                </div> --}}
+                <div class="col-sm-4">
                     <label for="">@lang('Full Name')</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter full name" value="{{ old('name') }}">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="">@lang('Email')</label>
                     <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ old('email') }}">
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                {{-- <div class="col-sm-6">
+                {{-- <div class="col-sm-4">
                     <label for="">Username</label>
                     <input type="text" class="form-control" name="username" placeholder="Enter username">
                     @error('username')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div> --}}
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="">@lang('Password')</label>
                     <input type="password" class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}">
                     @error('password')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="password_confirmation">@lang('Confirm Password')</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-lg-4">
                     <label for="">@lang('Role')</label>
                     <select class="form-control ambitious-form-loading select2" name="role" id="role" placeholder="Select role">
                         <option value="{{ old('role') }}" disabled selected>@lang('Select role')</option>

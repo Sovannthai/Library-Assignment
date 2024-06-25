@@ -91,8 +91,65 @@
         $('#customer_id').select2();
         $('#book_id').select2();
     });
-
 </script>
+<script>
+    $(document).ready(function() {
+  $('.send-telegram-notification').click(function(event) {
+    event.preventDefault();
 
+    $(this).prop('disabled', true);
+    $(this).html('<i class="fa fa-spinner fa-spin"></i> Sending...');
+
+    var borrowId = $(this).data('borrow-id');
+    var telegramBotToken = '{{ env('TELEGRAM_BOT_TOKEN') }}';
+
+    $.ajax({
+      url: '/send-telegram-notification/' + borrowId,
+      method: 'POST',
+      data: {
+        _token: $(this).find('input[name="_token"]').val(),
+        telegram_bot_token: telegramBotToken
+      },
+      success: function(response) {
+        if (response.status === 'Notification sent!') {
+          $(this).html('<i class="fa fa-check"></i> Sent!');
+          setTimeout(function() {
+            $(this).html('<i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>');
+            $(this).prop('disabled', false);
+          }, 2000);
+        } else {
+          $(this).html('<i class="fa fa-times"></i> Error!');
+          setTimeout(function() {
+            $(this).html('<i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>');
+            $(this).prop('disabled', false);
+          }, 2000);
+        }
+      },
+      error: function(error) {
+        console.error('Error sending notification:', error);
+      }
+    });
+  });
+});
+</script>
+<script>
+    $(document).on('click', '.send-notification', function(e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        Swal.fire({
+            title: "Send Notification?"
+            // , text: "You won't be able to revert this!"
+            , icon: "warning"
+            , showCancelButton: true
+            , confirmButtonColor: "#3085d6"
+            , cancelButtonColor: "#d33"
+            , confirmButtonText: "@lang('Yes, Send it!')"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    });
+</script>
 @endpush
 @endsection

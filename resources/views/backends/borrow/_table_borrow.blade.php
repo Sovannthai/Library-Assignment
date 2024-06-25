@@ -5,7 +5,7 @@
                 <th>@lang('No.')</th>
                 <th>@lang('Customer')</th>
                 <th>@lang('Borrow Code')</th>
-                {{-- <th>Book Name</th> --}}
+                <th>Book Name</th>
                 <th>@lang('Deposite Amount')</th>
                 {{-- <th>Find Amount</th> --}}
                 <th>@lang('Borrow Date')</th>
@@ -20,7 +20,7 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $borrow->customer->name }}</td>
                 <td>{{ $borrow->borrow_code }}</td>
-                {{-- <td>
+                <td>
                     @foreach ($borrow->book_id as $bookId)
                     @php
                     $book = \App\Models\Book::find($bookId);
@@ -31,7 +31,7 @@
                     </li>
                     @endif
                     @endforeach
-                </td> --}}
+                </td>
                 <td>$ {{ $borrow->deposit_amount }}</td>
                 {{-- <td>$ {{ $borrow->find_amount }}</td> --}}
                 <td>{{ $borrow->borrow_date }}</td>
@@ -44,6 +44,13 @@
                     @endif
                 </td>
                 <td class="text-uppercase">
+                    <form id="send-telegram-notification-{{ $borrow->id }}" action="{{ route('send.telegram.notification', ['borrow' => $borrow->id]) }}" method="POST" class="d-inline-block">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger btn-outline btn-sm btn-md send-notification text-uppercase" title="@lang('Delete')" data-borrow-id="{{ $borrow->id }}">
+                          <i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>
+                        </button>
+                      </form>
+                    {{-- <button class="btn btn-outline-primary btn-sm text-uppercase send-notification" data-borrow-id="{{ $borrow->id }}">Sent</button> --}}
                     <a href="" class="btn btn-outline-info btn-sm btn-md" data-toggle="modal" data-target="#return-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('Return')"><li class="nav-icon fas fa-exchange-alt"> @lang('Return')</li></a>
                     @include('backends.borrow.return_book')
                     @if (auth()->user()->can('view.borrow'))
@@ -54,10 +61,10 @@
                     <a href="{{ route('borrow.edit', ['borrow' => $borrow->id]) }}" class="btn btn-outline-success btn-outline btn-sm btn-md" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
                     @endif
                     @if (auth()->user()->can('delete.borrow'))
-                    <form id="deleteForm" action="{{ route('borrow.destroy', ['borrow' => $borrow->id]) }}" method="POST" class="d-inline-block">
+                    <form action="{{ route('borrow.destroy', ['borrow' => $borrow->id]) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="button" class="btn btn-outline-danger btn-outline btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-btn text-uppercase" title="@lang('Delete')">
                             <i class="fa fa-trash-can ambitious-padding-btn"> @lang('Delete')</i>
                         </button>
                     </form>
@@ -74,6 +81,7 @@
         <td></td>
         <td></td>
         <td></td>
+        <td></td>
     </table>
     <div class="col-12 d-flex flex-row flex-wrap">
         <div class="col-12 col-sm-6 text-center text-sm-left" style="margin-block: 20px">
@@ -84,3 +92,4 @@
         <div class="col-12 col-sm-6"> {{ $borrows->appends(request()->input())->links() }}</div>
     </div>
 </div>
+

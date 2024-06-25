@@ -15,6 +15,14 @@
             @method('PUT')
             <div class="row">
                 <div class="col-sm-4">
+                    <label for="">@lang('Telegram Token')</label>
+                    <input type="text" class="form-control" name="telegram_token" placeholder="Enter token" value="{{ $customer->telegram_token }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram ID')</label>
+                    <input type="text" class="form-control" name="telegram_chat_id" placeholder="Enter id" value="{{ $customer->telegram_chat_id }}">
+                </div>
+                <div class="col-sm-4">
                     <label for="">@lang('Code')</label>
                     <input type="text" class="form-control" name="code" value="{{ $customer->code }}">
                     @error('code')
@@ -62,6 +70,10 @@
                 <div class="col-sm-4">
                     <label for="">@lang('Date of Birth')</label>
                     <input type="date" name="dob" class="form-control" value="{{ $customer->dob }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram Username')</label>
+                    <input type="text" name="telegram_username" class="form-control" placeholder="Name" value="{{ $customer->telegram_username }}">
                 </div>
                 <div class="col-sm-12">
                     <label for="">@lang('Place Of Birth')</label>

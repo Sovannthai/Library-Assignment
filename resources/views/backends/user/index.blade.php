@@ -9,7 +9,7 @@
         @endif
     </div>
     <div class="card-body">
-        <table class="table datatable table-bordered table-hover">
+        <table class="table datatable table-bordered table-hover table-responsive-lg">
             <thead class="">
                 <tr>
                     <th>@lang('Profile')</th>
@@ -34,13 +34,13 @@
                     <td>{{ $user->email }}</td>
                     <td>
                         @if (auth()->user()->can('edit.user'))
-                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-outline-success btn-sm btn-md text-uppercase" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
+                        <a href="{{ route('user.edit',['user'=>$user->id]) }}" class="btn btn-outline-success btn-sm text-uppercase" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
                         @endif
                         @if(auth()->user()->can('delete.user'))
-                        <form id="deleteForm" action="{{ route('user.destroy',['user'=>$user->id]) }}" method="POST" class="d-inline-block">
+                        <form id="deleteForm" action="{{ route('user.destroy',['user'=>$user->id]) }}" method="POST" class=" d-inline-block">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="btn btn-outline-danger btn-sm btn-md delete-btn text-uppercase" title="@lang('Delete')">
+                            <button type="button" class="btn btn-outline-danger btn-sm delete-btn text-uppercase" title="@lang('Delete')">
                                 <i class="fa fa-trash ambitious-padding-btn"> @lang('Delete')</i>
                             </button>
                         </form>

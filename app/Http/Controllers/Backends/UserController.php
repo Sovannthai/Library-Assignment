@@ -31,7 +31,6 @@ class UserController extends Controller
         try {
             $user = User::find($id);
             $old_photo_path = $user->photo;
-
             $user->name = $request->name;
             // $user->username = $request->username;
             $user->email = $request->email;
@@ -98,6 +97,8 @@ class UserController extends Controller
             try {
             $user = new User();
             $user->name = $request->name;
+            // $user->telegram_token = $request->telegram_token;
+            // $user->telegram_chat_id = $request->telegram_chat_id;
             // $user->username = $request->username;
             $user->email = $request->email;
             $user->password = $request->password;
@@ -156,6 +157,8 @@ class UserController extends Controller
             $user = User::find($id);
             $old_photo_path = $user->photo;
             $user->name = $request->name;
+            // $user->telegram_token = $request->telegram_token;
+            // $user->telegram_chat_id = $request->telegram_chat_id;
             // $user->username = $request->username;
             $user->email = $request->email;
             $user->password = $request->password;

@@ -48,6 +48,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     .dropify-wrapper .dropify-message span.file-icon {
         font-size: 15px;
@@ -55,9 +56,6 @@
     }
 
 </style>
-
-
-
 <script>
     var burl = "{{ url('/') }}";
 
@@ -178,12 +176,12 @@
         var form = $(this).closest('form');
         Swal.fire({
             title: "@lang('Are you sure?')"
-            , text: "You won't be able to revert this!"
+            // , text: "You won't be able to revert this!"
             , icon: "warning"
             , showCancelButton: true
             , confirmButtonColor: "#3085d6"
             , cancelButtonColor: "#d33"
-            , confirmButtonText: "Yes, delete it!"
+            , confirmButtonText: "@lang('Yes, delete it!')"
         }).then((result) => {
             if (result.isConfirmed) {
                 form.submit();

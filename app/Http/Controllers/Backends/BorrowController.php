@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Backends;
 
-use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Borrow;
+use GuzzleHttp\Client;
 use App\Models\Catelog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Notifications\TelegramAlertNotification;
+use App\Notifications\Channels\TelegramNotificationChannel;
 
 class BorrowController extends Controller
 {
@@ -26,10 +29,21 @@ class BorrowController extends Controller
             return $query->whereHas('customer', function ($customer) use ($search) {
                 $customer->where('name', 'LIKE', '%' . $search . '%');
             })
-                ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
-                ->orWhereHas('books', function ($q) use ($search) {
-                    $q->where('book_code', 'LIKE', '%' . $search . '%');
+            ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
+            ->orWhere(function ($query) use ($search) {
+                // Get the IDs of books that match the search criteria
+                $bookIds = Book::where('status', 1)
+                               ->where('book_code', 'LIKE', '%' . $search . '%')
+                               ->pluck('id')
+                               ->toArray();
+
+                // Add a condition to check if the book_id JSON array contains any of the matching book IDs using raw SQL
+                $query->where(function ($query) use ($bookIds) {
+                    foreach ($bookIds as $bookId) {
+                        $query->orWhereRaw('JSON_CONTAINS(book_id, ?)', [$bookId]);
+                    }
                 });
+            });
         })->where('is_return', '1')->OrderBy('borrow_code', 'desc')->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
@@ -287,5 +301,52 @@ class BorrowController extends Controller
             ];
         }
         return redirect()->route('borrow.index')->with($output);
+    }
+
+    public function sendTelegramNotification($borrowId)
+    {
+        $telegramBotToken = env('TELEGRAM_BOT_TOKEN'); // Retrieve bot token
+
+        $borrow = Borrow::with('customer')->findOrFail($borrowId);
+        $customer = $borrow->customer;
+
+        if ($customer && $customer->telegram_chat_id) {
+            $message = "Dear Customer, **" . $customer->telegram_username . "**,\n\n";
+            $message .= "This is a friendly reminder to please return the book to our library at your earliest convenience.\n\n";
+            $message .= "Due Date: ". $borrow->due_date ."\n\n";
+            $message .= "Thank you for your attention to this matter!\n\n";
+            $message .= "Best regards,\n";
+            $message .= "**" . auth()->user()->name . "**";
+            $this->sendTelegramNotificationManually($customer->telegram_chat_id, $message, $telegramBotToken);
+            $data = [
+                'success' => 1,
+                'msg' => 'Telegram notification sent successfully'
+            ];
+            return redirect()->back()->with($data);
+        }
+        $data = [
+            'error' => 1,
+            'msg' => 'Customer does not have a Telegram chat ID set'
+        ];
+        return redirect()->back()->with($data);
+    }
+    private function sendTelegramNotificationManually($chatId, $message, $telegramBotToken)
+    {
+        $url = "https://api.telegram.org/bot{$telegramBotToken}/sendMessage";
+        $client = new Client([
+            'verify' => false,
+        ]);
+        $data = $client->post('https://api.telegram.org/bot' . env('TELEGRAM_BOT_TOKEN') . '/sendMessage', [
+            'json' => [
+                'chat_id' => $chatId,
+                'text' => $message,
+            ],
+        ]);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        $response = curl_exec($ch);
+        curl_close($ch);
     }
 }

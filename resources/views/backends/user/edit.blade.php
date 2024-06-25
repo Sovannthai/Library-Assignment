@@ -14,29 +14,37 @@
             @csrf
             @method('PUT')
             <div class="form-group row">
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-4">
+                    <label for="">@lang('Telegram Token')</label>
+                    <input type="text" class="form-control" name="telegram_token" placeholder="Enter token" value="{{ $user->telegram_token }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram ID')</label>
+                    <input type="text" class="form-control" name="telegram_chat_id" placeholder="Enter id" value="{{ $user->telegram_chat_id }}">
+                </div> --}}
+                <div class="col-sm-4">
                     <label for="">@lang('Full Name')</label>
                     <input type="text" class="form-control" name="name" placeholder="Enter full name" value="{{ $user->name }}">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="">@lang('Email')</label>
                     <input type="email" class="form-control" name="email" placeholder="Enter email" value="{{ $user->email }}">
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                {{-- <div class="col-sm-6">
+                {{-- <div class="col-sm-4">
                     <label for="">Username</label>
                     <input type="text" class="form-control" name="username" placeholder="Enter username" value="{{ $user->username }}">
                     @error('username')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div> --}}
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="">@lang('Password')</label>
                     <input type="password" class="form-control" name="password" placeholder="Enter password">
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label for="">@lang('Role')</label>
                     <select class="form-control ambitious-form-loading select2" name="role" id="role" placeholder="Select role">
                         <option value="{{ old('role') }}" disabled selected>@lang('Select role')</option>

@@ -14,6 +14,14 @@
             @csrf
             <div class="row">
                 <div class="col-sm-4">
+                    <label for="">@lang('Telegram Token')</label>
+                    <input type="text" class="form-control" name="telegram_token" placeholder="Enter token" value="{{ old('name') }}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram ID')</label>
+                    <input type="text" class="form-control" name="telegram_chat_id" placeholder="Enter id" value="{{ old('name') }}">
+                </div>
+                <div class="col-sm-4">
                     <label for="">@lang('Code')</label>
                     <input type="text" class="form-control" name="code" placeholder="@lang('Code')">
                     @error('code')
@@ -61,6 +69,10 @@
                 <div class="col-sm-4">
                     <label for="">@lang('Date Of Birth')</label>
                     <input type="date" name="dob" class="form-control">
+                </div>
+                <div class="col-sm-4">
+                    <label for="">@lang('Telegram Username')</label>
+                    <input type="text" name="telegram_username" class="form-control" placeholder="Name">
                 </div>
                 <div class="col-sm-12">
                     <label for="">@lang('Place Of Birth')</label>
