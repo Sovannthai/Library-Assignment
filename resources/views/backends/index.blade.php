@@ -152,10 +152,54 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="far fa-chart-bar"></i>
+                                Top Borrow Book
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="bar-chart" height="215px"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="far fa-chart-bar"></i>
+                                Top Views of month
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myChart" width="auto" height="215px"
+                                style="display: block; height: 390px; width: auto;"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <section class=" col-md-12">
-                <div class="row">
-                    <div class="col-md-8">
+            {{-- <section class=" col-md-12"> --}}
+            {{-- <div class="row"> --}}
+            {{-- <div class="col-md-6">
                         <div class="card card-primary card-outline">
                             <div class="card-header">
                                 <h3 class="card-title">
@@ -177,31 +221,30 @@
 
                         </div>
                     </div>
-                    {{-- <div class="col-md-4">
-
-                    <div class="card card-primary card-outline">
-                        <div class="card-header">
-                            <h3 class="card-title">
-                                <i class="far fa-chart-bar"></i>
-                                Top Views of month
-                            </h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                    <div class="col-md-6">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="far fa-chart-bar"></i>
+                                    Top Views of month
+                                </h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="myChart" width="1448" height="730px"
+                                    style="display: block; height: 390px; width: 1159px;"></canvas>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <canvas id="myChart" width="1448" height="730px"
-                                style="display: block; height: 390px; width: 1159px;"></canvas>
-                        </div>
-                    </div>
-                </div> --}}
-                </div>
-            </section>
+                    </div> --}}
+            {{-- </div> --}}
+            {{-- </section> --}}
         @endif
     </div>
 @endsection
@@ -253,11 +296,37 @@
                                     return 'Book Code: ' + bookCodes[index] + ',Total Borrow: ' +
                                         borrowCounts[index];
                                 },
-                                afterLabel: function(tooltipItem) {
-                                    var index = tooltipItem.dataIndex;
-                                    return bookDescriptions[index];
-                                }
                             }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var monthlyData = @json(array_values($monthlyData));
+
+            var data = {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Total Borrow Book',
+                    data: monthlyData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }

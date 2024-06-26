@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Book;
 use App\Models\User;
 use App\Models\Borrow;
 use App\Models\Catelog;
 use App\Models\Customer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Auth\Middleware\Authorize;
 
 class HomeController extends Controller
 {
@@ -57,6 +55,22 @@ class HomeController extends Controller
             })
             ->sortByDesc('borrow_count')
             ->values();
+
+        $currentYear = Carbon::now()->year;
+
+        $borrowedBooksByMonth = Borrow::selectRaw('MONTH(created_at) as month, SUM(JSON_LENGTH(book_id)) as borrow_count')
+            ->whereYear('created_at', $currentYear)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->pluck('borrow_count', 'month')
+            ->toArray();
+
+        // Ensure all months are present in the array
+        $monthlyData = array_fill(1, 12, 0);
+        foreach ($borrowedBooksByMonth as $month => $count) {
+            $monthlyData[$month] = $count;
+        }
         $books = Book::count();
         $users = User::count();
         $customer = Customer::count();
@@ -69,6 +83,6 @@ class HomeController extends Controller
         $catelogs = Catelog::where('status', 1)->count();
         $deposte_amount = Borrow::where('is_return', '1')->sum('deposit_amount');
         $find_amount = Borrow::where('is_return', '0')->sum('find_amount');
-        return view('backends.index', compact('books', 'users', 'customer', 'borrows', 'deposte_amount', 'find_amount', 'totalBookCount', 'catelogs', 'topBooks'));
+        return view('backends.index', compact('books', 'users', 'customer', 'borrows', 'deposte_amount', 'find_amount', 'totalBookCount', 'catelogs', 'topBooks', 'monthlyData'));
     }
 }
