@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Book;
 use App\Models\Catelog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class BookController extends Controller
@@ -21,6 +22,7 @@ class BookController extends Controller
                 'msg' => _('Status update successfully')
             ];
         } catch (Exception $e) {
+            Log::info("message");
             dd($e);
             $output = [
                 'error' => 0,

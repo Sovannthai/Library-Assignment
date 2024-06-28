@@ -9,6 +9,7 @@ use App\Models\Catelog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BorrowDetail;
 use App\Models\CustomerType;
 use Illuminate\Support\Facades\DB;
 
@@ -23,10 +24,11 @@ class ReportController extends Controller
         $cateId = $request->input('cate_id');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
-        $borrows = Borrow::query();
+        $borrows = BorrowDetail::query();
         $customers = Customer::where('status', 1)->get();
         $Users = User::all();
         $books = Book::where('status', 1)->get();
+
         if ($request->filled('customer_id')) {
             $borrows->where('customer_id', $request->customer_id);
         }
@@ -36,8 +38,8 @@ class ReportController extends Controller
         if ($startDate && $endDate) {
             $endDate = date('Y-m-d', strtotime($endDate . ' +1 day'));
 
-            $borrows->whereDate('borrow_date', '>=', $startDate)
-                ->whereDate('borrow_date', '<=', $endDate);
+            $borrows->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
         }
         if ($filterValue !== null) {
             $borrows->where('is_return', $filterValue);
@@ -47,27 +49,30 @@ class ReportController extends Controller
                 $query->where('cate_id', $cateId);
             });
         }
-        $borrows = $borrows->latest()->get();
+
+        $borrow_reports = $borrows->latest()->get();
         $catelogs = Catelog::where('status', 1)->get();
-        return view('backends.report.borrow_report', compact('borrows', 'customers', 'catelogs', 'books', 'filterValue', 'cateId', 'Users', 'request'));
+        return view('backends.report.borrow_report', compact('borrow_reports', 'customers', 'catelogs', 'books', 'filterValue', 'cateId', 'Users', 'request'));
     }
+
     public function book_report(Request $request)
     {
         if (!auth()->user()->can('view.book_report')) {
             abort(403, 'Unauthorized action.');
         }
-        $books = Book::query();
+        // $books = Book::query();
         $catelogs = Catelog::all();
         $librarains = User::all();
 
-        if ($request->filled('cate_id')) {
-            $books->where('cate_id', $request->cate_id);
-        }
-        if ($request->filled('created_by')) {
-            $books->where('created_by', $request->created_by);
-        }
-        $books = $books->where('status', 1)->get();
-        return view('backends.report.book_report', compact('books', 'catelogs', 'librarains'));
+        // if ($request->filled('cate_id')) {
+        //     $books->where('cate_id', $request->cate_id);
+        // }
+        // if ($request->filled('created_by')) {
+        //     $books->where('created_by', $request->created_by);
+        // }
+        // $books = $books->where('status', 1)->get();
+        $book_borrows = BorrowDetail::all();
+        return view('backends.report.book_report', compact('book_borrows', 'catelogs', 'librarains'));
     }
     // public function customerReport()
     // {
@@ -94,7 +99,7 @@ class ReportController extends Controller
         if ($request->filled('customer_type_id')) {
             $customers->where('customer_type_id', $request->customer_type_id);
         }
-        $customers = $customers->where('status',1)->get();
-        return view('backends.report.customer_report', compact('catelogs', 'librarains','customers','customer_types'));
+        $customers = $customers->where('status', 1)->get();
+        return view('backends.report.customer_report', compact('catelogs', 'librarains', 'customers', 'customer_types'));
     }
 }

@@ -14,6 +14,8 @@ use App\Http\Controllers\Backends\CustomerController;
 use App\Http\Controllers\Backends\PermissionController;
 use App\Http\Controllers\Backends\CustomerTypeController;
 use App\Http\Controllers\Backends\BusinessSettingController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,4 +84,5 @@ Route::middleware(['auth', SetSessionData::class, 'local_lang', 'default_lang'])
     //Business Setting
     Route::get('business-setting', [BusinessSettingController::class, 'index'])->name('business_setting.index');
     Route::put('update-business-setting', [BusinessSettingController::class, 'update'])->name('business_setting.update');
+
 });

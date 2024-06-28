@@ -5,7 +5,7 @@
                 <th>@lang('No.')</th>
                 <th>@lang('Customer')</th>
                 <th>@lang('Borrow Code')</th>
-                {{-- <th>Book Name</th> --}}
+                <th>@lang('Book')</th>
                 <th>@lang('Deposite Amount')</th>
                 <th>@lang('Find Amount')</th>
                 <th>@lang('Borrow Date')</th>
@@ -31,6 +31,14 @@
                     @endif
                     @endforeach
                 </td> --}}
+                <td>
+                    @foreach ($borrow->borrow_detail as $borrow_detail)
+                        <li>
+                            {{ $borrow_detail->book->book_code }} ({{ $borrow_detail->book->catelog->cate_name }})
+                        </li>
+                        </li>
+                    @endforeach
+                </td>
                 <td>$ {{ $borrow->deposit_amount }}</td>
                 <td>$ {{ $borrow->find_amount }}</td>
                 <td>{{ $borrow->borrow_date }}</td>
@@ -53,6 +61,7 @@
             </tr>
             @endforeach
         </tbody>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>

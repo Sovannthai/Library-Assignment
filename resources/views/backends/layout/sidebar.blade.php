@@ -158,22 +158,22 @@
                             </a>
                         </li>
                         @endif
-                        @if (auth()->user()->can('view.book_report'))
+                        {{-- @if (auth()->user()->can('view.book_report'))
                         <li class="nav-item">
                             <a href="{{ route('book_report.index') }}" class="nav-link custom-ml @if(Route::is('book_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>@lang('Book Report')</p>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('view.customer_report'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('view.customer_report'))
                         <li class="nav-item">
                             <a href="{{ route('customer_report.index') }}" class="nav-link custom-ml @if(Route::is('customer_report.index')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>
                                 <p>@lang('Customer Report')</p>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         {{-- <li class="nav-item">
                             <a href="{{ route('report.customer') }}" class="nav-link custom-ml @if(Route::is('report.customer')) active @endif" id="menu_employess">
                                 <i class="fa-solid fa-plus nav-icon"></i>

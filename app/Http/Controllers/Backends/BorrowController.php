@@ -9,8 +9,7 @@ use App\Models\Catelog;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Notifications\TelegramAlertNotification;
-use App\Notifications\Channels\TelegramNotificationChannel;
+use App\Models\BorrowDetail;
 
 class BorrowController extends Controller
 {
@@ -22,29 +21,35 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $search =  request('search');
-        $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
-            $query->where('customer_id', $request->customer_id);
-        })->when(request()->filled('search'), function ($query) use ($search) {
-            return $query->whereHas('customer', function ($customer) use ($search) {
-                $customer->where('name', 'LIKE', '%' . $search . '%');
-            })
-            ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
-            ->orWhere(function ($query) use ($search) {
-                // Get the IDs of books that match the search criteria
-                $bookIds = Book::where('status', 1)
-                               ->where('book_code', 'LIKE', '%' . $search . '%')
-                               ->pluck('id')
-                               ->toArray();
+        $search = $request->input('search');
+        $cate_id = $request->input('cate_id');
 
-                // Add a condition to check if the book_id JSON array contains any of the matching book IDs using raw SQL
-                $query->where(function ($query) use ($bookIds) {
-                    foreach ($bookIds as $bookId) {
-                        $query->orWhereRaw('JSON_CONTAINS(book_id, ?)', [$bookId]);
-                    }
+        $borrows = Borrow::with('borrow_detail.book')
+            ->when($request->customer_id, function ($query) use ($request) {
+                $query->where('customer_id', $request->customer_id);
+            })
+            ->when($request->filled('search'), function ($query) use ($search) {
+                $query->whereHas('customer', function ($customer) use ($search) {
+                    $customer->where('name', 'LIKE', '%' . $search . '%');
+                })
+                    ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('borrow_detail', function ($detail) use ($search) {
+                        $bookIds = Book::where('status', 1)
+                            ->where('book_code', 'LIKE', '%' . $search . '%')
+                            ->orWhereHas('catelog', function ($query) use ($search) {
+                                $query->where('cate_name', 'LIKE', '%' . $search . '%');
+                            })
+                            ->pluck('id')
+                            ->toArray();
+                        $detail->whereIn('book_id', $bookIds);
+                    });
+            })->when($request->filled('cate_id'), function ($query) use ($cate_id) {
+                $query->whereHas('borrow_detail.book', function ($query) use ($cate_id) {
+                    $query->where('cate_id', $cate_id);
                 });
-            });
-        })->where('is_return', '1')->OrderBy('borrow_code', 'desc')->paginate(10);
+            })->where('is_return', '1')
+            ->orderBy('borrow_code', 'desc')
+            ->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
@@ -63,21 +68,48 @@ class BorrowController extends Controller
         if (!auth()->user()->can('view.borrow')) {
             abort(403, 'Unauthorized action.');
         }
-        $borrows = Borrow::when($request->customer_id, function ($query) use ($request) {
-            $query->where('customer_id', $request->customer_id);
-        })->where('is_return', '0')->paginate(10);
+        $search = $request->input('search');
+        $cate_id = $request->input('cate_id');
+
+        $borrows = Borrow::with('borrow_detail.book')
+            ->when($request->customer_id, function ($query) use ($request) {
+                $query->where('customer_id', $request->customer_id);
+            })
+            ->when($request->filled('search'), function ($query) use ($search) {
+                $query->whereHas('customer', function ($customer) use ($search) {
+                    $customer->where('name', 'LIKE', '%' . $search . '%');
+                })
+                    ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
+                    ->orWhereHas('borrow_detail', function ($detail) use ($search) {
+                        $bookIds = Book::where('status', 1)
+                            ->where('book_code', 'LIKE', '%' . $search . '%')
+                            ->orWhereHas('catelog', function ($query) use ($search) {
+                                $query->where('cate_name', 'LIKE', '%' . $search . '%');
+                            })
+                            ->pluck('id')
+                            ->toArray();
+                        $detail->whereIn('book_id', $bookIds);
+                    });
+            })->when($request->filled('cate_id'), function ($query) use ($cate_id) {
+                $query->whereHas('borrow_detail.book', function ($query) use ($cate_id) {
+                    $query->where('cate_id', $cate_id);
+                });
+            })
+            ->where('is_return', '0')
+            ->orderBy('borrow_code', 'desc')
+            ->paginate(10);
         $total_deposite = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
         $customers = Customer::where('status', 1)->get();
         $catalogs = Catelog::where('status', 1)->get();
         $books = Book::where('status', 1)->get();
         if ($request->ajax()) {
-            $view = view('backends.borrow._table_is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount'))->render();
+            $view = view('backends.borrow._table_is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount', 'catalogs'))->render();
             return response()->json([
                 'view' => $view
             ]);
         }
-        return view('backends.borrow.is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount'));
+        return view('backends.borrow.is_return', compact('borrows', 'customers', 'total_deposite', 'total_find_amount', 'catalogs'));
     }
 
     /**
@@ -89,9 +121,10 @@ class BorrowController extends Controller
             abort(403, 'Unauthorized action.');
         }
         $catelogs = Catelog::all();
-        $borrowedBookIds = Borrow::where('is_return', '1')->pluck('book_id')->flatten()->unique()->toArray();
+        $borrowedBookIds = BorrowDetail::where('is_return', '1')->pluck('book_id')->flatten()->unique()->toArray();
         $books = Book::where('status', 1)
             ->whereNotIn('id', $borrowedBookIds)
+            ->orderBy('book_code', 'asc')
             ->get();
         $customerBorrowId = Borrow::where('is_return', '1')->pluck('customer_id');
         $customers = Customer::where('status', 1)
@@ -99,22 +132,8 @@ class BorrowController extends Controller
             ->get();
         return view('backends.borrow.create', compact('books', 'catelogs', 'customers'));
     }
-    // public function fetchBooks($cate_id)
-    // {
-    //     $borrowedBookIds = Borrow::where('is_return','1')->pluck('book_id')->flatten()->unique()->toArray();
-    //     $books = Book::whereNotIn('id', $borrowedBookIds)
-    //         ->where('cate_id',$cate_id)
-    //         ->where('status', 1)
-    //         ->pluck('book_code', 'id');
-    //     return response()->json($books);
-    // }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'customer_id' => 'required',
             'book_id' => 'required',
@@ -122,8 +141,8 @@ class BorrowController extends Controller
         ]);
         try {
             $borrow = new Borrow();
+            // $borrow->book_id = $request->input('book_id');
             $borrow->customer_id = $request->customer_id;
-            $borrow->book_id = $request->input('book_id');
             $borrow->catelog_id = $request->catelog_id;
             $borrow->created_by = auth()->user()->id;
             $lastBorrow = Borrow::withTrashed()->latest()->first();
@@ -142,12 +161,21 @@ class BorrowController extends Controller
             }
             $borrow->borrow_code = $newBorrowCode;
             $borrow->deposit_amount = $request->deposit_amount ?? 0;
-            $borrow->find_amount = $request->find_amount ?? 0;
             $borrow->borrow_date = $request->borrow_date;
             $borrow->due_date = $request->due_date;
-            $borrow->return_date = $request->return_date;
             $borrow->note = $request->note;
             $borrow->save();
+            foreach ($request->input('book_id') as $book_id) {
+                $borrow_detail = new BorrowDetail();
+                $borrow_detail->borrow_id = $borrow->id;
+                $borrow_detail->customer_id = $request->customer_id;
+                $borrow_detail->is_return = 1;
+                $borrow_detail->book_id = $book_id;
+                $borrow_detail->return_date = $request->return_date;
+                $borrow_detail->find_amount = $request->find_amount ?? 0;
+                $borrow_detail->save();
+                $borrow->borrow_detail()->save($borrow_detail);
+            }
             $output = [
                 'success' => 1,
                 'msg' => _('Create successfully')
@@ -175,60 +203,37 @@ class BorrowController extends Controller
     }
     public function showIs_return(string $id)
     {
-        $borrow = Borrow::find($id);
-        $catelogs = Catelog::all();
-        $books = Book::where('status', 1)->get();
-        $customers = Customer::where('status', 1)->get();
-        return view('backends.borrow.show_is_return', compact('books', 'catelogs', 'customers', 'borrow'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function EditfetchBooks($cate_id)
-    // {
-    //     $borrowedBookIds = Borrow::where('is_return', 0)->pluck('book_id');
-    //     $books = Book::where('cate_id', $cate_id)
-    //         ->where('status', 1)
-    //         ->whereNotIn('id', $borrowedBookIds)
-    //         ->pluck('book_code', 'id');
-    //     return response()->json($books);
-    // }
-    // public function edit(string $id)
-    // {
-    //     $borrow = Borrow::findOrFail($id);
-    //     $catelogs = Catelog::all();
-    //     $customers = Customer::all();
-    //     $borrowedBookIds = Borrow::pluck('book_id')->flatten()->unique()->toArray();
-    //     $borrowedBookIds = array_values(array_diff($borrowedBookIds, $borrow->book_id));
-    //     // dd($borrow->book_id,$borrowedBookIds);
-    //     $books = Book::where('cate_id', $borrow->catelog_id)
-    //         ->where('status', 1)
-    //         ->whereNotIn('id', $borrowedBookIds)
-    //         ->pluck('book_code', 'id');
-
-    //     return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books'));
-    // }
-    public function edit(string $id)
-    {
-        // if (!auth()->user()->can('update.borrow')) {
-        //     abort(403, 'Unauthorized action.');
-        // }
         $borrow = Borrow::findOrFail($id);
         $catelogs = Catelog::all();
         $customers = Customer::all();
         $books = Book::all();
-        return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books'));
+        return view('backends.borrow.show_is_return', compact('books', 'catelogs', 'customers', 'borrow'));
+    }
+    public function edit(string $id)
+    {
+        $borrow = Borrow::findOrFail($id);
+        $catelogs = Catelog::all();
+        $customers = Customer::all();
+        $books = Book::all();
+        $book_ids = $borrow->borrow_detail->pluck('book_id')->toArray();
+        return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books', 'book_ids'));
     }
 
     public function return_book(Request $request, $id)
     {
         try {
             $borrow = Borrow::find($id);
-            $borrow->find_amount = $request->find_amount ?? 0;
+            $borrow_details = $borrow->borrow_detail;
             $borrow->return_date = $request->return_date;
             if ($request->input('return_date')) {
                 $borrow->is_return = '0';
+            }
+            foreach ($borrow_details as $borrow_detail) {
+                $borrow_detail->update([
+                    'is_return' => '0',
+                    'return_date' => $request->return_date,
+                    'find_amount' => $request->find_amount ?? 0,
+                ]);
             }
             $borrow->save();
             $output = [
@@ -253,20 +258,40 @@ class BorrowController extends Controller
         try {
             $borrow = Borrow::find($id);
             $borrow->customer_id = $request->customer_id;
-            $borrow->book_id = $request->book_id;
+            // $borrow->book_id = $request->book_id;
             $borrow->catelog_id = $request->catelog_id;
             $borrow->created_by = auth()->user()->id;
-            $borrow->borrow_code = $request->borrow_code;
+            $lastBorrow = Borrow::withTrashed()->latest()->first();
+            $borrow_code = optional($lastBorrow)->borrow_code;
+            $newBorrowCode = null;
+            if ($borrow_code) {
+                $lastNumericPart = intval(substr($borrow_code, -5));
+                $newNumericPart = $lastNumericPart + 1;
+                $newBorrowCode = str_pad($newNumericPart, 5, '0', STR_PAD_LEFT);
+            } else {
+                $newBorrowCode = '00001';
+            }
+            while (Borrow::withTrashed()->where('borrow_code', $newBorrowCode)->exists()) {
+                $newNumericPart++;
+                $newBorrowCode = str_pad($newNumericPart, 5, '0', STR_PAD_LEFT);
+            }
+            // $borrow->borrow_code = $newBorrowCode;
             $borrow->deposit_amount = $request->deposit_amount ?? 0;
-            $borrow->find_amount = $request->find_amount ?? 0;
             $borrow->borrow_date = $request->borrow_date;
             $borrow->due_date = $request->due_date;
-            $borrow->return_date = $request->return_date;
-            $borrow->note = $request->note;
-            if ($request->input('return_date')) {
-                $borrow->is_return = '0';
-            }
             $borrow->save();
+            BorrowDetail::where('borrow_id', $borrow->id)->delete();
+            foreach ($request->input('book_id') as $book_id) {
+                $borrow_detail = new BorrowDetail();
+                $borrow_detail->borrow_id = $borrow->id;
+                $borrow_detail->customer_id = $request->customer_id;
+                $borrow_detail->book_id = $book_id;
+                $borrow_detail->is_return = 1;
+                $borrow_detail->return_date = $request->return_date;
+                $borrow_detail->find_amount = $request->find_amount ?? 0;
+                $borrow_detail->save();
+                $borrow->borrow_detail()->save($borrow_detail);
+            }
             $output = [
                 'success' => 1,
                 'msg' => _('Update successfully')
@@ -311,12 +336,11 @@ class BorrowController extends Controller
         $customer = $borrow->customer;
 
         if ($customer && $customer->telegram_chat_id) {
-            $message = "Dear Customer, **" . $customer->telegram_username . "**,\n\n";
+            $message = "Dear Customer, " . $customer->telegram_username . ",\n\n";
             $message .= "This is a friendly reminder to please return the book to our library at your earliest convenience.\n\n";
-            $message .= "Due Date: ". $borrow->due_date ."\n\n";
+            $message .= "Due Date: " . $borrow->due_date . "\n\n";
             $message .= "Thank you for your attention to this matter!\n\n";
-            $message .= "Best regards,\n";
-            $message .= "**" . auth()->user()->name . "**";
+            $message .= "Best regards, " . auth()->user()->name;
             $this->sendTelegramNotificationManually($customer->telegram_chat_id, $message, $telegramBotToken);
             $data = [
                 'success' => 1,

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\BorrowDetail;
+use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Promise\FulfilledPromise;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
@@ -21,5 +22,9 @@ class Book extends Model
     public function createdBy ()
     {
         return $this->belongsTo(User::class,'created_by');
+    }
+    public function borrow_detail()
+    {
+        return $this->hasMany(BorrowDetail::class);
     }
 }

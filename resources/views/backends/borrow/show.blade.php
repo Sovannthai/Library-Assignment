@@ -16,9 +16,9 @@
                         </div>
                         <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                             <label class="font-weight-bold mb-1 text-uppercase">@lang('Customer')</label>
-                            <p>{{ $borrow->customer->name }}</p>
+                            <p>{{ @$borrow->customer->name }}</p>
                         </div>
-                        <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
+                        {{-- <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
                             <label class="font-weight-bold mb-1 text-uppercase">@lang('Book')</label>
                             <p>{{ @$borrow->catelog->cate_name }}
                                 @foreach ($borrow->book_id as $bookId)
@@ -30,6 +30,16 @@
                                             {{ $book->book_code }} ({{ $book->catelog->cate_name }})
                                         </li>
                                     @endif
+                                @endforeach
+                            </p>
+                        </div> --}}
+                        <div class="form-group col-xs-6 col-sm-4 col-md-3 ">
+                            <label class="font-weight-bold mb-1 text-uppercase">@lang('Book')</label>
+                            <p>{{ @$borrow->catelog->cate_name }}
+                                @foreach ($borrow->borrow_detail as $borrow_detail)
+                                    <li>
+                                        {{ $borrow_detail->book->book_code }} ({{ $borrow_detail->book->catelog->cate_name }})</li>
+                                    </li>
                                 @endforeach
                             </p>
                         </div>

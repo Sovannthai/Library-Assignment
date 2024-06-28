@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\BorrowDetail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +24,10 @@ class Borrow extends Model
     public function customer()
     {
         return $this->belongsTo(customer::class,'customer_id');
+    }
+    public function borrow_detail()
+    {
+        return $this->hasMany(BorrowDetail::class);
     }
     public function catelog()
     {
