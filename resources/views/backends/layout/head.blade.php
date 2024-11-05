@@ -125,4 +125,8 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-w
 .form-control{
     border-radius: 0;
 }
+.bg-success-header{
+    background-color: #66B132;
+    color: white;
+}
 </style>

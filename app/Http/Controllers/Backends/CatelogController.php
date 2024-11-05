@@ -26,7 +26,7 @@ class CatelogController extends Controller
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg' =>('Something went wrong')
             ];
         }
         return response()->json($output);
@@ -85,13 +85,13 @@ class CatelogController extends Controller
             $catelog->save();
             $output = [
                 'success'=>1,
-                'msg'=>_('Create successfully')
+                'msg'=>('Create successfully')
             ];
         }catch(\Exception $e){
             dd($e);
             $output = [
                 'error'=>0,
-                'msg'=>_('Something went wrong')
+                'msg'=>('Something went wrong')
             ];
         }
         return redirect()->route('catelog.index')->with($output);
@@ -133,13 +133,13 @@ class CatelogController extends Controller
             $catelog->save();
             $output = [
                 'success'=>1,
-                'msg'=>_('Update successfully')
+                'msg'=>('Update successfully')
             ];
         }catch(\Exception $e){
             dd($e);
             $output = [
                 'error'=>0,
-                'msg'=>_('Something went wrong')
+                'msg'=>('Something went wrong')
             ];
         }
         return redirect()->route('catelog.index')->with($output);
@@ -160,12 +160,12 @@ class CatelogController extends Controller
             DB::commit();
             $output = [
                 'success' => 1,
-                'msg' =>_('Deleted successfully')
+                'msg' =>('Deleted successfully')
             ];
         } catch (\Exception $e) {
             $output = [
                 'error' => 0,
-                'msg' =>_('Something went wrong')
+                'msg' =>('Something went wrong')
             ];
         }
         return redirect()->route('catelog.index')->with($output);

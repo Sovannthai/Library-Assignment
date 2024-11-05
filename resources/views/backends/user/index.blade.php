@@ -24,8 +24,8 @@
                 <tr>
                     <td>
                         <span>
-                            <a class="example-image-link" href="{{ url('uploads/all_photo/'.$user->photo) }}" data-lightbox="lightbox-' . $user->id . '">
-                                <img class="example-image profile-image" src="{{ url('uploads/all_photo/'.$user->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
+                            <a class="example-image-link" href="{{ asset('uploads/all_photo/'.$user->photo) }}" data-lightbox="lightbox-' . $user->id . '">
+                                <img class="example-image profile-image" src="{{ asset('uploads/all_photo/'.$user->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
                             </a>
                         </span>
                     </td>

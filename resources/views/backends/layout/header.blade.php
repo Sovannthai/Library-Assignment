@@ -8,7 +8,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
-        <!-- Language Dropdown Menu -->
+        <!-- Language Dro   pdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="flag-icon flag-icon-{{ Session::get('locale', 'en') == 'en' ? 'gb' : Session::get('locale') }}" ></i>

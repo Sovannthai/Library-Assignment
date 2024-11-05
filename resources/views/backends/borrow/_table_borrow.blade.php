@@ -28,9 +28,9 @@
                     @if ($book)
                     <li>
                         {{ $book->book_code }} ({{ $book->catelog->cate_name }})
-                    </li>
-                    @endif
-                    @endforeach
+                </li>
+                @endif
+                @endforeach
                 </td> --}}
                     <td>
                         @foreach ($borrow->borrow_detail as $borrow_detail)
@@ -45,12 +45,12 @@
                     <td>{{ $borrow->borrow_date }}</td>
                     <td>{{ $borrow->due_date }}</td>
                     {{-- <td>
-                        @if ($borrow->note)
-                            {{ Str::limit($borrow->note) }}
-                        @elseif(!$borrow->note)
-                            <span class="text-secondary">@lang('No data')</span>
-                        @endif
-                    </td> --}}
+                    @if ($borrow->note)
+                    {{ Str::limit($borrow->note) }}
+                @elseif(!$borrow->note)
+                <span class="text-secondary">@lang('No data')</span>
+                @endif
+                </td> --}}
                     <td class="text-uppercase">
                         <form id="send-telegram-notification-{{ $borrow->id }}"
                             action="{{ route('send.telegram.notification', ['borrow' => $borrow->id]) }}" method="POST"
@@ -62,7 +62,8 @@
                                 <i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>
                             </button>
                         </form>
-                        {{-- <button class="btn btn-outline-primary btn-sm text-uppercase send-notification" data-borrow-id="{{ $borrow->id }}">Sent</button> --}}
+                        {{-- <button class="btn btn-outline-primary btn-sm text-uppercase send-notification"
+                        data-borrow-id="{{ $borrow->id }}">Sent</button> --}}
                         <a href="" class="btn btn-outline-info btn-sm btn-md" data-toggle="modal"
                             data-target="#return-{{ $borrow->id }}" data-toggle="tooltip" title="@lang('Return')">
                             <li class="nav-icon fas fa-exchange-alt"> @lang('Return')</li>

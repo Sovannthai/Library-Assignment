@@ -19,14 +19,14 @@ class BookController extends Controller
             $book->update(['status' => $status]);
             $output = [
                 'success' => 1,
-                'msg' => _('Status update successfully')
+                'msg' => ('Status update successfully')
             ];
         } catch (Exception $e) {
             Log::info("message");
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg' => ('Something went wrong')
             ];
         }
         return response()->json($output);
@@ -88,12 +88,12 @@ class BookController extends Controller
             $book->save();
             $output = [
                 'success' => 1,
-                'msg' => _('Create successfully')
+                'msg' => ('Create successfully')
             ];
         } catch (\Exception $e) {
             $output = [
                 'error' => 0,
-                'msg' => _('Someting went wrong')
+                'msg' => ('Someting went wrong')
             ];
         }
         return redirect()->route('book.index')->with($output);
@@ -138,12 +138,12 @@ class BookController extends Controller
             $book->save();
             $output = [
                 'success' => 1,
-                'msg' => _('Update successfully')
+                'msg' => ('Update successfully')
             ];
         } catch (\Exception $e) {
             $output = [
                 'error' => 0,
-                'msg' => _('Someting went wrong')
+                'msg' => ('Someting went wrong')
             ];
         }
         return redirect()->route('book.index')->with($output);
@@ -159,12 +159,12 @@ class BookController extends Controller
             $book->delete();
             $output = [
                 'success' => 1,
-                'msg' => _('Delete successfully')
+                'msg' => ('Delete successfully')
             ];
         } catch (\Exception $e) {
             $output = [
                 'error' => 0,
-                'msg' => _('Someting went wrong')
+                'msg' => ('Someting went wrong')
             ];
         }
         return redirect()->route('book.index')->with($output);

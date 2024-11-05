@@ -16,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($catelogs as $catelog)
+            @forelse ($catelogs as $catelog)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
                     <span>
-                        <a class="example-image-link" href="{{ url('uploads/all_photo/'.$catelog->photo) }}" data-lightbox="lightbox-' . $catelog->id . '">
-                            <img class="example-image image-thumbnail" src="{{ url('uploads/all_photo/'.$catelog->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
+                        <a class="example-image-link" href="{{ asset('uploads/all_photo/' . $catelog->photo) }}" data-lightbox="lightbox-' . $catelog->id . '">
+                            <img class="example-image image-thumbnail" src="{{ asset('uploads/all_photo/' . $catelog->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
                         </a>
                     </span>
                 </td>
@@ -35,17 +35,19 @@
                 <td>{{ $catelog->publish_edition }}</td>
                 <td>
                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $catelog->id }}" data-id="{{ $catelog->id }}" {{ $catelog->status =='1' ? 'checked' : '' }}>
+                        <input type="checkbox" class="custom-control-input toggle-status" id="customSwitches{{ $catelog->id }}" data-id="{{ $catelog->id }}" {{ $catelog->status ==
+                        '1' ? 'checked' : '' }}>
                         <label class="custom-control-label" for="customSwitches{{ $catelog->id }}"></label>
                     </div>
                 </td>
                 <td>
                     @if (auth()->user()->can('edit.catelog'))
-                    <a href="" class="btn btn-outline-success text-uppercase btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn"> @lang('Edit')</i></a>&nbsp;&nbsp;
+                    <a href="" class="btn btn-outline-success text-uppercase btn-sm btn-md" data-toggle="modal" data-target="#edit-{{ $catelog->id }}" data-toggle="tooltip" title="@lang('Edit')"><i class="fa fa-edit ambitious-padding-btn">
+                            @lang('Edit')</i></a>&nbsp;&nbsp;
                     @include('backends.catelog_and_book.catelog.edit')
                     @endif
                     @if (auth()->user()->can('delete.catelog'))
-                    <form id="deleteForm" action="{{ route('catelog.destroy',['catelog'=>$catelog->id]) }}" method="POST" class="d-inline-block">
+                    <form id="deleteForm" action="{{ route('catelog.destroy', ['catelog' => $catelog->id]) }}" method="POST" class="d-inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="button" class="btn btn-outline-danger text-uppercase btn-sm btn-md delete-btn" title="@lang('Delete')">
@@ -55,7 +57,24 @@
                     @endif
                 </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="11" class="text-center">
+                    <div class="text-danger">
+                        @lang('No Data Found')
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11" class="text-center">
+                    <a href="" class="btn btn-outline-success btn-sm btn-md text-uppercase" data-toggle="modal" data-target="#create" data-toggle="tooltip" title="@lang('Add')"><i class="fa fa-plus ambitious-padding-btn">
+                            @lang('Add')</i></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="11" class="text-center">
+            </tr>
+            @endforelse
         </tbody>
     </table>
     <div class="col-12 d-flex flex-row flex-wrap">

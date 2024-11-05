@@ -20,39 +20,64 @@ class ReportController extends Controller
         if (!auth()->user()->can('view.borrow_report')) {
             abort(403, 'Unauthorized action.');
         }
-        $filterValue = $request->input('filter');
-        $cateId = $request->input('cate_id');
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-        $borrows = BorrowDetail::query();
+        $search = $request->input('search');
+        $cate_id = $request->input('cate_id');
+        $customer_id = $request->input('customer_id');
+        $start_date = $request->input('start_date');
+        $end_date = $request->input('end_date');
+        $created_by = $request->input('created_by');
+
+        $borrow_reports = BorrowDetail::with('book.catelog')
+            ->when($customer_id, function ($query) use ($customer_id) {
+                $query->where('customer_id', $customer_id);
+            })
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('borrow', function ($borrow) use ($search) {
+                    $borrow->where('borrow_code', 'LIKE', '%' . $search . '%')
+                        ->orWhereHas('customer', function ($customer) use ($search) {
+                            $customer->where('name', 'LIKE', '%' . $search . '%');
+                        });
+                })
+                    ->orWhereHas('book', function ($book) use ($search) {
+                        $book->where('book_code', 'LIKE', '%' . $search . '%')
+                            ->orWhereHas('catelog', function ($query) use ($search) {
+                                $query->where('cate_name', 'LIKE', '%' . $search . '%');
+                            });
+                    });
+            })
+            ->when($cate_id, function ($query) use ($cate_id) {
+                $query->whereHas('book', function ($book) use ($cate_id) {
+                    $book->where('cate_id', $cate_id);
+                });
+            })
+            ->when($start_date, function ($query) use ($start_date) {
+                $query->whereHas('borrow', function ($borrow) use ($start_date) {
+                    $borrow->whereDate('borrow_date', '>=', $start_date);
+                });
+            })
+            ->when($end_date, function ($query) use ($end_date) {
+                $query->whereHas('borrow', function ($borrow) use ($end_date) {
+                    $borrow->whereDate('borrow_date', '<=', $end_date);
+                });
+            })
+            ->when($created_by, function ($query) use ($created_by) {
+                $query->whereHas('borrow', function ($borrow) use ($created_by) {
+                    $borrow->where('created_by', $created_by);
+                });
+            })
+            ->orderBy('borrow_id', 'desc')
+            ->paginate(10);
         $customers = Customer::where('status', 1)->get();
         $Users = User::all();
         $books = Book::where('status', 1)->get();
-
-        if ($request->filled('customer_id')) {
-            $borrows->where('customer_id', $request->customer_id);
+        $catalogs = Catelog::where('status', 1)->get();
+        if ($request->ajax()) {
+            $view = view('backends.report._table_borrow_report', compact('borrow_reports', 'customers', 'catalogs', 'books','Users'))->render();
+            return response()->json([
+                'view' => $view
+            ]);
         }
-        if ($request->filled('created_by')) {
-            $borrows->where('created_by', $request->created_by);
-        }
-        if ($startDate && $endDate) {
-            $endDate = date('Y-m-d', strtotime($endDate . ' +1 day'));
-
-            $borrows->whereDate('created_at', '>=', $startDate)
-                ->whereDate('created_at', '<=', $endDate);
-        }
-        if ($filterValue !== null) {
-            $borrows->where('is_return', $filterValue);
-        }
-        if ($cateId !== null) {
-            $borrows->whereHas('book', function ($query) use ($cateId) {
-                $query->where('cate_id', $cateId);
-            });
-        }
-
-        $borrow_reports = $borrows->latest()->get();
-        $catelogs = Catelog::where('status', 1)->get();
-        return view('backends.report.borrow_report', compact('borrow_reports', 'customers', 'catelogs', 'books', 'filterValue', 'cateId', 'Users', 'request'));
+        return view('backends.report.borrow_report', compact('borrow_reports', 'customers', 'catalogs', 'books','Users'));
     }
 
     public function book_report(Request $request)

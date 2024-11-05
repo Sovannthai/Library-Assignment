@@ -32,29 +32,31 @@ class BorrowController extends Controller
                 $query->whereHas('customer', function ($customer) use ($search) {
                     $customer->where('name', 'LIKE', '%' . $search . '%');
                 })
-                    ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
-                    ->orWhereHas('borrow_detail', function ($detail) use ($search) {
+                ->orWhere('borrow_code', 'LIKE', '%' . $search . '%')
+                ->orWhereHas('borrow_detail', function ($detail) use ($search) {
                         $bookIds = Book::where('status', 1)
                             ->where('book_code', 'LIKE', '%' . $search . '%')
                             ->orWhereHas('catelog', function ($query) use ($search) {
                                 $query->where('cate_name', 'LIKE', '%' . $search . '%');
                             })
-                            ->pluck('id')
-                            ->toArray();
+                               ->pluck('id')
+                               ->toArray();
                         $detail->whereIn('book_id', $bookIds);
                     });
-            })->when($request->filled('cate_id'), function ($query) use ($cate_id) {
+            })
+            ->when($request->filled('cate_id'), function ($query) use ($cate_id) {
                 $query->whereHas('borrow_detail.book', function ($query) use ($cate_id) {
                     $query->where('cate_id', $cate_id);
                 });
-            })->where('is_return', '1')
+            })
+            ->where('is_return', '1')
             ->orderBy('borrow_code', 'desc')
             ->paginate(10);
-        $total_deposite = $borrows->sum('deposit_amount');
+        $total_deposite    = $borrows->sum('deposit_amount');
         $total_find_amount = $borrows->sum('find_amount');
-        $customers = Customer::where('status', 1)->get();
-        $catalogs = Catelog::where('status', 1)->get();
-        $books = Book::where('status', 1)->get();
+        $customers         = Customer::where('status', 1)->get();
+        $catalogs          = Catelog::where('status', 1)->get();
+        $books             = Book::where('status', 1)->get();
         if ($request->ajax()) {
             $view = view('backends.borrow._table_borrow', compact('borrows', 'customers', 'catalogs', 'books', 'total_deposite', 'total_find_amount'))->render();
             return response()->json([
@@ -178,13 +180,13 @@ class BorrowController extends Controller
             }
             $output = [
                 'success' => 1,
-                'msg' => _('Create successfully')
+                'msg' => ('Create successfully')
             ];
         } catch (\Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg' => ('Something went wrong')
             ];
         }
         return redirect()->route('borrow.index')->with($output);
@@ -206,7 +208,7 @@ class BorrowController extends Controller
         $borrow = Borrow::findOrFail($id);
         $catelogs = Catelog::all();
         $customers = Customer::all();
-        $books = Book::all();
+        $books = BorrowDetail::where('book_id', $borrow->book_id)->get();
         return view('backends.borrow.show_is_return', compact('books', 'catelogs', 'customers', 'borrow'));
     }
     public function edit(string $id)
@@ -219,6 +221,12 @@ class BorrowController extends Controller
         return view('backends.borrow.edit', compact('borrow', 'catelogs', 'customers', 'books', 'book_ids'));
     }
 
+    // public function get_borrow_books(string $id)
+    // {
+    //     $book_borrows = Borrow::find($id);
+    //     $book_ids = $book_borrows->borrow_detail->pluck('book_id')->toArray();
+    //     return view('backends.borrow.return_book',compact('book_borrows', 'book_ids'));
+    // }
     public function return_book(Request $request, $id)
     {
         try {
@@ -238,13 +246,13 @@ class BorrowController extends Controller
             $borrow->save();
             $output = [
                 'success' => 1,
-                'msg' => _('Return successfully')
+                'msg' => ('Return successfully')
             ];
         } catch (\Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg' => ('Something went wrong')
             ];
         }
         return redirect()->route('borrow.index')->with($output);
@@ -283,10 +291,10 @@ class BorrowController extends Controller
             BorrowDetail::where('borrow_id', $borrow->id)->delete();
             foreach ($request->input('book_id') as $book_id) {
                 $borrow_detail = new BorrowDetail();
-                $borrow_detail->borrow_id = $borrow->id;
+                $borrow_detail->borrow_id   = $borrow->id;
                 $borrow_detail->customer_id = $request->customer_id;
-                $borrow_detail->book_id = $book_id;
-                $borrow_detail->is_return = 1;
+                $borrow_detail->book_id     = $book_id;
+                $borrow_detail->is_return   = 1;
                 $borrow_detail->return_date = $request->return_date;
                 $borrow_detail->find_amount = $request->find_amount ?? 0;
                 $borrow_detail->save();
@@ -294,13 +302,13 @@ class BorrowController extends Controller
             }
             $output = [
                 'success' => 1,
-                'msg' => _('Update successfully')
+                'msg'     => ('Update successfully')
             ];
         } catch (\Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg'   => ('Something went wrong')
             ];
         }
         return redirect()->route('borrow.index')->with($output);
@@ -316,13 +324,13 @@ class BorrowController extends Controller
             $borrow->delete();
             $output = [
                 'success' => 1,
-                'msg' => _('Delete successfully')
+                'msg' => ('Delete successfully')
             ];
         } catch (\Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg' => ('Something went wrong')
             ];
         }
         return redirect()->route('borrow.index')->with($output);
@@ -336,7 +344,7 @@ class BorrowController extends Controller
         $customer = $borrow->customer;
 
         if ($customer && $customer->telegram_chat_id) {
-            $message = "Dear Customer, " . $customer->telegram_username . ",\n\n";
+            $message  = "Dear Customer, " . $customer->telegram_username . ",\n\n";
             $message .= "This is a friendly reminder to please return the book to our library at your earliest convenience.\n\n";
             $message .= "Due Date: " . $borrow->due_date . "\n\n";
             $message .= "Thank you for your attention to this matter!\n\n";
@@ -344,13 +352,13 @@ class BorrowController extends Controller
             $this->sendTelegramNotificationManually($customer->telegram_chat_id, $message, $telegramBotToken);
             $data = [
                 'success' => 1,
-                'msg' => 'Telegram notification sent successfully'
+                'msg'     => 'Notification sent successfully'
             ];
             return redirect()->back()->with($data);
         }
         $data = [
             'error' => 1,
-            'msg' => 'Customer does not have a Telegram chat ID set'
+            'msg'   => 'Customer does not have a Telegram chat ID set'
         ];
         return redirect()->back()->with($data);
     }
@@ -360,17 +368,21 @@ class BorrowController extends Controller
         $client = new Client([
             'verify' => false,
         ]);
-        $data = $client->post('https://api.telegram.org/bot' . env('TELEGRAM_BOT_TOKEN') . '/sendMessage', [
-            'json' => [
-                'chat_id' => $chatId,
-                'text' => $message,
-            ],
-        ]);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        $response = curl_exec($ch);
-        curl_close($ch);
+        try {
+            $response = $client->post($url, [
+                'json' => [
+                    'chat_id' => $chatId,
+                    'text'    => $message,
+                ],
+            ]);
+            $responseData = json_decode($response->getBody(), true);
+            if ($responseData['ok']) {
+                return "Message sent successfully!";
+            } else {
+                return "Failed to send message: " . $responseData['description'];
+            }
+        } catch (\Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
     }
 }

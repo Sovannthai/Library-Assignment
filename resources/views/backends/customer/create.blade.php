@@ -55,7 +55,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="">@lang('Gender')</label>
-                    <select class="form-control" name="sex">
+                    <select class="form-control select2" name="sex">
                         <option>@lang('Select')</option>
                         @foreach ($genders as $key=>$gender)
                             <option value="{{ $key }}">{{ $gender }}</option>

@@ -2,9 +2,9 @@
 @section('title','Catelog')
 @section('contents')
 <div class="card">
-    <h6 class="card-header">
+    <h6 class="card-header bg-success-header">
         <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
-            id="heading-example" class="d-block">
+            id="heading-example" class="d-block bg-success-header">
             <i class="fa fa-filter"></i>
             @lang('Filter')
         </a>

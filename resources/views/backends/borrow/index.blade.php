@@ -7,10 +7,10 @@
         }
     </style>
     <div class="card">
-        <h6 class="card-header">
+        <h6 class="card-header bg-success-header">
             <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
-                id="heading-example" class="d-block">
-                <i class="fa fa-filter"></i>
+                id="heading-example" class="d-block bg-success-header">
+                <i class="fa fa-filter bg-success-header"></i>
                 @lang('Filter')
             </a>
         </h6>
@@ -130,7 +130,7 @@
                                 setTimeout(function() {
                                     $(this).html(
                                         '<i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>'
-                                        );
+                                    );
                                     $(this).prop('disabled', false);
                                 }, 2000);
                             } else {
@@ -138,7 +138,7 @@
                                 setTimeout(function() {
                                     $(this).html(
                                         '<i class="fa fa-message ambitious-padding-btn"> @lang('Send')</i>'
-                                        );
+                                    );
                                     $(this).prop('disabled', false);
                                 }, 2000);
                             }

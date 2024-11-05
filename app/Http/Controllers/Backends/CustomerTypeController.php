@@ -39,12 +39,12 @@ class CustomerTypeController extends Controller
             $customer_type->save();
             $output = [
                 'success'=>1,
-                'msg'=>_('Create successfully')
+                'msg'=>('Create successfully')
             ];
         }catch(\Exception $e){
             $output = [
                 'error'=>0,
-                'msg'=>_('Something went wrong')
+                'msg'=>('Something went wrong')
             ];
         }
         return redirect()->route('customer_type.index')->with($output);
@@ -77,12 +77,12 @@ class CustomerTypeController extends Controller
             $customer_type->save();
             $output = [
                 'success'=>1,
-                'msg'=>_('Update successfully')
+                'msg'=>('Update successfully')
             ];
         }catch(\Exception $e){
             $output = [
                 'error'=>0,
-                'msg'=>_('Something went wrong')
+                'msg'=>('Something went wrong')
             ];
         }
         return redirect()->route('customer_type.index')->with($output);
@@ -98,12 +98,12 @@ class CustomerTypeController extends Controller
             $customer_type->delete();
             $output = [
                 'success'=>1,
-                'msg'=>_('Delete successfully')
+                'msg'=>('Delete successfully')
             ];
         }catch(\Exception $e){
             $output = [
                 'error'=>0,
-                'msg'=>_('Something went wrong')
+                'msg'=>('Something went wrong')
             ];
         }
         return redirect()->route('customer_type.index')->with($output);

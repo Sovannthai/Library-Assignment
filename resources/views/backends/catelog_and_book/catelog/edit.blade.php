@@ -1,7 +1,7 @@
 <div class="modal fade" id="edit-{{ $catelog->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-success">
+            <div class="modal-header bg-success-header text-uppercase">
                 <h5 class="modal-title" id="exampleModalLabel">@lang('Edit')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <label for="image" class="col-form-label">@lang('Image')</label>
                             <input name="photo" type="file" class="dropify" data-height="100" data-default-file="{{ url('uploads/all_photo/' . $catelog->photo) }}" value="{{ $catelog->photo }}" /><br>
                             <input type="hidden" name="photo" value="{{ $catelog->photo }}">

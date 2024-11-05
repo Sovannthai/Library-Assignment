@@ -1,7 +1,7 @@
 <div class="modal fade" id="show-{{ $borrow->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-success">
+            <div class="modal-header bg-success-header">
                 <h5 class="modal-title" id="exampleModalLabel">@lang('Borrow Detail')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

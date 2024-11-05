@@ -59,12 +59,12 @@ class BusinessSettingController extends Controller
     {
         try {
             $business_setting = BusinessSetting::firstOrNew();
-            $old_logo_path = $business_setting->business_logo;
+            $old_logo_path    = $business_setting->business_logo;
 
             if ($request->hasFile('business_logo')) {
                 $business_logo = $request->file('business_logo');
-                $extension = $business_logo->getClientOriginalExtension();
-                $imageName = Carbon::now()->toDateString() . "-" . uniqid() . "." . $extension;
+                $extension     = $business_logo->getClientOriginalExtension();
+                $imageName     = Carbon::now()->toDateString() . "-" . uniqid() . "." . $extension;
                 $business_logo->move(public_path('uploads/all_photo/'), $imageName);
 
                 if ($old_logo_path && File::exists(public_path('uploads/all_photo/' . $old_logo_path))) {
@@ -78,13 +78,13 @@ class BusinessSettingController extends Controller
 
             $output = [
                 'success' => 1,
-                'msg' => _('Setting Updated Successfully')
+                'msg'     =>('Setting Updated Successfully')
             ];
         } catch (Exception $e) {
             dd($e);
             $output = [
                 'error' => 0,
-                'msg' => _('Something went wrong')
+                'msg'   =>('Something went wrong')
             ];
         }
 
