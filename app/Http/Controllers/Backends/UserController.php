@@ -177,6 +177,7 @@ class UserController extends Controller
                 'msg' => Lang::get('Updated successfully')
             ];
         } catch (\Exception $e) {
+            dd($e);
             $output = [
                 'error' => 0,
                 'msg' => trans('Something went wrong')

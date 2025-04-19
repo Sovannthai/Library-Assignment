@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_3333
+ Source Server         : Localhost 3336
  Source Server Type    : MySQL
  Source Server Version : 80030
- Source Host           : localhost:3333
- Source Schema         : library-management
+ Source Host           : localhost:3336
+ Source Schema         : library_management
 
  Target Server Type    : MySQL
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 02/05/2024 19:55:25
+ Date: 19/04/2025 11:41:19
 */
 
 SET NAMES utf8mb4;
@@ -29,31 +29,62 @@ CREATE TABLE `books`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `status` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
-  `created_by` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of books
 -- ----------------------------
-INSERT INTO `books` VALUES (1, 1, '770', 'Good for everyone want to know about history war!!', '2024-04-23 13:55:18', '2024-05-02 06:00:28', '1', 1);
-INSERT INTO `books` VALUES (2, 2, '880', 'Good for young man!', '2024-04-23 13:57:56', '2024-04-27 05:42:05', '1', 1);
-INSERT INTO `books` VALUES (4, 4, '990', 'រឿងបង្ហាញពីទំនៀមទម្លាប់ខ្មែរ។', '2024-04-26 05:55:04', '2024-04-27 04:58:21', '1', 1);
-INSERT INTO `books` VALUES (5, 4, '991', NULL, '2024-04-27 04:58:32', '2024-04-27 04:58:32', '1', 1);
-INSERT INTO `books` VALUES (6, 4, '992', NULL, '2024-04-27 04:58:42', '2024-04-27 04:58:42', '1', 1);
-INSERT INTO `books` VALUES (7, 4, '993', NULL, '2024-04-27 04:58:52', '2024-04-27 04:58:52', '1', 1);
-INSERT INTO `books` VALUES (8, 4, '995', NULL, '2024-04-27 04:59:01', '2024-04-30 01:41:33', '1', 1);
-INSERT INTO `books` VALUES (9, 1, '771', NULL, '2024-04-27 04:59:21', '2024-04-27 04:59:21', '1', 1);
-INSERT INTO `books` VALUES (10, 1, '772', NULL, '2024-04-27 04:59:33', '2024-04-27 04:59:33', '1', 1);
-INSERT INTO `books` VALUES (11, 1, '773', NULL, '2024-04-27 04:59:54', '2024-04-27 04:59:54', '1', 1);
-INSERT INTO `books` VALUES (12, 1, '774', NULL, '2024-04-27 05:00:06', '2024-04-27 05:00:06', '1', 1);
-INSERT INTO `books` VALUES (13, 1, '775', NULL, '2024-04-27 05:00:23', '2024-04-27 05:00:23', '1', 1);
-INSERT INTO `books` VALUES (16, 2, '881', NULL, '2024-04-27 05:42:16', '2024-04-28 06:34:50', '1', 1);
-INSERT INTO `books` VALUES (17, 2, '882', NULL, '2024-04-27 05:42:29', '2024-04-27 05:42:29', '1', 1);
-INSERT INTO `books` VALUES (18, 2, '883', NULL, '2024-04-27 05:42:38', '2024-04-27 05:42:38', '1', 1);
-INSERT INTO `books` VALUES (19, 2, '884', NULL, '2024-04-27 05:42:51', '2024-04-27 05:42:51', '1', 1);
-INSERT INTO `books` VALUES (20, 2, '885', NULL, '2024-04-27 05:43:02', '2024-04-27 05:43:02', '1', 1);
-INSERT INTO `books` VALUES (21, 4, '994', NULL, '2024-04-27 06:12:18', '2024-04-27 06:12:18', '1', 1);
+INSERT INTO `books` VALUES (1, 1, '770', 'Good for everyone want to know about history war!', '2024-04-23 13:55:18', '2024-04-27 04:58:09', '1');
+INSERT INTO `books` VALUES (2, 2, '880', 'Good for young man!', '2024-04-23 13:57:56', '2024-04-27 05:42:05', '1');
+INSERT INTO `books` VALUES (4, 4, '990', 'រឿងបង្ហាញពីទំនៀមទម្លាប់ខ្មែរ។', '2024-04-26 05:55:04', '2024-04-27 04:58:21', '1');
+INSERT INTO `books` VALUES (5, 4, '991', NULL, '2024-04-27 04:58:32', '2024-04-27 04:58:32', '1');
+INSERT INTO `books` VALUES (6, 4, '992', NULL, '2024-04-27 04:58:42', '2024-04-27 04:58:42', '1');
+INSERT INTO `books` VALUES (7, 4, '993', NULL, '2024-04-27 04:58:52', '2024-04-27 04:58:52', '1');
+INSERT INTO `books` VALUES (8, 4, '995', NULL, '2024-04-27 04:59:01', '2024-04-27 04:59:01', '1');
+INSERT INTO `books` VALUES (9, 1, '771', NULL, '2024-04-27 04:59:21', '2024-04-27 04:59:21', '1');
+INSERT INTO `books` VALUES (10, 1, '772', NULL, '2024-04-27 04:59:33', '2024-04-27 04:59:33', '1');
+INSERT INTO `books` VALUES (11, 1, '773', NULL, '2024-04-27 04:59:54', '2024-04-27 04:59:54', '1');
+INSERT INTO `books` VALUES (12, 1, '774', NULL, '2024-04-27 05:00:06', '2024-04-27 05:00:06', '1');
+INSERT INTO `books` VALUES (13, 1, '775', NULL, '2024-04-27 05:00:23', '2024-04-27 05:00:23', '1');
+INSERT INTO `books` VALUES (16, 2, '881', NULL, '2024-04-27 05:42:16', '2024-04-27 05:42:16', '1');
+INSERT INTO `books` VALUES (17, 2, '882', NULL, '2024-04-27 05:42:29', '2024-04-27 05:42:29', '1');
+INSERT INTO `books` VALUES (18, 2, '883', NULL, '2024-04-27 05:42:38', '2024-04-27 05:42:38', '1');
+INSERT INTO `books` VALUES (19, 2, '884', NULL, '2024-04-27 05:42:51', '2024-04-27 05:42:51', '1');
+INSERT INTO `books` VALUES (20, 2, '885', NULL, '2024-04-27 05:43:02', '2024-04-27 05:43:02', '1');
+INSERT INTO `books` VALUES (21, 4, '994', NULL, '2024-04-27 06:12:18', '2024-04-27 06:12:18', '1');
+
+-- ----------------------------
+-- Table structure for borrow_details
+-- ----------------------------
+DROP TABLE IF EXISTS `borrow_details`;
+CREATE TABLE `borrow_details`  (
+  `id` bigint(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `borrow_id` int(0) NOT NULL,
+  `book_id` int(0) NOT NULL,
+  `return_date` date NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  `find_amount` decimal(10, 2) NOT NULL,
+  `is_return` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `customer_id` int(0) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of borrow_details
+-- ----------------------------
+INSERT INTO `borrow_details` VALUES (1, 3, 1, NULL, '2025-04-19 04:20:40', '2025-04-19 04:20:40', 0.00, '1', 3);
+INSERT INTO `borrow_details` VALUES (2, 3, 9, NULL, '2025-04-19 04:20:40', '2025-04-19 04:20:40', 0.00, '1', 3);
+INSERT INTO `borrow_details` VALUES (3, 4, 11, '2025-04-19', '2025-04-19 04:21:12', '2025-04-19 04:24:59', 5.00, '0', 1);
+INSERT INTO `borrow_details` VALUES (4, 4, 2, '2025-04-19', '2025-04-19 04:21:12', '2025-04-19 04:24:59', 5.00, '0', 1);
+INSERT INTO `borrow_details` VALUES (5, 4, 6, '2025-04-19', '2025-04-19 04:21:12', '2025-04-19 04:24:59', 5.00, '0', 1);
+INSERT INTO `borrow_details` VALUES (6, 5, 10, '2025-04-26', '2025-04-19 04:36:01', '2025-04-19 04:38:38', 0.00, '0', 4);
+INSERT INTO `borrow_details` VALUES (7, 5, 11, '2025-04-26', '2025-04-19 04:36:01', '2025-04-19 04:38:38', 0.00, '0', 4);
+INSERT INTO `borrow_details` VALUES (8, 5, 12, '2025-04-26', '2025-04-19 04:36:01', '2025-04-19 04:38:38', 0.00, '0', 4);
+INSERT INTO `borrow_details` VALUES (9, 6, 13, '2025-04-19', '2025-04-19 04:36:30', '2025-04-19 04:38:28', 5.00, '0', 5);
+INSERT INTO `borrow_details` VALUES (10, 6, 16, '2025-04-19', '2025-04-19 04:36:30', '2025-04-19 04:38:28', 5.00, '0', 5);
+INSERT INTO `borrow_details` VALUES (11, 6, 4, '2025-04-19', '2025-04-19 04:36:30', '2025-04-19 04:38:28', 5.00, '0', 5);
 
 -- ----------------------------
 -- Table structure for borrows
@@ -62,8 +93,8 @@ DROP TABLE IF EXISTS `borrows`;
 CREATE TABLE `borrows`  (
   `id` bigint(0) UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` int(0) NOT NULL,
-  `book_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_by` int(0) NOT NULL,
+  `book_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_by` int(0) NULL DEFAULT NULL,
   `borrow_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `deposit_amount` decimal(10, 2) NULL DEFAULT NULL,
   `find_amount` decimal(10, 2) NULL DEFAULT NULL,
@@ -71,24 +102,41 @@ CREATE TABLE `borrows`  (
   `due_date` date NULL DEFAULT NULL,
   `return_date` date NULL DEFAULT NULL,
   `note` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `is_return` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `is_return` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '1',
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `catelog_id` int(0) NULL DEFAULT NULL,
   `deleted_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of borrows
 -- ----------------------------
-INSERT INTO `borrows` VALUES (7, 1, '[\"1\",\"2\",\"4\"]', 1, '00007', 0.00, 5.00, '2024-04-29', '2024-05-01', '2024-05-10', 'សងយឺតពេល', '0', '2024-04-29 12:05:40', '2024-04-30 01:07:14', NULL, NULL);
-INSERT INTO `borrows` VALUES (9, 1, '[\"5\",\"6\",\"7\",\"8\",\"21\"]', 1, '00009', 8.00, 0.00, '2024-04-29', '2024-05-05', '2024-05-02', NULL, '0', '2024-04-29 13:20:10', '2024-04-29 13:20:54', NULL, NULL);
-INSERT INTO `borrows` VALUES (10, 3, '[\"5\",\"9\"]', 1, '00010', 8.00, 0.00, '2024-04-30', '2024-05-05', NULL, NULL, '1', '2024-04-30 01:05:40', '2024-04-30 01:05:40', NULL, NULL);
-INSERT INTO `borrows` VALUES (11, 1, '[\"1\"]', 1, '00011', 5.00, 0.00, '2024-04-30', '2024-05-02', NULL, NULL, '1', '2024-04-30 01:11:26', '2024-04-30 01:11:26', NULL, NULL);
-INSERT INTO `borrows` VALUES (12, 4, '[\"2\"]', 1, '00012', 7.00, 0.00, '2024-04-30', '2024-05-03', NULL, NULL, '1', '2024-04-30 01:12:06', '2024-04-30 01:12:06', NULL, NULL);
-INSERT INTO `borrows` VALUES (13, 5, '[\"4\",\"10\"]', 1, '00013', 5.00, 0.00, '2024-04-30', '2024-05-03', NULL, NULL, '1', '2024-04-30 01:12:35', '2024-04-30 01:12:35', NULL, NULL);
-INSERT INTO `borrows` VALUES (14, 6, '[\"8\",\"11\"]', 1, '00014', 7.00, 0.00, '2024-04-30', '2024-05-03', NULL, NULL, '1', '2024-04-30 01:13:01', '2024-04-30 01:13:01', NULL, NULL);
+INSERT INTO `borrows` VALUES (1, 1, '[\"1\",\"9\",\"10\"]', 1, '00001', 5.00, 0.00, '2024-04-27', '2024-04-30', NULL, NULL, '1', '2024-04-27 15:04:24', '2025-04-19 04:20:46', 1, '2025-04-19 04:20:46');
+INSERT INTO `borrows` VALUES (2, 3, '[\"11\",\"12\",\"13\"]', 1, '00002', 7.00, 0.00, '2024-04-27', '2024-04-30', '2024-04-29', 'បានសងវិញហើយ', '0', '2024-04-27 15:04:57', '2025-04-19 04:38:48', 1, '2025-04-19 04:38:48');
+INSERT INTO `borrows` VALUES (3, 3, NULL, 1, '00003', 5.00, NULL, '2025-04-19', '2025-04-19', NULL, NULL, '1', '2025-04-19 04:20:40', '2025-04-19 04:20:40', NULL, NULL);
+INSERT INTO `borrows` VALUES (4, 1, NULL, 1, '00004', 5.00, NULL, '2025-04-19', '2025-04-30', '2025-04-19', NULL, '0', '2025-04-19 04:21:12', '2025-04-19 04:38:17', NULL, '2025-04-19 04:38:17');
+INSERT INTO `borrows` VALUES (5, 4, NULL, 1, '00005', 5.00, NULL, '2025-04-19', '2025-04-30', '2025-04-26', NULL, '0', '2025-04-19 04:36:01', '2025-04-19 04:38:38', NULL, NULL);
+INSERT INTO `borrows` VALUES (6, 5, NULL, 1, '00006', 8.00, NULL, '2025-04-19', '2025-04-25', '2025-04-19', NULL, '0', '2025-04-19 04:36:30', '2025-04-19 04:38:28', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for business_settings
+-- ----------------------------
+DROP TABLE IF EXISTS `business_settings`;
+CREATE TABLE `business_settings`  (
+  `id` bigint(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `business_logo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL,
+  `updated_at` timestamp(0) NULL DEFAULT NULL,
+  `language` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of business_settings
+-- ----------------------------
+INSERT INTO `business_settings` VALUES (1, '2025-04-19-680326c36ee75.png', '2025-04-19 04:12:09', '2025-04-19 04:29:55', NULL);
 
 -- ----------------------------
 -- Table structure for catelogs
@@ -113,9 +161,9 @@ CREATE TABLE `catelogs`  (
 -- ----------------------------
 -- Records of catelogs
 -- ----------------------------
-INSERT INTO `catelogs` VALUES (1, 'CAT1', 'History War', 'New York', 'Alin No', 'Jacob', '2024-04-23', 'New York', '2024-04-23 12:49:13', '2024-04-30 09:46:01', '2024-04-23-6627b15b780a1.jpg', '1');
-INSERT INTO `catelogs` VALUES (2, 'CAT2', 'Drama Lover Book', 'England', 'Jang Ko', 'Vilaim', '2019-07-23', 'England', '2024-04-23 13:04:45', '2024-04-30 09:46:46', '2024-04-23-6627b1ed50ebf.jpg', '1');
-INSERT INTO `catelogs` VALUES (4, 'CAT3', 'ទុំទាវ', 'ខ្មែរ', 'គង់ ប៊ុនឈឿន', 'គង់ ប៊ុនឈឿន', '1965-07-08', 'កម្ពុជា', '2024-04-26 05:53:49', '2024-04-30 09:46:48', '2024-04-26-662b416da63e4.jpg', '1');
+INSERT INTO `catelogs` VALUES (1, 'CAT1', 'History War', 'New York', 'Alin No', 'Jacob', '2024-04-23', 'New York', '2024-04-23 12:49:13', '2024-04-25 12:57:38', '2024-04-23-6627b15b780a1.jpg', '1');
+INSERT INTO `catelogs` VALUES (2, 'CAT2', 'Drama Lover Book', 'England', 'Jang Ko', 'Vilaim', '2019-07-23', 'England', '2024-04-23 13:04:45', '2024-04-25 12:59:23', '2024-04-23-6627b1ed50ebf.jpg', '1');
+INSERT INTO `catelogs` VALUES (4, 'CAT3', 'ទុំទាវ', 'ខ្មែរ', 'គង់ ប៊ុនឈឿន', 'គង់ ប៊ុនឈឿន', '1965-07-08', 'កម្ពុជា', '2024-04-26 05:53:49', '2024-04-27 04:57:53', '2024-04-26-662b416da63e4.jpg', '1');
 
 -- ----------------------------
 -- Table structure for customer_types
@@ -127,7 +175,7 @@ CREATE TABLE `customer_types`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customer_types
@@ -154,19 +202,16 @@ CREATE TABLE `customers`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   `status` enum('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '1',
-  `created_by` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
-INSERT INTO `customers` VALUES (1, '1234', 3, 'Sovann Nai', 'male', '2024-04-25', 'Siem Reap, Cambodia', '017670442', 'P.O.Box 54436, sitra\r\nP.O.Box 54436, sitra', '2024-04-25 01:27:00', '2024-05-02 06:05:35', '1', 1);
-INSERT INTO `customers` VALUES (3, '12345', 3, 'Jang Ko', 'male', '2024-04-01', 'Battambang, Cambodia', '017670442', 'P.O.Box 54436, sitra\r\nP.O.Box 54436, sitra', '2024-04-26 05:50:50', '2024-05-02 06:05:36', '1', 1);
-INSERT INTO `customers` VALUES (4, '1111', 1, 'Chan Da', 'female', '2006-03-08', 'BMC', '098765433', 'New York', '2024-04-27 05:45:59', '2024-05-02 06:05:34', '1', 1);
-INSERT INTO `customers` VALUES (5, '1122', 7, 'Sok Na', 'female', '2001-07-18', 'Siem Reap, Cambodia', '09876543', 'Siem Reap, Cambodia', '2024-04-27 05:46:56', '2024-05-02 06:05:35', '1', 1);
-INSERT INTO `customers` VALUES (6, '999', 3, 'Da', 'male', '2007-02-06', 'Cambodia', '098765433', 'New York', '2024-04-28 06:27:00', '2024-05-02 06:05:33', '1', 1);
-INSERT INTO `customers` VALUES (7, '11122', 8, 'Jecika', 'female', '1995-02-01', 'New York', '09874563', 'Siem Reap, Cambodia', '2024-04-30 02:47:25', '2024-05-02 06:05:36', '1', 1);
+INSERT INTO `customers` VALUES (1, '1234', 3, 'Sovann Nai', 'male', '2024-04-25', 'Siem Reap, Cambodia', '017670442', 'P.O.Box 54436, sitra\r\nP.O.Box 54436, sitra', '2024-04-25 01:27:00', '2025-04-19 04:17:03', '1');
+INSERT INTO `customers` VALUES (3, '12345', 3, 'Jang Ko', 'male', '2024-04-01', 'Battambang, Cambodia', '017670442', 'P.O.Box 54436, sitra\r\nP.O.Box 54436, sitra', '2024-04-26 05:50:50', '2024-04-27 13:09:11', '1');
+INSERT INTO `customers` VALUES (4, '1111', 1, 'Chan Da', 'female', '2006-03-08', 'BMC', '098765433', 'New York', '2024-04-27 05:45:59', '2024-04-27 13:09:08', '1');
+INSERT INTO `customers` VALUES (5, '1122', 7, 'Sok Na', 'female', '2001-07-18', 'Siem Reap, Cambodia', '09876543', 'Siem Reap, Cambodia', '2024-04-27 05:46:56', '2024-04-27 13:09:09', '1');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -215,8 +260,6 @@ INSERT INTO `migrations` VALUES (15, '2024_04_25_125035_add_status_to_catelogs_t
 INSERT INTO `migrations` VALUES (16, '2024_04_25_130005_add_status_to_customers_table', 11);
 INSERT INTO `migrations` VALUES (17, '2024_04_26_054004_create_borrow_table', 12);
 INSERT INTO `migrations` VALUES (18, '2024_04_27_055313_add_deleted_at_to_borrows_table', 13);
-INSERT INTO `migrations` VALUES (19, '2024_05_01_030005_add_created_by_to_books_table', 14);
-INSERT INTO `migrations` VALUES (20, '2024_05_02_055306_add_created_by_to_customers_table', 15);
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -248,6 +291,7 @@ CREATE TABLE `model_has_roles`  (
 -- Records of model_has_roles
 -- ----------------------------
 INSERT INTO `model_has_roles` VALUES (2, 'App\\Models\\User', 1);
+INSERT INTO `model_has_roles` VALUES (22, 'App\\Models\\User', 7);
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -315,6 +359,11 @@ INSERT INTO `permissions` VALUES (24, 'view.borrow', 'web', '2024-04-27 13:12:57
 INSERT INTO `permissions` VALUES (25, 'create.borrow', 'web', '2024-04-27 16:14:08', '2024-04-27 16:14:08');
 INSERT INTO `permissions` VALUES (26, 'edit.borrow', 'web', '2024-04-27 16:14:08', '2024-04-27 16:14:08');
 INSERT INTO `permissions` VALUES (27, 'delete.borrow', 'web', '2024-04-27 16:14:08', '2024-04-27 16:14:08');
+INSERT INTO `permissions` VALUES (28, 'checked.all', 'web', '2025-04-19 04:18:23', '2025-04-19 04:18:23');
+INSERT INTO `permissions` VALUES (29, 'view.report', 'web', '2025-04-19 04:18:23', '2025-04-19 04:18:23');
+INSERT INTO `permissions` VALUES (30, 'view.borrow_report', 'web', '2025-04-19 04:18:23', '2025-04-19 04:18:23');
+INSERT INTO `permissions` VALUES (31, 'view.book_report', 'web', '2025-04-19 04:18:23', '2025-04-19 04:18:23');
+INSERT INTO `permissions` VALUES (32, 'view.customer_report', 'web', '2025-04-19 04:18:23', '2025-04-19 04:18:23');
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -378,14 +427,42 @@ INSERT INTO `role_has_permissions` VALUES (24, 2);
 INSERT INTO `role_has_permissions` VALUES (25, 2);
 INSERT INTO `role_has_permissions` VALUES (26, 2);
 INSERT INTO `role_has_permissions` VALUES (27, 2);
+INSERT INTO `role_has_permissions` VALUES (28, 2);
+INSERT INTO `role_has_permissions` VALUES (29, 2);
+INSERT INTO `role_has_permissions` VALUES (30, 2);
+INSERT INTO `role_has_permissions` VALUES (31, 2);
+INSERT INTO `role_has_permissions` VALUES (32, 2);
 INSERT INTO `role_has_permissions` VALUES (1, 22);
 INSERT INTO `role_has_permissions` VALUES (2, 22);
+INSERT INTO `role_has_permissions` VALUES (3, 22);
+INSERT INTO `role_has_permissions` VALUES (4, 22);
+INSERT INTO `role_has_permissions` VALUES (5, 22);
 INSERT INTO `role_has_permissions` VALUES (6, 22);
+INSERT INTO `role_has_permissions` VALUES (8, 22);
+INSERT INTO `role_has_permissions` VALUES (9, 22);
+INSERT INTO `role_has_permissions` VALUES (10, 22);
 INSERT INTO `role_has_permissions` VALUES (11, 22);
+INSERT INTO `role_has_permissions` VALUES (12, 22);
+INSERT INTO `role_has_permissions` VALUES (13, 22);
+INSERT INTO `role_has_permissions` VALUES (14, 22);
 INSERT INTO `role_has_permissions` VALUES (15, 22);
 INSERT INTO `role_has_permissions` VALUES (16, 22);
+INSERT INTO `role_has_permissions` VALUES (17, 22);
+INSERT INTO `role_has_permissions` VALUES (18, 22);
+INSERT INTO `role_has_permissions` VALUES (19, 22);
+INSERT INTO `role_has_permissions` VALUES (20, 22);
+INSERT INTO `role_has_permissions` VALUES (21, 22);
+INSERT INTO `role_has_permissions` VALUES (22, 22);
 INSERT INTO `role_has_permissions` VALUES (23, 22);
 INSERT INTO `role_has_permissions` VALUES (24, 22);
+INSERT INTO `role_has_permissions` VALUES (25, 22);
+INSERT INTO `role_has_permissions` VALUES (26, 22);
+INSERT INTO `role_has_permissions` VALUES (27, 22);
+INSERT INTO `role_has_permissions` VALUES (28, 22);
+INSERT INTO `role_has_permissions` VALUES (29, 22);
+INSERT INTO `role_has_permissions` VALUES (30, 22);
+INSERT INTO `role_has_permissions` VALUES (31, 22);
+INSERT INTO `role_has_permissions` VALUES (32, 22);
 
 -- ----------------------------
 -- Table structure for roles
@@ -413,12 +490,12 @@ INSERT INTO `roles` VALUES (22, 'Librarian', 'web', '2024-04-18 13:28:16', '2024
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`  (
   `id` bigint(0) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `email_verified_at` timestamp(0) NULL DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
@@ -429,7 +506,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'HE Sovannthai', 'Lincon@gmail.com', 'Lincon@gmail.com', '2024-04-27-662d2932146f0.png', NULL, '$2y$12$xxuOdnXmptms9RWrvBNO4u2dHaF48Ps.a6AMRhVF7.omKN6y9gOLa', 'ldGk57XD3DtauXyiUC98XFrSJsb00J1FFMfFdSpT8D5RLSPszCAwgQeB7D5N', '2024-04-04 12:08:09', '2024-04-27 16:34:58');
-INSERT INTO `users` VALUES (7, 'Testing', 'test12', 'test@gmail.com', '2024-04-25-662a7b6e3e94b.jpg', NULL, '$2y$12$QEmCUMeHNVhWsn0YqOkLrO7AhV3kq9e/21cEW.LwA24h5GuKqGEeW', NULL, '2024-04-25 15:49:02', '2024-04-25 15:49:02');
+INSERT INTO `users` VALUES (1, 'Ambany Lincon', 'Lincon@gmail.com', 'Lincon@gmail.com', '2025-04-19-68032713613d3.png', NULL, '$2y$12$hvP7xYcR0JsPcOOMC5svAegJ076m9FRRTfTaY8.xbkiV3fNB6.E5O', '0FrKojiwsSdTQH2bkDpum61sHfI9jB3DUdDGEzK7cu0HfydTWPil27m2oUFK', '2024-04-04 12:08:09', '2025-04-19 04:31:15');
+INSERT INTO `users` VALUES (7, 'Testing', 'test12', 'test@gmail.com', '2025-04-19-680323a778d24.png', NULL, NULL, NULL, '2024-04-25 15:49:02', '2025-04-19 04:16:39');
 
 SET FOREIGN_KEY_CHECKS = 1;

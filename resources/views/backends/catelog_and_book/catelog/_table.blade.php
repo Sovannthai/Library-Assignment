@@ -1,5 +1,5 @@
 <div class="card-body p-0 table-wrap table-responsive">
-    <table class="table table-bordered table-hover text-nowrap">
+    <table class="table table-bordered table-hover text-nowrap align-middle">
         <thead class="text-uppercase">
             <tr>
                 <th>@lang('No.')</th>
@@ -22,7 +22,7 @@
                 <td>
                     <span>
                         <a class="example-image-link" href="{{ asset('uploads/all_photo/' . $catelog->photo) }}" data-lightbox="lightbox-' . $catelog->id . '">
-                            <img class="example-image image-thumbnail" src="{{ asset('uploads/all_photo/' . $catelog->photo) }}" alt="profile" width="90px" height="50px" style="cursor:pointer" />
+                            <img class="example-image rounded-circle" src="{{ asset('uploads/all_photo/' . $catelog->photo) }}" alt="profile" width="70px" height="70px" style="cursor:pointer" />
                         </a>
                     </span>
                 </td>

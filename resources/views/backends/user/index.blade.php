@@ -30,7 +30,7 @@
                         </span>
                     </td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->roles->first()->name }}</td>
+                    <td>{{ optional($user->roles->first())->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
                         @if (auth()->user()->can('edit.user'))

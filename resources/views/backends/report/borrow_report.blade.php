@@ -61,8 +61,8 @@
                         </div>
                     </div>
                     <div class="mt-2">
-                        <button type="button" class="btn btn-outline-danger btn-lg ml-1"
-                            onclick="resetFilter()" style="border-radius: 0">@lang('Reset')</button>
+                        <a href="{{ route('report.index') }}" type="button" class="btn btn-outline-danger btn-lg ml-1"
+                            onclick="resetFilter()" style="border-radius: 0">@lang('Reset')</a>
                         <button type="submit" class="btn btn-outline-success btn-lg" style="border-radius: 0">@lang('Filter')</button>
                     </div>
                 </form>
